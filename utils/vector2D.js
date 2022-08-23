@@ -1,50 +1,56 @@
-function Vector2D(x, y) {
-    this.x = x;
-    this.y = y;
-}
+class Vector2D {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 
-Vector2D.prototype = {
-    length : function() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    },
-    normalize : function() {
+    length() { return Math.sqrt(this.x * this.x + this.y * this.y); }
+
+    normalize() {
         let length = this.length();
-        if (length > 0 ) {
+        if (length > 0) {
             this.x /= length;
             this.y /= length;
         }
-    },
-    invert : function() {
+    }
+
+    invert() {
         this.x = -this.x;
         this.y = -this.y;
-    },
-    add : function(v) {
-        return new Vector2D(this.x + v.x, this.y + v.y); 
-    },
-    subtract : function(v) {
-        return new Vector2D(this.x - v.x, this.y - v.y);
-    },
-    incrementBy : function(v) {
+    }
+
+    incrementBy(v) {
         this.x += v.x;
         this.y += v.y;
-    },
-    decrementBy : function(v) {
+    }
+
+    decrementBy(v) {
         this.x -= v.x;
         this.y -= v.y;
-    },
-    scaleBy : function(k) {
+    }
+
+    scaleBy(k) {
         this.x *= k;
         this.y *= k;
-    },
-    dotProductWith : function(v) {
-        return (this.x * v.x + this.y * v.y);
     }
 }
 
 Vector2D.distance = function(v1, v2) {
-    return v1.subtract(v2).length();
+    return Vector2D.subtract(v1, v2).length();
 }
 
-Vector2D.angleBetween = function(v1, v2) {
+Vector2D.angle = function(v1, v2) {
     return Math.acos(v1.dotProductWith(v2) / (v1.length() * v2.length()));
 }
+
+Vector2D.add = function(v1, v2) {
+    return new Vector2D(v1.x + v2.x, v1.y + v2.y);
+}
+
+Vector2D.subtract = function(v1, v2) {
+    return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+}
+
+Vector2D.dotProduct = function(v1, v2) { return (v1.x * v2.x + v1.y * v2.y); }
+
+Vector2D.scale = function(v, k) { return new Vector2D(v.x * k, v.y * k); }
