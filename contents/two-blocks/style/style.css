@@ -61,6 +61,12 @@ nav li:hover {
     box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.2);
 }
 
+.simulation {
+    display:flex;
+    margin: auto;
+    justify-content:center;
+}
+
 .child {
     margin: 0 auto;
 }
@@ -86,8 +92,8 @@ p {
     flex-direction:column;
     border-radius: 5px 0 0 5px;
     justify-content:center;
-    background:#444488;
-    background:#13141b
+    background:darkgray;
+    margin:0;
 }
 
 .horizontalButtons{
@@ -123,7 +129,7 @@ button:hover{
     border-radius:0 5px 5px 0;
     overflow:hidden;
     display:flex;
-    margin: 0 auto;
+    margin: 0;
 }
 
 #responsive-canvas {

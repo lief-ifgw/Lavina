@@ -19,9 +19,20 @@
             </ul>
         </nav>
 
-        <div class="content">
+        <div class="content" style="position flex">
             <h1> Leis de Newton</h1>
-            <canvas id="myCanvas" align="center" ></canvas>
+            <div class="simulation">
+                <div class="controlPanel">
+                    <div class="slideContainer">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="force">
+                    </div>
+                    <div class="horizontalButtons">
+                        <button type="button" id="btnRun">Run</button>
+                        <button type="button" id="btnQuit">Quit</button>
+                    </div>
+                </div>
+                <canvas id="myCanvas" align="center" ></canvas>
+            </div>
         </div>
         <script src="../../utils/vector2D.js"></script>
         <script src="src/block.js"></script>
