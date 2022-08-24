@@ -1,25 +1,21 @@
-var gravity = new Vector2D(0, 2);
-
 class Block {
-    constructor(p, w, h, m, v = 1, color = "blue") {
+    constructor(p, w, h, m, color = "blue") {
         this.pos = p;
         this.width = w;
         this.height = h;
         this.mass = m;
-        this.velocity = new Vector2D(v, 0);
-
+        this.acceleration = new Vector2D(0, 0);
+        this.velocity = new Vector2D(0, 0);
+        this.weight = Vector2D.scale(gravity, this.mass);
+        this.normal = new Vector2D(0, 0);
+        this.forces = new Vector2D(0, 0);
         this.fillStyle = color;
     }
 
     move() {
+        this.acceleration = Vector2D.scale(this.forces, 1.0 / this.mass);
         this.pos.incrementBy(this.velocity);
-
-        if (Math.abs(this.velocity.x) <= 0.01) {
-            this.velocity.x = 0;
-        }
-        if (Math.abs(this.velocity.y) <= 0.01) {
-            this.velocity.y = 0;
-        }
+        this.velocity.incrementBy(this.acceleration);
     }
 
     draw(ctx) {
