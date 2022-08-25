@@ -24,7 +24,12 @@
             <div class="simulation">
                 <div class="controlPanel">
                     <div class="slideContainer">
-                        <input type="range" min="0" max="100" value="50" class="slider" id="force">
+                        <input type="range" min="0" max="0.1" value="0" step="0.01" class="slider" id="force">
+                        <p>F=<span id="outForce"></span>N</p>
+                        <input type="range" min="0" max="20" value="10" step="0.5" class="slider" id="m1">
+                        <p>M=<span id="outM1"></span>kg</p>
+                        <input type="range" min="0" max="15" value="5" step="0.5" class="slider" id="m2">
+                        <p>m=<span id="outM2"></span>kg</p>
                     </div>
                     <div class="horizontalButtons">
                         <button type="button" id="btnRun">Run</button>

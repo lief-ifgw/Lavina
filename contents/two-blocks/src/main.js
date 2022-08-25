@@ -21,6 +21,29 @@ canvas.height = canvasHeight;
 var ctx = canvas.getContext("2d");
 
 let sliderForce = document.getElementById("force");
+var outputForce = document.getElementById("outForce");
+outputForce.innerHTML = sliderForce.value;
+
+sliderForce.oninput = function() {
+    outputForce.innerHTML = this.value;
+}
+
+let sliderMassOne = document.getElementById("m1");
+var outputMassOne = document.getElementById("outM1");
+outputMassOne.innerHTML = sliderMassOne.value;
+
+sliderMassOne.oninput = function() {
+    outputMassOne.innerHTML = this.value;
+}
+
+let sliderMassTwo = document.getElementById("m2");
+var outputMassTwo = document.getElementById("outM2");
+outputMassTwo.innerHTML = sliderMassTwo.value;
+
+sliderMassTwo.oninput = function() {
+    outputMassTwo.innerHTML = this.value;
+}
+
 let btnRun = document.getElementById("btnRun");
 
 var blockOne = new Block(pos1, blockOneWidth, blockOneHeight, blockOneMass, "red");
@@ -44,7 +67,9 @@ function dynamics() {
 }
 
 btnRun.onclick = function() {
-    let force = new Vector2D(sliderForce.value / 100, 0);
+    blockOne.mass = sliderMassOne.value;
+    blockTwo.mass = sliderMassTwo.value;
+    let force = new Vector2D(sliderForce.value, 0);
     blockOne.forces.incrementBy(force);
     dynamics();
 }
