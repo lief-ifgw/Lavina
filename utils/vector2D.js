@@ -39,7 +39,7 @@ class Vector2D {
         this.x *= k;
         this.y *= k;
     }
-
+    
 }
 
 Vector2D.distance = function(v1, v2) {
