@@ -19,7 +19,7 @@ function check(a){
 
 let x = 100;
 let y = 100;
-let friction = 0.5;
+let friction = 0.1;
 let elasticity = 1;
 
 const BALLZ = [];
@@ -107,9 +107,22 @@ function collision(b1,b2){
 function penetration(b1,b2){
     let dist = b1.pos.subtract(b2.pos);
     let profund = b1.r + b2.r -dist.length();
-    let penetr = dist.normalize().mult(profund/2);
-    b1.pos = b1.pos.add(penetr);
-    b2.pos = b2.pos.add(penetr.mult(-1));
+    let penetr = dist.normalize().mult(profund/(b1.inv_m + b2.inv_m));
+    b1.pos = b1.pos.add(penetr.mult(b1.inv_m));
+    b2.pos = b2.pos.add(penetr.mult(-b2.inv_m));
+}
+
+function collisionResult(obj1, obj2){
+    let normal = obj1.pos.subtract(obj2.pos).normalize();
+    let vRel = obj1.v.subtract(obj2.v);
+    let sepVel = Vector.dotProduct(vRel, normal);
+    //let sepVelVec = normal.mult(sepVel * elasticity);
+    let new_sepVel = -sepVel *Math.min(obj1.elasticity, obj2.elasticity);
+    let sepVel_dif = new_sepVel - sepVel;
+    let impulse = sepVel_dif/(obj1.inv_m+obj2.inv_m);
+    let impulseVec = normal.mult(impulse);
+    obj1.v = obj1.v.add(impulseVec.mult(obj1.inv_m));
+    obj2.v = obj2.v.add(impulseVec.mult(-obj2.inv_m));
 }
 
 function setLine(x0,y0,xf,yf,color){
@@ -131,16 +144,7 @@ function massCenter(obj1,obj2){
     ctx.fillStyle = 'black';
     ctx.fill();
     ctx.closePath();
-}
-
-function collisionResult(obj1, obj2){
-    let normal = obj1.pos.subtract(obj2.pos).normalize();
-    let vRel = obj1.v.subtract(obj2.v);
-    let sepVel = Vector.dotProduct(vRel, normal);
-    let sepVelVec = normal.mult(sepVel * elasticity);
-    obj1.v = obj1.v.add(sepVelVec.mult(-1));
-    obj2.v = obj2.v.add(sepVelVec);
-}
+} 
 
 function mainLoop() {
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
@@ -217,7 +221,7 @@ function originPos(){
 
 let ball1 = new Ball("ball1", 200, 400, 10, 1, 'blue');
 let ball2 = new Ball("ball2", 100, 100, 10, 1, 'red');
-let ball3 = new Ball("ball3", 500, 200, 60, 1, 'yellow');
+let ball3 = new Ball("ball3", 500, 200, 60, 5, 'yellow');
 
 
 

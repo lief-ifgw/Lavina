@@ -14,6 +14,7 @@ class Ball{
         this.a = new Vector(0,0);
         this.color = color;
         this.acceleration = 1;
+        this.elasticity = 1;
         BALLZ.push(this);
         this.player = false;
     }
@@ -29,10 +30,10 @@ class Ball{
     }
 
     display(){
-        this.v.drawVec(800, 400, 10, 'green');
+        this.v.drawVec(800, 400, 5, 'green');
         this.a.normalize().drawVec(800, 400, 50, 'blue');
         this.a.normal().drawVec(800, 400, 50, 'black');
-        this.v.mult(-1).drawVec(800, 400, 50, 'red');
+        this.v.mult(-1).normalize().drawVec(800, 400, 50, 'red');
         ctx.beginPath();
         ctx.arc(800,400,50,0,2*Math.PI);
         ctx.strokeStyle = 'black';
