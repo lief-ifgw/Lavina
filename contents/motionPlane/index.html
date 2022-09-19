@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Experimentos</a></li>
+                <li><a href="#">Projetos</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex;">
+            <h1>Entendendo centro de massa</h1>
+            <div class="simulation">
+                <div class="controlPanel" class="box">
+                    <table>
+                        <tr>
+                            <th style="border: 0px; background-color: transparent;"></th>
+                            <th>X</th>
+                            <th>Y</th>
+                        </tr>
+                        <tr>
+                            <td id="ball1" onclick="playerChange(ball1,ball2);" class="button">Bola 1:</td>
+                            <td id="b1x" class="w2"></td>
+                            <td id="b1y" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <td id="ball2" onclick="playerChange(ball2,ball1);" class="button">Bola 2:</td>
+                            <td id="b2x" class="w2"></td>
+                            <td id="b2y" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <td class="w1">CM:</td>
+                            <td id="cmX" class="w2"></td>
+                            <td id="cmY" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <td class="w1">Distância:</td>
+                            <td id="dist" colspan="2" class="w1"></td>
+                        </tr>
+                        <tr>
+                            <td class="w1">Momento:</td>
+                            <td id="momentum" colspan="2" class="w1"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div class="slidecontainer">
+                        <table>
+                            <tr>
+                                <td colspan="2">Elasticidade:</td> 
+                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="elasticSlider"></td>
+                                <td id="elastic"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Atrito:</td> 
+                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="frictionSlider"></td>
+                                <td id="friction"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table>
+                        <tr>
+                            <td onclick="check('up');" class="button">Origem no canto superior esquerdo&nbsp;&nbsp;<input type="radio" name="origem" id="up"></td>
+                        </tr>
+                        <tr>
+                            <td onclick="check('down');" class="button">Origem no canto inferior esquerdo&nbsp;&nbsp;<input type="radio" name="origem" id="down"></td>
+                        </tr>
+                    </table>
+                        Exibir as interações <input type="checkbox" name="display" id="display" class="button">
+                    
+                </div>
+                <canvas id="myCanvas" align="center" class="box" tabindex="1"></canvas>
+            </div>
+        </div>
+        <script src="src/class/ball.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="src/motion.js"></script>
+
+    </body>
+</html>
+
