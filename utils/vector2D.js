@@ -7,10 +7,16 @@ class Vector2D {
     length() { return Math.sqrt(this.x * this.x + this.y * this.y); }
 
     normalize() {
-        let length = this.length();
+        /*let length = this.length();
         if (length > 0) {
             this.x /= length;
             this.y /= length;
+        }*/
+        if(this.length() === 0){
+            return new Vector2D(0,0);
+        }
+        else{
+            return new Vector2D(this.x/this.length(), this.y/this.length());
         }
     }
 
@@ -33,6 +39,7 @@ class Vector2D {
         this.x *= k;
         this.y *= k;
     }
+
 }
 
 Vector2D.distance = function(v1, v2) {
@@ -40,7 +47,7 @@ Vector2D.distance = function(v1, v2) {
 }
 
 Vector2D.angle = function(v1, v2) {
-    return Math.acos(v1.dotProductWith(v2) / (v1.length() * v2.length()));
+    return Math.acos(Vector2D.dotProduct(v1,v2) / (v1.length() * v2.length()));
 }
 
 Vector2D.add = function(v1, v2) {

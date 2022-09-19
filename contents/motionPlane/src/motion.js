@@ -1,5 +1,5 @@
-const canvasWidth = 900;
-const canvasHeight = 500;
+const canvasWidth = 600;
+const canvasHeight = 400;
 
 const canvas = document.getElementById("myCanvas");
 canvas.width = canvasWidth;
@@ -7,11 +7,8 @@ canvas.height = canvasHeight;
 
 var ctx = canvas.getContext('2d');
 
-let originUp = document.getElementById('up').checked === true;
-let originDown = document.getElementById('down').checked === true;
 document.getElementById('down').checked = true;
-let origin = 1;
-let shift = 0;
+
 
 function check(a){
     document.getElementById(a).checked = true;
@@ -96,7 +93,7 @@ function round(n, precision){
 }
 
 function collision(b1,b2){
-    if(b1.r + b2.r >= b1.pos.subtract(b2.pos).length()){
+    if(b1.r + b2.r >= Vector2D.subtract(b1.pos,b2.pos).length()){
         return true;
     }
     else{
@@ -105,24 +102,24 @@ function collision(b1,b2){
 }
 
 function penetration(b1,b2){
-    let dist = b1.pos.subtract(b2.pos);
+    let dist = Vector2D.subtract(b1.pos,b2.pos);
     let profund = b1.r + b2.r -dist.length();
-    let penetr = dist.normalize().mult(profund/(b1.inv_m + b2.inv_m));
-    b1.pos = b1.pos.add(penetr.mult(b1.inv_m));
-    b2.pos = b2.pos.add(penetr.mult(-b2.inv_m));
+    let penetr = Vector2D.scale(dist.normalize(),profund/(b1.inv_m + b2.inv_m));
+    b1.pos = Vector2D.add(b1.pos,Vector2D.scale(penetr,b1.inv_m));
+    b2.pos = Vector2D.add(b2.pos,Vector2D.scale(penetr,-b2.inv_m));
 }
 
 function collisionResult(obj1, obj2){
-    let normal = obj1.pos.subtract(obj2.pos).normalize();
-    let vRel = obj1.v.subtract(obj2.v);
-    let sepVel = Vector.dotProduct(vRel, normal);
-    //let sepVelVec = normal.mult(sepVel * elasticity);
+    let normal = Vector2D.subtract(obj1.pos,obj2.pos).normalize();
+    let vRel = Vector2D.subtract(obj1.v,obj2.v);
+    let sepVel = Vector2D.dotProduct(vRel, normal);
+    //let sepVelVec = normal.scale(sepVel * elasticity);
     let new_sepVel = -sepVel *Math.min(obj1.elasticity, obj2.elasticity);
     let sepVel_dif = new_sepVel - sepVel;
     let impulse = sepVel_dif/(obj1.inv_m+obj2.inv_m);
-    let impulseVec = normal.mult(impulse);
-    obj1.v = obj1.v.add(impulseVec.mult(obj1.inv_m));
-    obj2.v = obj2.v.add(impulseVec.mult(-obj2.inv_m));
+    let impulseVec = Vector2D.scale(normal,impulse);
+    obj1.v = Vector2D.add(obj1.v,Vector2D.scale(impulseVec,obj1.inv_m));
+    obj2.v = Vector2D.add(obj2.v,Vector2D.scale(impulseVec,-obj2.inv_m));
 }
 
 function setLine(x0,y0,xf,yf,color){
@@ -135,7 +132,7 @@ function setLine(x0,y0,xf,yf,color){
 }
 
 function massCenter(obj1,obj2){
-    let line = new Vector(obj1.pos.x, obj2.pos.y);
+    let line = new Vector2D(obj1.pos.x, obj2.pos.y);
     setLine(obj1.pos.x,obj1.pos.y,obj2.pos.x,obj2.pos.y,'black');
     ctx.beginPath();
     ctx.arc((obj1.pos.x - obj2.pos.x + 2 * obj2.pos.x)/2,(obj1.pos.y - obj2.pos.y + 2 * obj2.pos.y)/2,5,0,2*Math.PI);
@@ -162,27 +159,21 @@ function mainLoop() {
             }
         }
         
-        let vBall1 = new Vector(ball1.pos.x, ball1.pos.y);
-        let vBall2 = new Vector(ball2.pos.x, ball2.pos.y);
-        let angle = vBall1.angle(vBall1,vBall2);
+        let vBall1 = new Vector2D(ball1.pos.x, ball1.pos.y);
+        let vBall2 = new Vector2D(ball2.pos.x, ball2.pos.y);
+        let angle = Vector2D.angle(vBall1,vBall2);
         //console.log(angle);
 
-        b.display();
         b.reposition();
         massCenter(ball1, ball2);
         
     });
 
-    let distanceVec = new Vector(0,0);
-    distanceVec = ball2.pos.subtract(ball1.pos);
-    let momentum = ball1.v.add(ball2.v).length();
+    let distanceVec = new Vector2D(0,0);
+    distanceVec = Vector2D.subtract(ball2.pos,ball1.pos);
+    let momentum = Vector2D.add(ball1.v,ball2.v).length();
 
-    let originUp = document.getElementById('up').checked === true;
-    let originDown = document.getElementById('down').checked === true;
-    let origin = 1;
-    let shift = 0;
-
-    
+    originPos();
 
     let dista = distanceVec.length();
     
@@ -191,8 +182,8 @@ function mainLoop() {
     document.getElementById("b2x").innerHTML = round(ball2.pos.x, 0);
     document.getElementById("b2y").innerHTML = round(origin * ball2.pos.y + shift, 0);
     document.getElementById("dist").innerHTML = round(dista, 1);
-    document.getElementById("cmX").innerHTML = round(distanceVec.mult(1/2).x, 0);
-    document.getElementById("cmY").innerHTML = round(origin * distanceVec.mult(1/2).y + shift, 0);
+    document.getElementById("cmX").innerHTML = round(Vector2D.scale(distanceVec,1/2).x, 0);
+    document.getElementById("cmY").innerHTML = round(origin * Vector2D.scale(distanceVec,1/2).y + shift, 0);
     document.getElementById("momentum").innerHTML = round(momentum, 1);
          
 
@@ -208,6 +199,8 @@ function playerChange(p,p2){
 }
 
 function originPos(){
+    let originUp = document.getElementById('up').checked === true;
+    let originDown = document.getElementById('down').checked === true;
     if(originUp){
         origin = 1;
         shift = 0;
@@ -219,9 +212,9 @@ function originPos(){
 }
 
 
-let ball1 = new Ball("ball1", 200, 400, 10, 1, 'blue');
-let ball2 = new Ball("ball2", 100, 100, 10, 1, 'red');
-let ball3 = new Ball("ball3", 500, 200, 60, 5, 'yellow');
+let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'blue');
+let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'red');
+let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, 5, 'yellow');
 
 
 
