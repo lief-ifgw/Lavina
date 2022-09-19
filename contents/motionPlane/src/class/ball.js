@@ -30,7 +30,7 @@ class Ball{
     }
 
     reposition(){
-        this.a = Vector2D.scale(this.a.normalize(),this.acceleration);
+        this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
         this.v = Vector2D.add(this.v,this.a);
         this.v = Vector2D.scale(this.v,1-friction);
         this.pos = Vector2D.add(this.pos,this.v);

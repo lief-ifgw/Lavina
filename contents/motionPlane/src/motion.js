@@ -104,13 +104,13 @@ function collision(b1,b2){
 function penetration(b1,b2){
     let dist = Vector2D.subtract(b1.pos,b2.pos);
     let profund = b1.r + b2.r -dist.length();
-    let penetr = Vector2D.scale(dist.normalize(),profund/(b1.inv_m + b2.inv_m));
+    let penetr = Vector2D.scale(Vector2D.norma(dist),profund/(b1.inv_m + b2.inv_m));
     b1.pos = Vector2D.add(b1.pos,Vector2D.scale(penetr,b1.inv_m));
     b2.pos = Vector2D.add(b2.pos,Vector2D.scale(penetr,-b2.inv_m));
 }
 
 function collisionResult(obj1, obj2){
-    let normal = Vector2D.subtract(obj1.pos,obj2.pos).normalize();
+    let normal = Vector2D.norma(Vector2D.subtract(obj1.pos,obj2.pos));
     let vRel = Vector2D.subtract(obj1.v,obj2.v);
     let sepVel = Vector2D.dotProduct(vRel, normal);
     //let sepVelVec = normal.scale(sepVel * elasticity);

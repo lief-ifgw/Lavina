@@ -7,17 +7,12 @@ class Vector2D {
     length() { return Math.sqrt(this.x * this.x + this.y * this.y); }
 
     normalize() {
-        /*let length = this.length();
+        let length = this.length();
         if (length > 0) {
             this.x /= length;
             this.y /= length;
-        }*/
-        if(this.length() === 0){
-            return new Vector2D(0,0);
         }
-        else{
-            return new Vector2D(this.x/this.length(), this.y/this.length());
-        }
+        
     }
 
     invert() {
@@ -61,3 +56,16 @@ Vector2D.subtract = function(v1, v2) {
 Vector2D.dotProduct = function(v1, v2) { return (v1.x * v2.x + v1.y * v2.y); }
 
 Vector2D.scale = function(v, k) { return new Vector2D(v.x * k, v.y * k); }
+
+Vector2D.inverse = function(v) {
+    return new Vector2D(-v.x, -v.y);
+}
+
+Vector2D.norma = function(v){
+    if(v.length() === 0){
+        return new Vector2D(0,0);
+    }
+    else{
+        return new Vector2D(v.x/v.length(), v.y/v.length());
+    }
+}
