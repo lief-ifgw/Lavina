@@ -28,16 +28,19 @@
                             <th style="border: 0px; background-color: transparent;"></th>
                             <th>X</th>
                             <th>Y</th>
+                            <th>Massa</th>
                         </tr>
                         <tr>
                             <td id="ball1" onclick="playerChange(ball1,ball2);" class="button">Bola 1:</td>
                             <td id="b1x" class="w2"></td>
                             <td id="b1y" class="w2"></td>
+                            <td id="mb1" class="w2"></td>
                         </tr>
                         <tr>
                             <td id="ball2" onclick="playerChange(ball2,ball1);" class="button">Bola 2:</td>
                             <td id="b2x" class="w2"></td>
                             <td id="b2y" class="w2"></td>
+                            <td id="mb2" class="w2"></td>
                         </tr>
                         <tr>
                             <td class="w1">CM:</td>
@@ -83,6 +86,7 @@
             </div>
         </div>
         <script src="src/class/ball.js"></script>
+        <script src="src/class/wall.js"></script>
         <script src="../../utils/vector2D.js"></script>
         <script src="src/motion.js"></script>
 
