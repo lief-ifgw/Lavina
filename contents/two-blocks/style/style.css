@@ -93,7 +93,7 @@ p {
     border-radius: 5px 0 0 5px;
     justify-content:center;
     background:darkgray;
-    margin:0;
+    padding: 10px;
 }
 
 .horizontalButtons{
