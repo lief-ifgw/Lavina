@@ -17,9 +17,9 @@ function check(a){
 let x = 100;
 let y = 100;
 let friction = 0.1;
-let elasticity = 1;
 
 const BALLZ = [];
+const WALLZ = [];
 
 let UP, DOWN, LEFT, RIGHT;
 
@@ -92,8 +92,24 @@ function round(n, precision){
     return Math.round(n*factor)/factor;
 }
 
-function collision(b1,b2){
-    if(b1.r + b2.r >= Vector2D.subtract(b1.pos,b2.pos).length()){
+function closestPointBW(obj1, w1){
+    let ballToWallStart = Vector2D.subtract(w1.start,obj1.pos);
+    if(Vector2D.dotProduct(w1.wallUnit(), ballToWallStart) > 0){
+        return w1.start;
+    }
+
+    let wallEndToBall = Vector2D.subtract(obj1.pos,w1.end);
+    if(Vector2D.dotProduct(w1.wallUnit(), wallEndToBall) > 0){
+        return w1.end;
+    }
+
+    let closestDist = Vector2D.dotProduct(w1.wallUnit(), ballToWallStart);
+    let closestVect = Vector2D.scale(w1.wallUnit(),closestDist);
+    return Vector2D.subtract(w1.start,closestVect);
+}
+
+function collisionDetectionBall(obj1,b2){
+    if(obj1.r + b2.r >= Vector2D.subtract(obj1.pos,b2.pos).length()){
         return true;
     }
     else{
@@ -101,15 +117,27 @@ function collision(b1,b2){
     }
 }
 
-function penetration(b1,b2){
-    let dist = Vector2D.subtract(b1.pos,b2.pos);
-    let profund = b1.r + b2.r -dist.length();
-    let penetr = Vector2D.scale(Vector2D.norma(dist),profund/(b1.inv_m + b2.inv_m));
-    b1.pos = Vector2D.add(b1.pos,Vector2D.scale(penetr,b1.inv_m));
+function collisionDetectionWall(obj1,w1){
+    let ballClosest = Vector2D.subtract(closestPointBW(obj1,w1),obj1.pos);
+    if(ballClosest.length() <= obj1.r){
+        return true;
+    }
+}
+
+function penetrationResultBall(obj1,b2){
+    let dist = Vector2D.subtract(obj1.pos,b2.pos);
+    let profund = obj1.r + b2.r -dist.length();
+    let penetr = Vector2D.scale(Vector2D.norma(dist),profund/(obj1.inv_m + b2.inv_m));
+    obj1.pos = Vector2D.add(obj1.pos,Vector2D.scale(penetr,obj1.inv_m));
     b2.pos = Vector2D.add(b2.pos,Vector2D.scale(penetr,-b2.inv_m));
 }
 
-function collisionResult(obj1, obj2){
+function penetrationResultWall(obj1, w1){
+    let penVect = Vector2D.subtract(obj1.pos,closestPointBW(obj1, w1));
+    obj1.pos = Vector2D.add(obj1.pos, Vector2D.scale(Vector2D.norma(penVect),obj1.r-penVect.length()));
+}
+
+function collisionResultBall(obj1, obj2){
     let normal = Vector2D.norma(Vector2D.subtract(obj1.pos,obj2.pos));
     let vRel = Vector2D.subtract(obj1.v,obj2.v);
     let sepVel = Vector2D.dotProduct(vRel, normal);
@@ -120,6 +148,14 @@ function collisionResult(obj1, obj2){
     let impulseVec = Vector2D.scale(normal,impulse);
     obj1.v = Vector2D.add(obj1.v,Vector2D.scale(impulseVec,obj1.inv_m));
     obj2.v = Vector2D.add(obj2.v,Vector2D.scale(impulseVec,-obj2.inv_m));
+}
+
+function collisionResultWall(obj1, w1){
+    let normal = Vector2D.norma(Vector2D.subtract(obj1.pos,closestPointBW(obj1, w1)));
+    let sepVel = Vector2D.dotProduct(obj1.v, normal);
+    let new_sepVel = -sepVel * obj1.elasticity;
+    let vsep_diff = sepVel - new_sepVel;
+    obj1.vel = Vector2D.add(obj1.v,Vector2D.scale(normal,-vsep_diff));
 }
 
 function setLine(x0,y0,xf,yf,color){
@@ -143,8 +179,20 @@ function massCenter(obj1,obj2){
     ctx.closePath();
 } 
 
+function drawGrid(px,py,color){
+    let xSpaces = canvasWidth/px;
+    let ySpaces = canvasHeight/py;
+    for(i = 1; i < xSpaces; i++){
+        setLine(px*i,0,px*i,canvasHeight,color);
+    }
+    for(i = 1; i < ySpaces; i++){
+        setLine(0,py*i,canvasWidth,py*i,color);
+    }
+}
+
 function mainLoop() {
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    drawGrid(30,30,'blue');
     BALLZ.forEach((b, index) => {
         b.drawBall();
 
@@ -152,12 +200,26 @@ function mainLoop() {
             keyControl(b);
         }
         for(let i = index+1; i<BALLZ.length; i++){
-            if(collision(BALLZ[index], BALLZ[i])){
+            if(collisionDetectionBall(BALLZ[index], BALLZ[i])){
                 ctx.fillText("Colisão!", 755, 300);
-                penetration(BALLZ[index], BALLZ[i]);
-                collisionResult(BALLZ[index], BALLZ[i]);
+                penetrationResultBall(BALLZ[index], BALLZ[i]);
+                collisionResultBall(BALLZ[index], BALLZ[i]);
             }
         }
+        
+        WALLZ.forEach((w) => {
+            if(collisionDetectionWall(BALLZ[index], w)){
+                penetrationResultWall(BALLZ[index], w);
+                collisionResultWall(BALLZ[index], w);
+            }
+        })
+        for(let i = index+1; i<BALLZ.length; i++){
+            if(collisionDetectionBall(BALLZ[index], BALLZ[i])){
+                penetrationResultBall(BALLZ[index], BALLZ[i]);
+                collisionResultBall(BALLZ[index], BALLZ[i]);
+            }
+        }
+
         
         let vBall1 = new Vector2D(ball1.pos.x, ball1.pos.y);
         let vBall2 = new Vector2D(ball2.pos.x, ball2.pos.y);
@@ -167,6 +229,10 @@ function mainLoop() {
         b.reposition();
         massCenter(ball1, ball2);
         
+    });
+
+    WALLZ.forEach((w) => {
+        w.drawWall();
     });
 
     let distanceVec = new Vector2D(0,0);
@@ -211,11 +277,17 @@ function originPos(){
     }
 }
 
+function canvasWall(){
+    let wallTop = new Wall(0, 0, canvasWidth, 0);
+    let wallBottom = new Wall(0, canvasHeight, canvasWidth, canvasHeight);
+    let wallLeft = new Wall(0, 0, 0, canvasHeight);
+    let wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
+}
 
-let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'blue');
-let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'red');
+let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 7, 'blue');
+let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 3, 'red');
 let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, 5, 'yellow');
-
+canvasWall();
 
 
 requestAnimationFrame(mainLoop);
