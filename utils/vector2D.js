@@ -12,7 +12,6 @@ class Vector2D {
             this.x /= length;
             this.y /= length;
         }
-        
     }
 
     invert() {
@@ -63,8 +62,8 @@ Vector2D.inverse = function(v) {
     return new Vector2D(-v.x, -v.y);
 }
 
-Vector2D.norma = function(v){
-    if(v.length() === 0){
+Vector2D.norma = function(v) {
+    if(v.length() === 0) {
         return new Vector2D(0,0);
     }
     else{
