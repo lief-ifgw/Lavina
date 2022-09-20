@@ -38,8 +38,21 @@
                 </div>
                 <canvas id="myCanvas" align="center" ></canvas>
             </div>
+
+            <h2> O que vai acontecer com os blocos? </h2>
+            <form action="src/action_page.js">
+                <input type="radio"  name="answer" id="rest" value="ans_rest">
+                <label for="ans_rest"> Os blocos permanecerão em repouso. </label><br>
+                <input type="radio" name="answer" id="move_together" value="ans_move_together">
+                <label for="ans_move_together"> Os blocos se moverão juntos. </label><br>
+                <input type="radio" name="answer" id="move_separately" value="ans_move_together">
+                <label for="ans_move_separately"> Os blocos se moverão com velocidades diferentes. </label><br>
+            </form>
         </div>
+
+        <script src="src/action_page.js"></script>
         <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/arrow.js"></script>
         <script src="src/block.js"></script>
         <script src="src/main.js"></script>
     </body>
