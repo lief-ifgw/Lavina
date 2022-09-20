@@ -1,6 +1,6 @@
 class Arrow {
-    constructor(pos, lenght, theta) {
-        this.pos = pos;
+    constructor(p, lenght, theta) {
+        this.pos = new Vector2D(p.x, p.y);
         this.lenght = lenght;
         this.angle = theta;
         this.color = "black";
