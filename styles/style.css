@@ -54,14 +54,20 @@ nav li:hover {
 .content {
     width: 50%;
     background-color: #E8F7EE;
-    padding-top: 60px;
-    padding-right: 60px;
-    padding-left: 60px;
+    padding: 60px;
     margin-top: 60px;
     text-align: justify;
     box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.3);
-    justify-content:center;
-    align-items:center;
+    justify-content: center;
+    align-items: center;
+}
+
+.simulation {
+    display: flex;
+    padding: auto;
+    margin: 50px 0 50px 0;
+    text-align: justify;
+    justify-content: center;
 }
 
 .child {
@@ -82,49 +88,70 @@ p {
 }
 
 .controlPanel{
-    display:flex;
-    height: 400px;
-    border: 0;
+    display: grid;
+    height: canvasHeight;
+    border: 2px solid black;
     row-gap: 20px;
-    flex-direction:column;
-    border-radius: 5px 0 0 5px;
-    justify-content:center;
-    background:#444488;
-    background:#13141b
+    border-radius: 10px 0 0 10px;
+    justify-content: center;
+    background: darkgray;
+    padding: 10px;
+    margin: 0;
+}
+
+#myCanvas {
+    background: white;
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
+    display: grid;
+    margin: 0;
+    border: 2px solid black;
 }
 
 .horizontalButtons{
-    display:flex;
-    flex-direction:row;
-    width:100%;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .verticalButtons{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 button{
     border: none;
-    background-color:#01e59b;
+    background-color: #01e59b;
+    width: 75px;
     border-radius: 5px;
-    padding: 5px 5px 7px 5px;
+    padding: 5px 5px 5px 5px;
     margin: 2px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 button:hover{
-    background:#547499;
+    background-color: aquamarine;
+    transition: 0.1s;
 }
 
-#myCanvas {
-    background:white;
-    border-radius:0 5px 5px 0;
-    overflow:hidden;
-    display:flex;
-    margin: 0 auto;
+th, td {
+    border: 1px solid black;
+    border-radius: 0;
+    background-color: white;
+    text-align: center;
+}
+ 
+.slider {
+    width: 90%;
+}
+
+table{
+    table-layout: fixed;
+    width: 300px;
+    overflow: hidden;
+    word-wrap: break-word;
 }
