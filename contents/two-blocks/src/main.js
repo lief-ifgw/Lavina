@@ -70,7 +70,7 @@ document.onload = init();
 
 btnRun.onclick = function() {
     if(!running) {
-        if (answered === true) {
+        if (isAnswered()) {
             init();
             dynamics(1.0 * sliderForce.value);
             running = true;
