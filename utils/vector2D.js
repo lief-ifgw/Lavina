@@ -7,8 +7,11 @@ class Vector2D {
     angle() {
         if (this.x === 0) {
             return (this.y/Math.abs(this.y)) * 90;
+        } else if (this.y === 0) {
+            return this.x < 0 ? 180 : 0;
         } else {
-            return Math.atan(this.y / this.x) * 180 / Math.PI;
+            let theta = Math.atan(this.y / this.x) * 180 / Math.PI;
+            return this.x < 0 ? -theta: theta; 
         }
     }
 
