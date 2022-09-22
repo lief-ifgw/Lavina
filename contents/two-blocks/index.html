@@ -42,6 +42,10 @@
                             </tr>
                         </table>
                     </div>
+                    <form>
+                        <input type="checkbox" id="show-diagram"  value="show-true">
+                        <label for="show-diagram"> Mostrar o diagrama de forças. </label><br>
+                    </form>
                     <div class="horizontal-buttons">
                         <button type="button" id="btnRun">Run</button>
                         <button type="button" id="btnReset">Reset</button>
@@ -51,7 +55,7 @@
             </div>
 
             <h2> O que vai acontecer com os blocos? </h2>
-            <form action="src/action_page.js">
+            <form>
                 <input type="radio"  name="answer" id="rest" value="ans_rest">
                 <label for="ans_rest"> Os blocos permanecerão em repouso. </label><br>
                 <input type="radio" name="answer" id="move_together" value="ans_move_together">
