@@ -1,10 +1,10 @@
 class Arrow {
-    constructor(p, lenght, theta) {
+    constructor(p, lenght, theta, color) {
         this.pos = new Vector2D(p.x, p.y);
         this.lenght = lenght;
         this.angle = theta;
-        this.color = "black";
-        this.headColor = "black";
+        this.color = color;
+        this.headColor = color;
         this.thickness = 3;
         this.headWidth;
         this.headSize;
@@ -21,6 +21,7 @@ class Arrow {
             ctx.translate(this.pos.x, this.pos.y);
             ctx.rotate(angle);
 
+            ctx.strokeStyle = this.color;
             ctx.beginPath();
             ctx.lineWidth = this.thickness;
             ctx.moveTo(0, 0);
