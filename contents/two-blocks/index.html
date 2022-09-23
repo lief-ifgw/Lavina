@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
+        <script src="../../components/load-mathjax.js" async></script>
         <link rel="stylesheet" type="text/css" href="../../styles/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,7 +21,19 @@
         </nav>
 
         <div class="content" style="position: flex">
-            <h1> Leis de Newton</h1>
+            <h1> Leis de Newton e forças de atrito</h1>
+
+            <h3> Dados do problema: </h3>
+            <font size="3" face="times" color="black">
+            <ul>
+                <li>Considere $g=10m/s^{2}$.</li>
+                <li>Coeficiente de atrito estático entre o bloco 1 e a superfície: $\mu_{e_{1}} = 0,4$ </li>
+                <li>Coeficiente de atrito estático entre o bloco 1 e o bloco 2: $\mu_{e_{2}} = 0,4$ </li>
+                <li>Coeficiente de atrito cinético entre o bloco 1 e a superfície: $\mu_{c_{1}} = 0,2$ </li>
+                <li>Coeficiente de atrito cinético entre o bloco 1 e o bloco 2: $\mu_{c_{2}} = 0,2$ </li>
+            </ul>
+            </font>
+
             <div class="simulation">
                 <div class="control-panel">
                     <div class="slidecontainer">
@@ -28,17 +41,17 @@
                             <tr>
                                 <td colspan="2">Força: </td>
                                 <td colspan="3"><input type="range" min="0" max="50.0" value="15" step="1.0" class="slider" id="force"></td>
-                                <td colspan="2">F = <span id="outForce"></span>N</td>
+                                <td colspan="2">$\|\vec{F}\|$ = <span id="outForce"></span>N</td>
                             </tr>
                             <tr>
-                                <td colspan="2">M: </td>
+                                <td colspan="2">$m_{1}$:</td>
                                 <td colspan="3"><input type="range" min="1.0" max="5" value="2.5" step="0.25" class="slider" id="m1"></td>
-                                <td colspan="2">M = <span id="outM1"></span>kg</td>
+                                <td colspan="2">$m_{1}$ = <span id="outM1"></span>kg</td>
                             </tr>
                             <tr>
-                                <td colspan="2">m: </td>
+                                <td colspan="2">$m_{2}$:</td>
                                 <td colspan="3"><input type="range" min="0.5" max="3" value="1.5" step="0.25" class="slider" id="m2"></td>
-                                <td colspan="2"><p>m=<span id="outM2"></span>kg</p></td>
+                                <td colspan="2"><p>$m_{2}$ = <span id="outM2"></span>kg</p></td>
                             </tr>
                         </table>
                     </div>
@@ -47,8 +60,8 @@
                         <label for="show-diagram"> Mostrar o diagrama de forças. </label><br>
                     </form>
                     <div class="horizontal-buttons">
-                        <button type="button" id="btnRun">Run</button>
-                        <button type="button" id="btnReset">Reset</button>
+                        <button type="button" id="btnRun">Iniciar</button>
+                        <button type="button" id="btnReset">Limpar</button>
                     </div>
                 </div>
                 <canvas id="myCanvas" align="center" ></canvas>
