@@ -3,7 +3,8 @@
 * {
     padding: 0px;
     margin: 0px;
-    font-family: 'Merriweather Sans', sans-serif;
+	line-height:1.5;
+	font-family: Verdana, sans-serif;
 }
 
 body {
@@ -52,7 +53,8 @@ nav li:hover {
 }
 
 .content {
-    width: 50%;
+    width: 75%;
+    max-width: 800px;
     background-color: #E8F7EE;
     padding: 60px;
     margin-top: 60px;
@@ -64,7 +66,7 @@ nav li:hover {
 
 .simulation {
     display: flex;
-    padding: auto;
+    padding: 0;
     margin: 50px 0 50px 0;
     text-align: justify;
     justify-content: center;
@@ -87,16 +89,17 @@ p {
     font-family: 'Merriweather Sans', sans-serif;
 }
 
-.controlPanel{
+.control-panel{
     display: grid;
     height: canvasHeight;
     border: 2px solid black;
     row-gap: 20px;
     border-radius: 10px 0 0 10px;
     justify-content: center;
-    background: darkgray;
+    background: lightgray;
     padding: 10px;
     margin: 0;
+    font-size: 14px;
 }
 
 #myCanvas {
@@ -108,7 +111,7 @@ p {
     border: 2px solid black;
 }
 
-.horizontalButtons{
+.horizontal-buttons{
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -116,7 +119,7 @@ p {
     align-items: center;
 }
 
-.verticalButtons{
+.vertical-buttons{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,7 +127,7 @@ p {
 }
 
 button{
-    border: none;
+    border: 1px solid black;
     background-color: #01e59b;
     width: 75px;
     border-radius: 5px;
@@ -138,9 +141,10 @@ button:hover{
     transition: 0.1s;
 }
 
-th, td {
+.control-panel th, td {
     border: 1px solid black;
-    border-radius: 0;
+    border-radius: 5px;
+    padding: 2px; 
     background-color: white;
     text-align: center;
 }
