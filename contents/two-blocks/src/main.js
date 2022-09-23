@@ -17,7 +17,7 @@ const gravity = new Vector2D(0, 10);
 const b2Color           = "#66aa66";
 const b1Color           = "#6666aa";
 const fat12DiagColor    = "blue";
-const fat2DiagColor     = "blue";
+const fat1DiagColor     = "blue";
 const fat21DiagColor    = "blue";
 const force1DiagColor   = "darkgray";
 const normal1DiagColor  = "black";
@@ -31,18 +31,18 @@ const pos1 = new Vector2D(0, canvasHeight - b1Height);
 const pos2 = new Vector2D(b1Width - b2Width, canvasHeight - b1Height - b2Height);
 
 /********* Force diagram elements **********/
-const pos1Diag      = new Vector2D(75,150);
-const pos2Diag      = new Vector2D(450,150);
+const pos1Diag      = new Vector2D(75,175);
+const pos2Diag      = new Vector2D(400,175);
 /* Somando e subtraindo 3px nas posições x para as setas não se sobreporem.*/
 const posFat12      = new Vector2D(pos2Diag.x + b2Width, pos2Diag.y + b2Height - 3);
 const posFat21      = new Vector2D(pos1Diag.x + b1Width, pos1Diag.y);
-const posFat2       = new Vector2D(pos1Diag.x, pos1Diag.y + b1Height - 3);
+const posFat1       = new Vector2D(pos1Diag.x, pos1Diag.y + b1Height - 3);
 const posForce1     = new Vector2D(pos1Diag.x + b1Width, pos1Diag.y + b1Height/2);
-const posNorm1      = new Vector2D(pos1Diag.x + b1Width/2 + 3, pos1Diag.y + b1Height);
+const posNorm1      = new Vector2D(pos1Diag.x + b1Width/2 - 3, pos1Diag.y + b1Height);
 const posNorm2      = new Vector2D(pos2Diag.x + b2Width/2 + 3, pos2Diag.y + b2Height);
 /* O valor '-10' é o tamanho da seta, para que fique fora do bloco. */
 /* Nesse caso, a posição final que é fixa.*/
-var posNorm21       = new Vector2D(pos1Diag.x + b1Width/2 - 3, pos1Diag.y);
+var posNorm21       = new Vector2D(pos1Diag.x + b1Width - b2Width/2, pos1Diag.y);
 const posWeight1    = new Vector2D(pos1Diag.x + b1Width/2, pos1Diag.y + b1Height/2);
 const posWeight2    = new Vector2D(pos2Diag.x + b2Width/2, pos2Diag.y + b2Height/2);
 
@@ -57,10 +57,11 @@ var canvas      = document.getElementById("myCanvas");
 var ctx         = canvas.getContext("2d");
 canvas.width    = canvasWidth;
 canvas.height   = canvasHeight;
+ctx.font = '18px Arial';
 
 /********* Arrows for the force diagram **********/
 var fat12Diag;
-var fat2Diag;
+var fat1Diag;
 var fat21Diag;
 var force1Diag;
 var forceVector = new Arrow({x:0, y:0}, 0, 0);
@@ -69,6 +70,18 @@ var normal2Diag;
 var normal21Diag;
 var weight1Diag;
 var weight2Diag;
+
+/********* Labels for the force diagram **********/
+var textFat12Diag       = 'f12 = ';
+var textFat1Diag        = 'f = ';
+var textFat21Diag       = 'f21 = ';
+var textForce1Diag      = 'F = ' ;
+var textForceVector     = 'F';
+var textNormal1Diag     = 'N1 = ';
+var textNormal2Diag     = 'N2 = ';
+var textNormal21Diag    = 'N12 = ';
+var textWeight1Diag     = 'P1 = ';
+var textWeight2Diag     = 'P2 = ';
 
 /******* Blocks and blocks for force diagram ********/
 var b1;
@@ -142,7 +155,6 @@ function cleanAnswer() {
 function mustAnswer() {
     alert("Você deve marcar uma opção antes de iniciar a simulação.");
 }
-
 
 btnRun.onclick = function() {
     if (checkBox.checked) {
@@ -270,12 +282,33 @@ function draw() {
 function drawWithDiagram() {
     ctx.save();
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
     b1.draw(ctx);
     b1Diag.draw(ctx);
     b2.draw(ctx);
     b2Diag.draw(ctx);
+    /* Os fatores numéricos são para pequenos ajustes nas posições para evitar sobreposições*/
+    ctx.fillText(textFat1Diag + fatB1.length() + 'N', posFat1.x - fatB1.length() - 25, posFat1.y + 25);
+
+    /*** Somente colocar valores para as forças =/= 0 ***/
+    if(fatB12.length()) {
+        ctx.fillText(textFat12Diag + fatB12.length() + 'N', posFat12.x + 20 + fatB12.length(), posFat12.y);
+    }
+    if(fatB21.length()) {
+        ctx.fillText(textFat21Diag + fatB21.length() + 'N', posFat21.x + 10, posFat21.y);
+    }
+    if(force.length()) {
+        ctx.fillText(textForce1Diag + force.length() + 'N', posForce1.x + force.length(), posForce1.y + 25);
+    }
+
+    ctx.fillText(textNormal1Diag + b1.normal.length() + 'N', posNorm1.x - 30, posNorm1.y - scale * b1.normal.length() - 25);
+    ctx.fillText(textNormal2Diag + b2.normal.length() + 'N', posNorm2.x - 30, posNorm2.y - scale * b2.normal.length() - 25);
+    ctx.fillText(textNormal21Diag + normal21.length() + 'N', posNorm21.x, posNorm21.y - 10);
+    ctx.fillText(textWeight1Diag + b1.weight.length() + 'N', posWeight1.x, posWeight1.y + scale * b1.weight.length() + 25);
+    ctx.fillText(textWeight2Diag + b2.weight.length() + 'N', posWeight2.x, posWeight2.y + scale * b2.weight.length() + 25);
+
+    fat1Diag.draw(ctx);
     fat12Diag.draw(ctx);
-    fat2Diag.draw(ctx);
     fat21Diag.draw(ctx);
     force1Diag.draw(ctx);
     forceVector.draw(ctx);
@@ -298,9 +331,9 @@ function animate() {
 }
 
 function freeBodyDiagram() {
-    posNorm21    = new Vector2D(pos1Diag.x + b1Width/2 - 3, pos1Diag.y - scale * normal21.length() - 10);
+    posNorm21    = new Vector2D(pos1Diag.x + b1Width - b2Width/2, pos1Diag.y - scale * normal21.length() - 10);
+    fat1Diag     = new Arrow(posFat1, scale * fatB1.length(), fatB1.angle(), fat1DiagColor);
     fat12Diag    = new Arrow(posFat12, scale * fatB12.length(), fatB12.angle(), fat12DiagColor);
-    fat2Diag     = new Arrow(posFat2, scale * fatB1.length(), fatB1.angle(), fat2DiagColor);
     fat21Diag    = new Arrow(posFat21, scale * fatB21.length(), fatB21.angle(), fat21DiagColor);
     force1Diag   = new Arrow(posForce1, scale * force.length(), force.angle(), force1DiagColor);
     normal1Diag  = new Arrow(posNorm1, scale * b1.normal.length(), b1.normal.angle(), normal1DiagColor);
