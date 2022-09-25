@@ -60,8 +60,8 @@ canvas.height   = canvasHeight;
 ctx.font = '18px Arial';
 
 /********* Arrows for the force diagram **********/
-var fat12Diag;
 var fat1Diag;
+var fat12Diag;
 var fat21Diag;
 var force1Diag;
 var forceVector = new Arrow({x:0, y:0}, 0, 0);
@@ -72,16 +72,25 @@ var weight1Diag;
 var weight2Diag;
 
 /********* Labels for the force diagram **********/
-var textFat12Diag       = 'f12 = ';
-var textFat1Diag        = 'f = ';
-var textFat21Diag       = 'f21 = ';
-var textForce1Diag      = 'F = ' ;
-var textForceVector     = 'F';
-var textNormal1Diag     = 'N1 = ';
-var textNormal2Diag     = 'N2 = ';
-var textNormal21Diag    = 'N12 = ';
-var textWeight1Diag     = 'P1 = ';
-var textWeight2Diag     = 'P2 = ';
+var imgFat1Diag        = new Image();
+var imgFat12Diag       = new Image();
+var imgFat21Diag       = new Image();
+var imgForce1Diag      = new Image();
+var imgNormal1Diag     = new Image();
+var imgNormal2Diag     = new Image();
+var imgNormal21Diag    = new Image();
+var imgWeight1Diag     = new Image();
+var imgWeight2Diag     = new Image();
+
+imgFat1Diag.src        = "img/f1.png";
+imgFat12Diag.src       = "img/f12.png";
+imgFat21Diag.src       = "img/f21.png";
+imgForce1Diag.src      = "img/force.png";
+imgNormal1Diag.src     = "img/n1.png";
+imgNormal2Diag.src     = "img/n2.png";
+imgNormal21Diag.src    = "img/n21.png";
+imgWeight1Diag.src     = "img/p1.png";
+imgWeight2Diag.src     = "img/p2.png";
 
 /******* Blocks and blocks for force diagram ********/
 var b1;
@@ -288,24 +297,24 @@ function drawWithDiagram() {
     b2.draw(ctx);
     b2Diag.draw(ctx);
     /* Os fatores numéricos são para pequenos ajustes nas posições para evitar sobreposições*/
-    ctx.fillText(textFat1Diag + fatB1.length() + 'N', posFat1.x - fatB1.length() - 25, posFat1.y + 25);
+    drawLabel(imgFat1Diag, round(fatB1.length(), 2), posFat1.x - scale * fatB1.length() - 45, posFat1.y + 25, 35);
 
     /*** Somente colocar valores para as forças =/= 0 ***/
     if(fatB12.length()) {
-        ctx.fillText(textFat12Diag + fatB12.length() + 'N', posFat12.x + 20 + fatB12.length(), posFat12.y);
+        drawLabel(imgFat12Diag, round(fatB12.length(), 2), posFat12.x + scale * fatB12.length() + 15, posFat12.y);
     }
     if(fatB21.length()) {
-        ctx.fillText(textFat21Diag + fatB21.length() + 'N', posFat21.x + 10, posFat21.y);
+        drawLabel(imgFat21Diag, round(fatB21.length(), 2), posFat21.x + 10, posFat21.y);
     }
     if(force.length()) {
-        ctx.fillText(textForce1Diag + force.length() + 'N', posForce1.x + force.length(), posForce1.y + 25);
+        drawLabel(imgForce1Diag, round(force.length(), 2), posForce1.x + force.length() - 25, posForce1.y + 30, 35, -2.5);
     }
 
-    ctx.fillText(textNormal1Diag + b1.normal.length() + 'N', posNorm1.x - 30, posNorm1.y - scale * b1.normal.length() - 25);
-    ctx.fillText(textNormal2Diag + b2.normal.length() + 'N', posNorm2.x - 30, posNorm2.y - scale * b2.normal.length() - 25);
-    ctx.fillText(textNormal21Diag + normal21.length() + 'N', posNorm21.x, posNorm21.y - 10);
-    ctx.fillText(textWeight1Diag + b1.weight.length() + 'N', posWeight1.x, posWeight1.y + scale * b1.weight.length() + 25);
-    ctx.fillText(textWeight2Diag + b2.weight.length() + 'N', posWeight2.x, posWeight2.y + scale * b2.weight.length() + 25);
+    drawLabel(imgNormal1Diag, round(b1.normal.length(), 2), posNorm1.x - 55, posNorm1.y - scale * b1.normal.length() - 25);
+    drawLabel(imgNormal2Diag, round(b2.normal.length(), 2), posNorm2.x - 55, posNorm2.y - scale * b2.normal.length() - 25);
+    drawLabel(imgNormal21Diag, round(normal21.length(), 2), posNorm21.x, posNorm21.y - 10);
+    drawLabel(imgWeight1Diag, round(b1.weight.length(), 2), posWeight1.x - 55, posWeight1.y + scale * b1.weight.length() + 25);
+    drawLabel(imgWeight2Diag, round(b2.weight.length(), 2), posWeight2.x - 50, posWeight2.y + scale * b2.weight.length() + 25, 40);
 
     fat1Diag.draw(ctx);
     fat12Diag.draw(ctx);
@@ -317,6 +326,13 @@ function drawWithDiagram() {
     normal21Diag.draw(ctx);
     weight1Diag.draw(ctx);
     weight2Diag.draw(ctx);
+    ctx.restore();
+}
+
+function drawLabel(img, value, x, y, dx = 45, dy = 0) {
+    ctx.save();
+    ctx.drawImage(img, x, y - 20);
+    ctx.fillText(" = " + value + 'N', x + dx, y + dy);
     ctx.restore();
 }
 
@@ -343,4 +359,9 @@ function freeBodyDiagram() {
     weight2Diag  = new Arrow(posWeight2, scale * b2.weight.length(), b2.weight.angle(), weight2DiagColor);
     b1Diag       = new Block(pos1Diag, b1Width, b1Height, b1Color);
     b2Diag       = new Block(pos2Diag, b2Width, b2Height, b2Color);
+}
+
+function round(n, precision){
+    let factor = 10 * precision;
+    return Math.round(n * factor) / factor;
 }
