@@ -1,5 +1,5 @@
 const canvasWidth = 600;
-const canvasHeight = 400;
+const canvasHeight = canvasWidth * 2 / 3;
 
 const canvas = document.getElementById("myCanvas");
 canvas.width = canvasWidth;
@@ -7,19 +7,15 @@ canvas.height = canvasHeight;
 
 var ctx = canvas.getContext('2d');
 
-document.getElementById('down').checked = true;
-
-
-function check(a){
-    document.getElementById(a).checked = true;
-}
-
 let x = 100;
 let y = 100;
 let friction = 0.1;
-
+let xcm = 0;
+let ycm = 0;
 const BALLZ = [];
 const WALLZ = [];
+const MASS = [];
+
 
 let UP, DOWN, LEFT, RIGHT;
 
@@ -158,41 +154,69 @@ function collisionResultWall(obj1, w1){
     obj1.vel = Vector2D.add(obj1.v,Vector2D.scale(normal,-vsep_diff));
 }
 
-function setLine(x0,y0,xf,yf,color){
+function setLine(x0,y0,xf,yf,color,lw=1){
     ctx.beginPath();    
     ctx.moveTo(x0,y0);
     ctx.lineTo(xf,yf);
     ctx.strokeStyle = color;
+    ctx.lineWidth = lw;
     ctx.stroke();
     ctx.closePath();
 }
 
-function massCenter(obj1,obj2){
-    let line = new Vector2D(obj1.pos.x, obj2.pos.y);
-    setLine(obj1.pos.x,obj1.pos.y,obj2.pos.x,obj2.pos.y,'black');
+function drawCircle(x,y){
     ctx.beginPath();
-    ctx.arc((obj1.pos.x - obj2.pos.x + 2 * obj2.pos.x)/2,(obj1.pos.y - obj2.pos.y + 2 * obj2.pos.y)/2,5,0,2*Math.PI);
+    ctx.arc(x,y,5,0,2*Math.PI);
     ctx.strokeStyle = 'black';
     ctx.stroke();
     ctx.fillStyle = 'black';
     ctx.fill();
     ctx.closePath();
-} 
+}
 
 function drawGrid(px,py,color){
-    let xSpaces = canvasWidth/px;
-    let ySpaces = canvasHeight/py;
+    s = 2;
+    pex = px;
+    pey = py;
+    xSpaces = canvasWidth/px;
+    ySpaces = canvasHeight/py;
     for(i = 1; i < xSpaces; i++){
-        setLine(px*i,0,px*i,canvasHeight,color);
+        if(i === s){
+            setLine(px*i,0,px*i,canvasHeight,'black',3);    
+        }
+        else{
+            setLine(px*i,0,px*i,canvasHeight,color);
+        }
     }
     for(i = 1; i < ySpaces; i++){
-        setLine(0,py*i,canvasWidth,py*i,color);
+        if(i === Math.round(ySpaces) - s){
+            setLine(0,py*i,canvasWidth,py*i,'black',3);    
+        }
+        else{
+            setLine(0,py*i,canvasWidth,py*i,color);
+        }
     }
+}
+
+function massCenter(){
+    for(i = 0; i < BALLZ.length; i++){
+        if(MASS.length <= 2){MASS.push(BALLZ[i].m);}
+        xcm += BALLZ[i].m * BALLZ[i].pos.x;
+        ycm += BALLZ[i].m * BALLZ[i].pos.y;
+    }
+    let totalMass = MASS.reduce((p,c) => p + c, 0)
+    xcm2 = xcm/totalMass;
+    ycm2 = ycm/totalMass;
+    drawCircle(xcm2,ycm2);
+    xcm = 0;
+    ycm = 0;
+    totalMass = 0;
+
 }
 
 function mainLoop() {
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
-    drawGrid(30,30,'blue');
+    drawGrid(50,50,'blue');
     BALLZ.forEach((b, index) => {
         b.drawBall();
 
@@ -213,68 +237,47 @@ function mainLoop() {
                 collisionResultWall(BALLZ[index], w);
             }
         })
-        for(let i = index+1; i<BALLZ.length; i++){
-            if(collisionDetectionBall(BALLZ[index], BALLZ[i])){
-                penetrationResultBall(BALLZ[index], BALLZ[i]);
-                collisionResultBall(BALLZ[index], BALLZ[i]);
-            }
-        }
-
+    
         
-        let vBall1 = new Vector2D(ball1.pos.x, ball1.pos.y);
-        let vBall2 = new Vector2D(ball2.pos.x, ball2.pos.y);
-        let angle = Vector2D.angle(vBall1,vBall2);
-        //console.log(angle);
-
+        
         b.reposition();
-        massCenter(ball1, ball2);
+        
         
     });
+    
+    massCenter();
 
     WALLZ.forEach((w) => {
         w.drawWall();
     });
 
-    let distanceVec = new Vector2D(0,0);
-    distanceVec = Vector2D.subtract(ball2.pos,ball1.pos);
-    let momentum = Vector2D.add(ball1.v,ball2.v).length();
-
-    originPos();
-
-    let dista = distanceVec.length();
-    
-    document.getElementById("b1x").innerHTML = round(ball1.pos.x, 0);
-    document.getElementById("b1y").innerHTML = round(origin * ball1.pos.y + shift, 0);
-    document.getElementById("b2x").innerHTML = round(ball2.pos.x, 0);
-    document.getElementById("b2y").innerHTML = round(origin * ball2.pos.y + shift, 0);
-    document.getElementById("dist").innerHTML = round(dista, 1);
-    document.getElementById("cmX").innerHTML = round(Vector2D.scale(distanceVec,1/2).x, 0);
-    document.getElementById("cmY").innerHTML = round(origin * Vector2D.scale(distanceVec,1/2).y + shift, 0);
-    document.getElementById("momentum").innerHTML = round(momentum, 1);
-         
+    document.getElementById("b1x").innerHTML = round(ball1.pos.x - pex * s, 0);
+    document.getElementById("b1y").innerHTML = round(-1 * ball1.pos.y + pey * (Math.round(ySpaces)-s), 0);
+    document.getElementById("mb1").innerHTML = ball1.m;
+    document.getElementById("b2x").innerHTML = round(ball2.pos.x - pex * s, 0);
+    document.getElementById("b2y").innerHTML = round(-1 * ball2.pos.y + pey * (Math.round(ySpaces)-s), 0);
+    document.getElementById("mb2").innerHTML = ball2.m;
+    document.getElementById("b3x").innerHTML = round(ball3.pos.x - pex * s, 0);
+    document.getElementById("b3y").innerHTML = round(-1 * ball3.pos.y + pey * (Math.round(ySpaces)-s), 0);
+    document.getElementById("mb3").innerHTML = ball3.m;
+    document.getElementById("cmX").innerHTML = round(xcm2 - pex * s, 0);
+    document.getElementById("cmY").innerHTML = round(-1 * ycm2 + pey * (Math.round(ySpaces)-s), 0);
 
     requestAnimationFrame(mainLoop);
 }
 
-function playerChange(p,p2){
-    p.player = 1;
-    p2.player = 0;
-    document.getElementById(p.name).style.border = "2px solid black";
-    document.getElementById(p2.name).style.border = "1px solid black";
+function playerChange(p){
+    BALLZ.forEach((b) => {
+        if(b.name === p.name){
+            b.player = 1;
+            document.getElementById(b.name).style.border = "2px solid black";
+        }
+        else{
+            b.player = 0;
+            document.getElementById(b.name).style.border = "1px solid black";
+        }
+    });
     document.getElementById("myCanvas").focus();
-}
-
-function originPos(){
-    let originUp = document.getElementById('up').checked === true;
-    let originDown = document.getElementById('down').checked === true;
-    if(originUp){
-        origin = 1;
-        shift = 0;
-    }
-    if(originDown){
-        origin = -1;
-        shift = canvasHeight;
-    }
 }
 
 function canvasWall(){
@@ -284,9 +287,10 @@ function canvasWall(){
     let wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
 }
 
-let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 7, 'blue');
-let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 3, 'red');
-let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, 5, 'yellow');
+let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'blue');
+let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'red');
+let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, 9, 'yellow');
+
 canvasWall();
 
 
