@@ -110,7 +110,7 @@ p {
 #myCanvas {
     background: white;
     border-radius: 0 10px 10px 0;
-    overflow: hidden    ;
+    overflow: hidden;
     display: grid;
     margin: 0;
     border: 2px solid black;
