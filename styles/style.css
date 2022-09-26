@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300&family=Montserrat:wght@300&family=Roboto+Mono&display=swap');
 
+
 * {
     padding: 0px;
     margin: 0px;
@@ -54,7 +55,7 @@ nav li:hover {
 
 .content {
     width: 75%;
-    max-width: 800px;
+    max-width: 1200px;
     background-color: #E8F7EE;
     padding: 60px;
     margin-top: 60px;
@@ -70,6 +71,7 @@ nav li:hover {
     margin: 50px 0 50px 0;
     text-align: justify;
     justify-content: center;
+    align-items: center;
 }
 
 .child {
@@ -90,8 +92,10 @@ p {
 }
 
 .control-panel{
-    display: grid;
-    height: canvasHeight;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    height: 380px;
     border: 2px solid black;
     row-gap: 20px;
     border-radius: 10px 0 0 10px;
@@ -100,12 +104,13 @@ p {
     padding: 10px;
     margin: 0;
     font-size: 14px;
+    align-items: center;
 }
 
 #myCanvas {
     background: white;
     border-radius: 0 10px 10px 0;
-    overflow: hidden;
+    overflow: hidden    ;
     display: grid;
     margin: 0;
     border: 2px solid black;
