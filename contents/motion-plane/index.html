@@ -20,7 +20,7 @@
         </nav>
 
         <div class="content" style="position: flex">
-            <h1>Entendendo centro de massa</h1>
+            <h1>Entendendo o centro de massa</h1>
             <div class="simulation">
                 <div class="control-panel">
                     <table>
@@ -31,19 +31,19 @@
                             <th>Massa</th>
                         </tr>
                         <tr>
-                            <th id="ball1" onclick="playerChange(ball1);" class="button">Bola 1:</th>
+                            <th id="ball1" onclick="playerChange(ball1);" class="btn">Bola 1:</th>
                             <td id="b1x" class="w2"></td>
                             <td id="b1y" class="w2"></td>
                             <td id="mb1" class="w2"></td>
                         </tr>
                         <tr>
-                            <th id="ball2" onclick="playerChange(ball2);" class="button">Bola 2:</th>
+                            <th id="ball2" onclick="playerChange(ball2);" class="btn">Bola 2:</th>
                             <td id="b2x" class="w2"></td>
                             <td id="b2y" class="w2"></td>
                             <td id="mb2" class="w2"></td>
                         </tr>
                         <tr>
-                            <th id="ball3" onclick="playerChange(ball3);" class="button">Bola 3:</th>
+                            <th id="ball3" onclick="playerChange(ball3);" class="btn">Bola 3:</th>
                             <td id="b3x" class="w2"></td>
                             <td id="b3y" class="w2"></td>
                             <td id="mb3" class="w2"></td>
@@ -56,22 +56,11 @@
                         
                     </table>
                     <br>
-                    <div class="slidecontainer">
-                        <table>
-                            <tr>
-                                <td colspan="2">Elasticidade:</td> 
-                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="elasticSlider"></td>
-                                <td id="elastic"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Atrito:</td> 
-                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="frictionSlider"></td>
-                                <td id="friction"></td>
-                            </tr>
-                        </table>
-                    </div>
-                        Exibir as interações <input type="checkbox" name="display" id="display" class="button">
-                    
+                    <table>
+                    <tr>
+                        <td colspan="5">Exibir o centro de massa</td><td onclick="document.getElementById('displayCM').ckecked = !document.getElementById('displayCM').ckecked;"><input type="checkbox" name="display" id="displayCM" class="button"></td>
+                    </tr>
+                    </table>
                 </div>
                 <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>

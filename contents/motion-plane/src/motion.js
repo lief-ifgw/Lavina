@@ -19,12 +19,12 @@ const MASS = [];
 
 let UP, DOWN, LEFT, RIGHT;
 
-canvas.addEventListener('mousedown', function(event){
-    ball1.pos.x = event.x;
-    ball1.pos.y = event.y;
+// canvas.addEventListener('mousedown', function(event){
+//     ball1.pos.x = event.x;
+//     ball1.pos.y = event.y;
 
-    console.log('x: '+event.x+' ; y: '+event.y);
-});
+//     console.log('x: '+event.x+' ; y: '+event.y);
+// });
 
 function keyControl(b) {
     canvas.addEventListener('keydown', function(e){
@@ -104,8 +104,8 @@ function closestPointBW(obj1, w1){
     return Vector2D.subtract(w1.start,closestVect);
 }
 
-function collisionDetectionBall(obj1,b2){
-    if(obj1.r + b2.r >= Vector2D.subtract(obj1.pos,b2.pos).length()){
+function collisionDetectionBall(obj1,obj2){
+    if(obj1.r + obj2.r >= Vector2D.subtract(obj1.pos,obj2.pos).length()){
         return true;
     }
     else{
@@ -120,12 +120,12 @@ function collisionDetectionWall(obj1,w1){
     }
 }
 
-function penetrationResultBall(obj1,b2){
-    let dist = Vector2D.subtract(obj1.pos,b2.pos);
-    let profund = obj1.r + b2.r -dist.length();
-    let penetr = Vector2D.scale(Vector2D.norma(dist),profund/(obj1.inv_m + b2.inv_m));
+function penetrationResultBall(obj1,obj2){
+    let dist = Vector2D.subtract(obj1.pos,obj2.pos);
+    let profund = obj1.r + obj2.r -dist.length();
+    let penetr = Vector2D.scale(Vector2D.norma(dist),profund/(obj1.inv_m + obj2.inv_m));
     obj1.pos = Vector2D.add(obj1.pos,Vector2D.scale(penetr,obj1.inv_m));
-    b2.pos = Vector2D.add(b2.pos,Vector2D.scale(penetr,-b2.inv_m));
+    obj2.pos = Vector2D.add(obj2.pos,Vector2D.scale(penetr,-obj2.inv_m));
 }
 
 function penetrationResultWall(obj1, w1){
@@ -151,7 +151,7 @@ function collisionResultWall(obj1, w1){
     let sepVel = Vector2D.dotProduct(obj1.v, normal);
     let new_sepVel = -sepVel * obj1.elasticity;
     let vsep_diff = sepVel - new_sepVel;
-    obj1.vel = Vector2D.add(obj1.v,Vector2D.scale(normal,-vsep_diff));
+    obj1.v = Vector2D.add(obj1.v,Vector2D.scale(normal,-vsep_diff));
 }
 
 function setLine(x0,y0,xf,yf,color,lw=1){
@@ -207,11 +207,26 @@ function massCenter(){
     let totalMass = MASS.reduce((p,c) => p + c, 0)
     xcm2 = xcm/totalMass;
     ycm2 = ycm/totalMass;
-    drawCircle(xcm2,ycm2);
     xcm = 0;
     ycm = 0;
     totalMass = 0;
 
+}
+
+function drawX(cx, cy, l, t = 1){
+    let k = l/(2*Math.sqrt(2));
+    ctx.beginPath();
+    ctx.moveTo(cx - k, cy + k);
+    ctx.lineTo(cx + k, cy - k);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = t;
+    ctx.stroke();
+    ctx.moveTo(cx - k, cy - k);
+    ctx.lineTo(cx + k, cy + k);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = t;
+    ctx.stroke();
+    ctx.closePath();
 }
 
 function mainLoop() {
@@ -244,12 +259,12 @@ function mainLoop() {
         
         
     });
-    
-    massCenter();
 
     WALLZ.forEach((w) => {
         w.drawWall();
     });
+
+    massCenter();
 
     document.getElementById("b1x").innerHTML = round(ball1.pos.x - pex * s, 0);
     document.getElementById("b1y").innerHTML = round(-1 * ball1.pos.y + pey * (Math.round(ySpaces)-s), 0);
@@ -262,6 +277,11 @@ function mainLoop() {
     document.getElementById("mb3").innerHTML = ball3.m;
     document.getElementById("cmX").innerHTML = round(xcm2 - pex * s, 0);
     document.getElementById("cmY").innerHTML = round(-1 * ycm2 + pey * (Math.round(ySpaces)-s), 0);
+
+    if(document.getElementById("displayCM").checked){
+        drawX(xcm2,ycm2,20,7);
+        document.getElementById("myCanvas").focus();
+    }
 
     requestAnimationFrame(mainLoop);
 }
@@ -285,11 +305,15 @@ function canvasWall(){
     let wallBottom = new Wall(0, canvasHeight, canvasWidth, canvasHeight);
     let wallLeft = new Wall(0, 0, 0, canvasHeight);
     let wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
+    let wallTop2 = new Wall(0, -1, canvasWidth, -1);
+    let wallBottom2 = new Wall(0, canvasHeight + 1, canvasWidth, canvasHeight + 1);
+    let wallLeft2 = new Wall(-1, 0, -1, canvasHeight);
+    let wallRight2 = new Wall(canvasWidth + 1, 0, canvasWidth + 1, canvasHeight);
 }
 
-let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'blue');
-let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, 1, 'red');
-let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, 9, 'yellow');
+let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, Math.ceil(Math.random()*9), 'blue');
+let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 10, Math.ceil(Math.random()*9), 'red');
+let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 60, Math.ceil(Math.random()*9), 'yellow');
 
 canvasWall();
 
