@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1>Entendendo o centro de massa</h1>
+            <div class="simulation">
+                <div class="control-panel">
+                    <table>
+                        <tr>
+                            <th style="border: 0px; background-color: transparent;"></th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>Massa</th>
+                        </tr>
+                        <tr>
+                            <th id="ball1" class="btn">Bola 1:</th>
+                            <td id="b1x" class="w2"></td>
+                            <td id="b1y" class="w2"></td>
+                            <td id="mb1" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th id="ball2" class="btn">Bola 2:</th>
+                            <td id="b2x" class="w2"></td>
+                            <td id="b2y" class="w2"></td>
+                            <td id="mb2" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th id="ball3" class="btn">Bola 3:</th>
+                            <td id="b3x" class="w2"></td>
+                            <td id="b3y" class="w2"></td>
+                            <td id="mb3" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th class="w1">CM:</th>
+                            <td id="cmX" class="w2"></td>
+                            <td id="cmY" class="w2"></td>
+                        </tr>
+                        
+                    </table>
+                    <br>
+                    <table>
+                    <tr>
+                        <td colspan="5">Exibir o centro de massa</td><td><input type="checkbox" name="display" id="displayCM" class="button" onclick="cm();"></td>
+                    </tr>
+                    </table>
+                </div>
+                <canvas id="myCanvas" align="center" tabindex="1"></canvas>
+            </div>
+            <h2> Qual é o centro de massa correto? </h2>
+            <form>
+                <input type="radio"  name="answer" id="opt1" value="r1">
+                <label for="opt1" id="r1"></label><br>
+                <input type="radio"  name="answer" id="opt2" value="r2">
+                <label for="opt2" id="r2"></label><br>
+                <input type="radio" name="answer" id="opt3" value="r3">
+                <label for="opt3" id="r3"></label><br>
+            </form>
+        </div>
+        <script src="src/class/ball.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="src/script.js"></script>
+
+    </body>
+</html>
+
