@@ -141,6 +141,21 @@ button:hover{
     transition: 0.1s;
 }
 
+#ball1:hover{
+    background-color: blue;
+    transition: 0.1s;
+}
+
+#ball2:hover{
+    background-color: red;
+    transition: 0.1s;
+}
+
+#ball3:hover{
+    background-color: yellow;
+    transition: 0.1s;
+}
+
 .control-panel th, td {
     border: 1px solid black;
     border-radius: 5px;
