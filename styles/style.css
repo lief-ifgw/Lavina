@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h3 {
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 p {
@@ -156,7 +156,8 @@ button:hover{
     transition: 0.1s;
 }
 
-.control-panel th, td {
+.control-panel th,
+.control-panel td {
     border: 1px solid black;
     border-radius: 5px;
     padding: 2px; 
@@ -168,9 +169,25 @@ button:hover{
     width: 90%;
 }
 
-table{
+.control-panel table {
     table-layout: fixed;
     width: 300px;
     overflow: hidden;
     word-wrap: break-word;
+}
+
+.stopwatch {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+    text-align: center;
+}
+
+.stopwatch th,
+.stopwatch td {
+    padding: 2px;
+    border: 0;
+    background-color: white;
+    text-align: center;
 }

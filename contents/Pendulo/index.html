@@ -35,18 +35,18 @@
                     <div class="slidecontainer">
                         <table>
                             <tr>
-                                <td colspan="2">Comprimento: </td>
+                                <td colspan="3">Comprimento: </td>
                                 <td colspan="3"><input type="range" min="0" max="50.0" value="10" step="1.0" class="slider" id="lenght"></td>
-                                <td colspan="3">$h$ = <span id="outLenght"></span>m</td>
+                                <td colspan="2">$l$ = <span id="outLenght"></span>m</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Ângulo inicial: </td>
+                                <td colspan="3">Ângulo inicial: </td>
                                 <td colspan="3"><input type="range" min="0" max="90.0" value="0" step="1.0" class="slider" id="angle"></td>
-                                <td colspan="3">$\theta$ = <span id="outAngle"></span>$º$</td>
+                                <td colspan="2">$\theta$ = <span id="outAngle"></span>$º$</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Frequência Angular: </td>
-                                <td colspan="3">$\omega$ = <span id="omega"></span></td>
+                                <td colspan="4">Frequência Angular: </td>
+                                <td colspan="4">$\omega$ = <span id="omega"></span></td>
                             </tr>
                         </table>
                     </div>
@@ -54,14 +54,26 @@
                         <button type="button" id="btnRun">Iniciar</button>
                         <button type="button" id="btnReset">Limpar</button>
                     </div>
-                    <div class="wrapper">
-                        <center>
-                        <h1>Cronômetro</h1>
-                        <p><span id="seconds">00</span>:<span id="tens">00</span></p>
-                        <button id="button-start">Start</button>
-                        <button id="button-stop">Stop</button>
-                        <button id="button-reset">Reset</button>
-                        </center>
+                    <div class="stopwatch">
+                        <table>
+                            <tr>
+                                <td colspan="2"> <h3>Cronômetro</h3> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h3> <span id="seconds">00</span>:<span id="tens">00</span></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="horizontal-buttons">
+                                        <button id="button-start">Start</button>
+                                        <button id="button-stop">Stop</button>
+                                        <button id="button-reset">Reset</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <canvas id="myCanvas" align="center" ></canvas>
