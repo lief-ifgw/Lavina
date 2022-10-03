@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
+        <script src="../../components/load-mathjax.js" async></script>
         <link rel="stylesheet" type="text/css" href="../../styles/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,15 +21,18 @@
         </nav>
 
         <div class="content" style="position: flex">
-            <h1>Entendendo o centro de massa</h1>
+            <h1>Entendendo o centro de massa</h1><br>
+            <h3>Abaixo temos uma tabela com informações sobre a localização e massa de três bolinhas, as quais estão representadas no plano a esquerda.
+                Seu trabalho é calcular o centro de massa considerando os três corpos e escolher a alternativa que considere correta. 
+            </h3>
             <div class="simulation">
                 <div class="control-panel">
                     <table>
                         <tr>
                             <th style="border: 0px; background-color: transparent;"></th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Massa</th>
+                            <th>X (m)</th>
+                            <th>Y (m)</th>
+                            <th>Massa (Kg)</th>
                         </tr>
                         <tr>
                             <th id="ball1" class="btn">Bola 1:</th>
@@ -49,16 +53,16 @@
                             <td id="mb3" class="w2"></td>
                         </tr>
                         <tr>
-                            <th class="w1">CM:</th>
-                            <td id="cmX" class="w2"></td>
-                            <td id="cmY" class="w2"></td>
+                            <th class="cm">CM:</th>
+                            <td id="cmX" class="cm"></td>
+                            <td id="cmY" class="cm"></td>
                         </tr>
                         
                     </table>
-                    <br>
+
                     <table>
                     <tr>
-                        <td colspan="5">Exibir o centro de massa</td><td><input type="checkbox" name="display" id="displayCM" class="button" onclick="cm();"></td>
+                        <td colspan="5">Exibir o centro de massa</td><td><input type="checkbox" name="display" id="displayCM" class="button" onclick="cm()"></td>
                     </tr>
                     </table>
                 </div>
@@ -66,14 +70,20 @@
             </div>
             <h2> Qual é o centro de massa correto? </h2>
             <form>
-                <input type="radio"  name="answer" id="opt1" value="r1">
-                <label for="opt1" id="r1"></label><br>
-                <input type="radio"  name="answer" id="opt2" value="r2">
-                <label for="opt2" id="r2"></label><br>
-                <input type="radio" name="answer" id="opt3" value="r3">
+                a) <input type="radio" name="answer" id="opt1">
+                <label for="opt1" id="r1"></label><br><br>
+                b) <input type="radio" name="answer" id="opt2">
+                <label for="opt2" id="r2"></label><br><br>
+                c) <input type="radio" name="answer" id="opt3">
                 <label for="opt3" id="r3"></label><br>
             </form>
+            <div class="horizontal-buttons">
+                <button type="button" id="btnRun" style="width: 200px;">Iniciar</button>
+                <button type="button" id="btnReset" style="width: 200px;">Reiniciar</button>
+            </div><br>
+            <h2>Solução: </h2>
         </div>
+ 
         <script src="src/class/ball.js"></script>
         <script src="../../utils/vector2D.js"></script>
         <script src="src/script.js"></script>
