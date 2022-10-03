@@ -26,6 +26,9 @@ class Ball{
         ctx.stroke();
         ctx.fillStyle = this.color;
         ctx.fill();
+        ctx.font = '20pt Arial';
+        ctx.fillStyle = "black";
+        ctx.fillText(BALLZ.indexOf(this)+1,this.pos.x - 8,this.pos.y + 8);
         ctx.closePath();
     }
 
