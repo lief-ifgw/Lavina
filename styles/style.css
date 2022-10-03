@@ -191,3 +191,18 @@ button:hover{
     background-color: white;
     text-align: center;
 }
+
+.correct{
+    background-color: rgb(131, 255, 131);
+    border-radius: 5px 5px 5px 5px;
+}
+
+.wrong{
+    background-color: rgba(255, 96, 96, 0.74);
+    border-radius: 5px 5px 5px 5px;
+}
+
+.cm{
+    border: 0px;
+    background-color: transparent;
+}
