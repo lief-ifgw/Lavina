@@ -19,10 +19,10 @@
             </ul>
         </nav>
 
-        <div class="content" style="position: flex;">
-            <h1>Entendendo centro de massa</h1>
+        <div class="content" style="position: flex">
+            <h1>Entendendo o centro de massa</h1>
             <div class="simulation">
-                <div class="control-panel" class="box">
+                <div class="control-panel">
                     <table>
                         <tr>
                             <th style="border: 0px; background-color: transparent;"></th>
@@ -31,58 +31,38 @@
                             <th>Massa</th>
                         </tr>
                         <tr>
-                            <td id="ball1" onclick="playerChange(ball1,ball2);" class="button">Bola 1:</td>
+                            <th id="ball1" onclick="playerChange(ball1);" class="btn">Bola 1:</th>
                             <td id="b1x" class="w2"></td>
                             <td id="b1y" class="w2"></td>
                             <td id="mb1" class="w2"></td>
                         </tr>
                         <tr>
-                            <td id="ball2" onclick="playerChange(ball2,ball1);" class="button">Bola 2:</td>
+                            <th id="ball2" onclick="playerChange(ball2);" class="btn">Bola 2:</th>
                             <td id="b2x" class="w2"></td>
                             <td id="b2y" class="w2"></td>
                             <td id="mb2" class="w2"></td>
                         </tr>
                         <tr>
-                            <td class="w1">CM:</td>
+                            <th id="ball3" onclick="playerChange(ball3);" class="btn">Bola 3:</th>
+                            <td id="b3x" class="w2"></td>
+                            <td id="b3y" class="w2"></td>
+                            <td id="mb3" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th class="w1">CM:</th>
                             <td id="cmX" class="w2"></td>
                             <td id="cmY" class="w2"></td>
                         </tr>
-                        <tr>
-                            <td class="w1">Distância:</td>
-                            <td id="dist" colspan="2" class="w1"></td>
-                        </tr>
-                        <tr>
-                            <td class="w1">Momento:</td>
-                            <td id="momentum" colspan="2" class="w1"></td>
-                        </tr>
+                        
                     </table>
                     <br>
-                    <div class="slidecontainer">
-                        <table>
-                            <tr>
-                                <td colspan="2">Elasticidade:</td> 
-                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="elasticSlider"></td>
-                                <td id="elastic"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Atrito:</td> 
-                                <td colspan="2"><input type="range" min="1" max="100" value="50" class="slider" id="frictionSlider"></td>
-                                <td id="friction"></td>
-                            </tr>
-                        </table>
-                    </div>
                     <table>
-                        <tr>
-                            <td onclick="check('up');" class="button">Origem no canto superior esquerdo&nbsp;&nbsp;<input type="radio" name="origem" id="up"></td>
-                        </tr>
-                        <tr>
-                            <td onclick="check('down');" class="button">Origem no canto inferior esquerdo&nbsp;&nbsp;<input type="radio" name="origem" id="down"></td>
-                        </tr>
+                    <tr>
+                        <td colspan="5">Exibir o centro de massa</td><td onclick="document.getElementById('displayCM').ckecked = !document.getElementById('displayCM').ckecked;"><input type="checkbox" name="display" id="displayCM" class="button"></td>
+                    </tr>
                     </table>
-                        Exibir as interações <input type="checkbox" name="display" id="display" class="button">
-                    
                 </div>
-                <canvas id="myCanvas" align="center" class="box" tabindex="1"></canvas>
+                <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>
         </div>
         <script src="src/class/ball.js"></script>

@@ -58,6 +58,8 @@ nav li:hover {
     background-color: #E8F7EE;
     padding: 60px;
     margin-top: 60px;
+    margin-bottom: 60px;
+    border-radius: 0 0 10px 10px;
     text-align: justify;
     box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.3);
     justify-content: center;
@@ -82,7 +84,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h3 {
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 p {
@@ -141,7 +143,23 @@ button:hover{
     transition: 0.1s;
 }
 
-.control-panel th, td {
+#ball1:hover{
+    background-color: blue;
+    transition: 0.1s;
+}
+
+#ball2:hover{
+    background-color: red;
+    transition: 0.1s;
+}
+
+#ball3:hover{
+    background-color: yellow;
+    transition: 0.1s;
+}
+
+.control-panel th,
+.control-panel td {
     border: 1px solid black;
     border-radius: 5px;
     padding: 2px; 
@@ -153,9 +171,76 @@ button:hover{
     width: 90%;
 }
 
-table{
+.control-panel table {
     table-layout: fixed;
     width: 300px;
     overflow: hidden;
     word-wrap: break-word;
 }
+
+.stopwatch {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+    text-align: center;
+}
+
+.stopwatch th,
+.stopwatch td {
+    padding: 2px;
+    border: 0;
+    background-color: white;
+    text-align: center;
+}
+
+.correct{
+    background-color: rgb(131, 255, 131);
+    border-radius: 5px 5px 5px 5px;
+}
+
+.wrong{
+    background-color: rgba(255, 96, 96, 0.74);
+    border-radius: 5px 5px 5px 5px;
+}
+
+.hide{
+    display: none;
+}
+
+.accordion {
+    background-color: #ccc;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+    transition: 0.4s;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #01e59b
+  }
+  
+  .accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: "\2212";
+  }
+  
+  .panel {
+    padding: 0 18px;
+    background-color: rgb(255, 255, 255);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }

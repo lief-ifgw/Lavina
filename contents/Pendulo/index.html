@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <script src="../../components/load-mathjax.js" async></script>
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1> Pêndulo Simples</h1>
+
+            <h3> Dados do problema: </h3>
+            <font size="3" face="times" color="black">
+            <ul>
+                <li>Considere $g=10m/s^{2}$.</li>
+            </ul>
+            </font>
+
+            <div class="simulation">
+                <div class="control-panel">
+                    <div class="slidecontainer">
+                        <table>
+                            <tr>
+                                <td colspan="3">Comprimento: </td>
+                                <td colspan="3"><input type="range" min="0" max="50.0" value="10" step="1.0" class="slider" id="lenght"></td>
+                                <td colspan="2">$l$ = <span id="outLenght"></span>m</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Ângulo inicial: </td>
+                                <td colspan="3"><input type="range" min="0" max="90.0" value="0" step="1.0" class="slider" id="angle"></td>
+                                <td colspan="2">$\theta$ = <span id="outAngle"></span>$º$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Frequência Angular: </td>
+                                <td colspan="4">$\omega$ = <span id="omega"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="stopwatch">
+                        <table>
+                            <tr>
+                                <td colspan="2"> <h3>Cronômetro</h3> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h3> <span id="seconds">00</span>:<span id="tens">00</span></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="horizontal-buttons">
+                                        <button id="button-start">Start</button>
+                                        <button id="button-stop">Stop</button>
+                                        <button id="button-reset">Reset</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <canvas id="myCanvas" align="center" ></canvas>
+            </div>
+
+        </div>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/arrow.js"></script>
+        <script src="src/main.js"></script>
+        <script src="src/stopwatch.js"></script>
+    </body>
+</html>
