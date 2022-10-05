@@ -1,5 +1,4 @@
 /********* Dimensions ************/
-
 const canvasWidth   = 600;
 const canvasHeight  = 400;
 
@@ -10,8 +9,8 @@ var ang_freq;             // Oscillation period and angular frequency (to be ans
 
 /********** Physical constants ********/
 
-const alturaH = 15;       // Fixed height H to the ground.
-const defaultG = 10.0;    // Gravity acceleration
+const alturaH    = 15;       // Fixed height H to the ground.
+const defaultG   = 10.0;    // Gravity acceleration
 const osc_period = 1;     // Default oscillation period
 
 /********** Canvas building ********/
@@ -26,31 +25,38 @@ ctx.font = '18px Arial';
 /********** HTML interaction ********/
 
 var sliderLenght = document.getElementById("lenght");
-var sliderAngle = document.getElementById("angle");
-var lenghtView = document.getElementById("outLenght");
-var angleView = document.getElementById("outAngle");
-var omegaView = document.getElementById("omega");
+var sliderAngle  = document.getElementById("angle");
+var lenghtView   = document.getElementById("outLenght");
+var angleView    = document.getElementById("outAngle");
+var omegaView    = document.getElementById("omega");
 
 lenghtView.innerHTML = sliderLenght.value;
-angleView.innerHTML = sliderAngle.value;
+angleView.innerHTML  = sliderAngle.value;
 
 ang_freq = Math.sqrt(defaultG/sliderLenght.value);
-omegaView.innerHTML = ang_freq;
+omegaView.innerHTML  = ang_freq;
 
 
 sliderLenght.oninput = function() {
     lenghtView.innerHTML = this.value;
-    ang_freq = Math.sqrt(defaultG/this.value);
+    ang_freq = Math.sqrt(defaultG/sliderLenght.value);
     omegaView.innerHTML = ang_freq;
 }
 
-sliderLenght.oninput = function() {
-    lenghtView.innerHTML = this.value;
-}
 
 sliderAngle.oninput = function() {
     angleView.innerHTML = this.value;
 }
+
+/********** Animation ********/
+
+ctx.beginPath();
+ctx.moveTo(300,0);
+ctx.lineTo(300,200);
+ctx.arc(300, 200, 20, 0, 2 * Math.PI);
+//ctx.fillStyle = "red";
+//ctx.fill();
+ctx.stroke();
 
 function init() {
 }
