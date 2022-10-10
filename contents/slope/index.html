@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Movimento 1D</title>
+        <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1>Movimento unidimensional</h1><br>
+            <h3>No espaço a direita temos um corpo com uma luz, parado no topo de uma descida, tal que sua luz está desligada. Assim que o botão "Iniciar"
+                for pressionado, o corpo será solto e então descerá a inclinação, e sua luz comecará a piscar uma vez por segundo, gerando uma marcação no
+                papel atrás dela, o qual também está representado um pouco abaixo da inclinação. Seu trabalho é observar o resultado no papel sabendo da
+                frequência em que a luz pisca e responder as perguntas na parte abaixo. Informações adicionais ao lado direito do espaço.
+            </h3>
+            <div class="simulation">
+                <div class="control-panel">
+                    <table>
+                        <tr>
+                            <td id="angle"></td>
+                        </tr>
+                        <tr>
+                            <td id="wx1"></td>
+                        </tr>
+                        <tr>
+                            <td id="wy1"></td>
+                        </tr>
+                    </table>
+                </div>
+                <canvas id="myCanvas" align="center" tabindex="1"></canvas>
+            </div>
+            <div class="horizontal-buttons">
+                <button type="button" id="display" style="width: 200px;">Iniciar</button>
+                <button type="button" id="reset" style="width: 200px;">Reiniciar</button>
+            </div><br>
+            <button class="accordion" id="answer">Solução</button>
+            <div class="panel">
+            </div>
+        </div>
+        </div>
+        <script src="../../utils/ball.js"></script>
+        <script src="src/class/wall.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="src/script.js"></script>
+
+    </body>
+</html>
+
