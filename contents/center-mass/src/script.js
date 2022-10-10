@@ -39,12 +39,8 @@ let ycm = 0;
 let gridX = 30;
 let gridY = 30;
 let clicked;
-const BALLZ = [];
-const WALLZ = [];
+const BALLS = [];
 const MASS = [];
-
-
-let UP, DOWN, LEFT, RIGHT;
 
 function round(n, precision){
     let factor = 10**precision;
@@ -88,10 +84,10 @@ function drawGrid(px,py,color){
 function massCenter(){
     xcm = 0;
     ycm = 0;
-    for(i = 0; i < BALLZ.length; i++){
-        if(MASS.length <= 2){MASS.push(BALLZ[i].m);}
-        xcm += BALLZ[i].m * BALLZ[i].pos.x;
-        ycm += BALLZ[i].m * BALLZ[i].pos.y;
+    for(i = 0; i < BALLS.length; i++){
+        if(MASS.length <= 2){MASS.push(BALLS[i].m);}
+        xcm += BALLS[i].m * BALLS[i].pos.x;
+        ycm += BALLS[i].m * BALLS[i].pos.y;
     }
     let totalMass = MASS.reduce((p,c) => p + c, 0)
     xcm = xcm/totalMass;
@@ -122,7 +118,7 @@ let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHei
 
 
 drawGrid(gridX,gridY,'blue');
-BALLZ.forEach((b) => {
+BALLS.forEach((b) => {
     b.drawBall();
 });
 
