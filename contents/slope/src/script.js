@@ -5,11 +5,70 @@ const canvas = document.getElementById("myCanvas");
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
+
 var ctx = canvas.getContext('2d');
+
+let btnStart = document.getElementById("btnStart");
+let btnReset = document.getElementById("btnReset");
+let running = false;
+let animId;
+let x = 100;
+let y = 100;
+const g = 0.98;
+let friction = 0.1;
+let xcm = 0;
+let ycm = 0;
+let rball = 20;
+let ang = rand(3/2*Math.PI,2*Math.PI);
+let wx2 = canvasWidth - 2*rball;
+let wy2 = canvasHeight - 2*rball;
+let wx1 = wx2 - wy2*Math.cos(ang); 
+let wy1 = wy2 + wy2*Math.sin(ang);
+const BALLS = [];
+const WALLS = [];
+
+
+let b = new Ball("ball1", wx1+2*rball, wy1+rball, rball, 1, 'black');
+b.elasticity = 0.2;
+let wall = new Wall(wx1, wy1, wx2, wy2);
+
+document.onload = mainLoop();
+
+function rad_deg(rad){
+    let new_rad = Math.abs(rad - 2*Math.PI);
+    let deg = (new_rad * 180.0) / Math.PI;
+    return deg;
+}
+
+btnStart.onclick = function() {
+    if(!running) {
+        running = true;
+        animate();
+    }
+}
+
+function pause() {
+    cancelAnimationFrame(animId);
+}
+
+btnReset.onclick = function() {
+    running = false;
+    mainLoop();
+    pause();
+}
+
+function animate() {
+    animId = requestAnimationFrame(animate);
+    mainLoop();
+}
 
 function round(n, precision){
     let factor = 10**precision;
     return Math.round(n*factor)/factor;
+}
+
+function rand(min, max){
+    return Math.random() * (max-min) + min;
 }
 
 function setLine(x0,y0,xf,yf,color,lw=1){
@@ -21,22 +80,6 @@ function setLine(x0,y0,xf,yf,color,lw=1){
     ctx.stroke();
     ctx.closePath();
 }
-
-let x = 100;
-let y = 100;
-const g = 0.98;
-let friction = 0.1;
-let xcm = 0;
-let ycm = 0;
-let rball = 20;
-let ang = Math.PI/6;
-let wx2 = canvasWidth - 2*rball;
-let wy2 = canvasHeight - 2*rball;
-let wx1 = Math.abs(canvasWidth*(Math.sin(ang)))- 2*rball; 
-let wy1 = Math.abs(canvasHeight*(Math.cos(ang)))- 2*rball;
-let angle = Math.asin((wy2-wy1)/Math.sqrt((wy2-wy1)*(wy2-wy1)+(wx2-wx1)*(wx2-wx1)));
-const BALLS = [];
-const WALLS = [];
 
 function closestPointBW(obj1, w1){
     let ballToWallStart = Vector2D.subtract(w1.start,obj1.pos);
@@ -87,12 +130,13 @@ function drawCircle(x,y){
     ctx.closePath();
 }
 
-
 function mainLoop() {
+    ctx.save();
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     BALLS.forEach((b, index) => {
         b.drawBall();
         b.v.y += g;
+        b.a.y = g;
         
         WALLS.forEach((w) => {
             w.drawWall();
@@ -105,10 +149,14 @@ function mainLoop() {
         b.reposition();
         
     });
+    
+    ctx.beginPath();
+    ctx.arc(wx2,wy2,wy2,Math.PI/2,Math.PI,true);
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+    ctx.closePath();
 
-
-
-    requestAnimationFrame(mainLoop);
+    ctx.restore();
 }
 
 function canvasWall(){
@@ -116,23 +164,11 @@ function canvasWall(){
     let wallBottom = new Wall(0, canvasHeight, canvasWidth, canvasHeight);
     let wallLeft = new Wall(0, 0, 0, canvasHeight);
     let wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
-    let wallTop2 = new Wall(0, -1, canvasWidth, -1);
-    let wallBottom2 = new Wall(0, canvasHeight + 1, canvasWidth, canvasHeight + 1);
-    let wallLeft2 = new Wall(-1, 0, -1, canvasHeight);
-    let wallRight2 = new Wall(canvasWidth + 1, 0, canvasWidth + 1, canvasHeight);
 }
-
-let wall = new Wall(wx1, wy1, wx2, wy2);
-
-let ball1 = new Ball("ball1", wx1+rball, wy1-rball, rball, 1, 'black');
-ball1.elasticity = 0.2;
 
 canvasWall();
 
 
-document.getElementById("angle").innerHTML = round(angle,4);
+document.getElementById("angle").innerHTML = round(rad_deg(ang),1);
 document.getElementById("wx1").innerHTML = round(wx1,4);
 document.getElementById("wy1").innerHTML = round(wy1,4);
-
-
-requestAnimationFrame(mainLoop);
