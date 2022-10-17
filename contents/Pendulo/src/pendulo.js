@@ -20,8 +20,12 @@ class Pendulo {
         this.lenght = l;
     }
 
+    setAngularFrequency(af) {
+        this.ang_freq = af;
+    }
+
     move(t) {
-       this.angle = Math.cos(1.0 * t);
+       this.angle = Math.cos(1.0 * this.ang_freq * t);
     }
 
     draw(ctx) {

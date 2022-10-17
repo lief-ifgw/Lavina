@@ -7,7 +7,6 @@ const defaultAngle  = 40;
 /********** Variables ********/
 
 var theta, compL;         // Initial angle and rope lenght
-var ang_freq;             // Oscillation period and angular frequency (to be answered)
 var xpos, ypos, radians;  // Pendulum position parameters
 
 var t = 0.0;
@@ -16,6 +15,7 @@ var t = 0.0;
 const alturaH    = 15;       // Fixed height H to the ground.
 const defaultG   = 10.0;    // Gravity acceleration
 const osc_period = 1;     // Default oscillation period
+var ang_freq = Math.sqrt(defaultG / defaultLenght);
 
 /********** Canvas building ********/
 
@@ -53,6 +53,7 @@ sliderLenght.oninput = function() {
     ang_freq = Math.sqrt(defaultG/sliderLenght.value);
     omegaView.innerHTML = ang_freq;
     pendulo.setLenght(1.0 * this.value);
+    pendulo.setAngularFrequency(ang_freq);
     draw();
 }
 
