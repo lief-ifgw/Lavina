@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>Movimento 1D</title>
+        <title>Plano Inclinado</title>
         <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
         <link rel="stylesheet" type="text/css" href="../../styles/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
         </nav>
 
         <div class="content" style="position: flex">
-            <h1>Movimento unidimensional</h1><br>
+            <h1>Plano Inclinado</h1><br>
             <h3>No espaço a direita temos um corpo com uma luz, parado no topo de uma descida, tal que sua luz está desligada. Assim que o botão "Iniciar"
                 for pressionado, o corpo será solto e então descerá a inclinação, e sua luz comecará a piscar uma vez por segundo, gerando uma marcação no
                 papel atrás dela, o qual também está representado um pouco abaixo da inclinação. Seu trabalho é observar o resultado no papel sabendo da
@@ -40,14 +40,18 @@
                         <tr>
                             <td id="wy1"></td>
                         </tr>
+                        <tr>
+                            <td id="vel"></td>
+                        </tr>
                     </table>
+                    <div class="horizontal-buttons">
+                        <button type="button" id="btnStart">Iniciar</button>
+                        <button type="button" id="btnReset">Reiniciar</button>
+                    </div>
                 </div>
                 <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>
-            <div class="horizontal-buttons">
-                <button type="button" id="btnStart" style="width: 200px;">Iniciar</button>
-                <button type="button" id="btnReset" style="width: 200px;">Reiniciar</button>
-            </div><br>
+            
             <button class="accordion" id="answer">Solução</button>
             <div class="panel">
             </div>
