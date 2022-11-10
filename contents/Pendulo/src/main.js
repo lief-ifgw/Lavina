@@ -14,7 +14,8 @@ var t = 0.0;
 
 const alturaH    = 15;       // Fixed height H to the ground.
 const defaultG   = 10.0;    // Gravity acceleration
-const osc_period = 1;     // Default oscillation period
+var osc_period;     // Default oscillation period
+
 var ang_freq = Math.sqrt(defaultG / defaultLenght);
 
 /********** Canvas building ********/
@@ -39,6 +40,7 @@ var sliderAngle  = document.getElementById("angle");
 var lenghtView   = document.getElementById("outLenght");
 var angleView    = document.getElementById("outAngle");
 var omegaView    = document.getElementById("omega");
+var TView        = document.getElementById("T");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
 var t_sec        = document.getElementById("seconds");
@@ -50,13 +52,22 @@ angleView.innerHTML  = sliderAngle.value;
 ang_freq = Math.sqrt(defaultG/sliderLenght.value);
 omegaView.innerHTML  = ang_freq;
 
+osc_period = 2.0 * Math.PI * (1.0/ang_freq);
+TView.innerHTML = osc_period;
+
 
 sliderLenght.oninput = function() {
     lenghtView.innerHTML = this.value;
+
     ang_freq = Math.sqrt(defaultG/sliderLenght.value);
     omegaView.innerHTML = ang_freq;
+
+    osc_period = 2.0 * Math.PI * (1.0/ang_freq);
+    TView.innerHTML = osc_period;
+
     pendulo.setLenght(1.0 * this.value);
     pendulo.setAngularFrequency(ang_freq);
+
     draw();
 }
 
