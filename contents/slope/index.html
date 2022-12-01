@@ -32,16 +32,20 @@
                 <div class="control-panel">
                     <table>
                         <tr>
-                            <td id="angle"></td>
+                            <td>Ângulo:</td><td id="angle"></td>
                         </tr>
                         <tr>
-                            <td id="wx1"></td>
+                            <td>Velocidade:</td><td id="vel"></td>
                         </tr>
                         <tr>
-                            <td id="wy1"></td>
+                            <td>Frequência:</td><td id="freq"></td>
                         </tr>
                         <tr>
-                            <td id="vel"></td>
+                            <td rowspan="2">Posições do mouse: </td>
+                            <td>X: <var id="xpos"></var></td>
+                        </tr>
+                        <tr>
+                            <td>Y: <var id="ypos"></var></td>
                         </tr>
                     </table>
                     <div class="horizontal-buttons">
@@ -51,7 +55,11 @@
                 </div>
                 <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>
-            
+            <h2> Qual a velocidade da esfera no instante t = <var id="t"></var> s?</h2>
+            <form>
+                <input type="tel" name="answer" id="opt1">
+            </form>
+            <br>
             <button class="accordion" id="answer">Solução</button>
             <div class="panel">
             </div>
