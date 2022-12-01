@@ -35,14 +35,14 @@ class Ball{
             ctx.closePath();
         }
         if(led){
-            let xball = (b.pos.x);
+            let x = (canvasWidth-2*rball)/(wx2-wx1);
+            let xball = x*((b.pos.x)-wx1);
             ctx.beginPath();
             ctx.arc(this.pos.x,this.pos.y,this.r/4,0,2*Math.PI);
-            ctx.arc(xball,canvasHeight-rball,this.r/4,0,2*Math.PI);
+            ctx.arc(this.pos.x,this.pos.y + 2*this.r,this.r/4,0,2*Math.PI);
             ctx.fillStyle = 'white';
             ctx.fill();
             ctx.closePath();
-            console.log(xball);
             c = 0;
         }
         
