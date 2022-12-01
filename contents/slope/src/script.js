@@ -1,5 +1,5 @@
 const canvasWidth = 600;
-const canvasHeight = canvasWidth * 2 / 3;
+const canvasHeight = 400;
 
 const canvas = document.getElementById("myCanvas");
 canvas.width = canvasWidth;
@@ -9,23 +9,28 @@ var ctx = canvas.getContext('2d');
 
 let btnStart = document.getElementById("btnStart");
 let btnReset = document.getElementById("btnReset");
+let t = document.getElementById("t");
+let xpos = document.getElementById("xpos");
+let ypos = document.getElementById("ypos");
+t.innerHTML = 1;
 let running = false;
 let animId;
 let x = 100;
 let y = 100;
-const freq = 15;
-let c = 0;
-const g = 0.098;
+const freq = 10;
+let c = freq;
+const g = 0.048;
 let friction = 0;
 let xcm = 0;
 let ycm = 0;
 let rball = 10;
-let ang = rand(3/2*Math.PI,2*Math.PI);
+let ang = rand(1.8*Math.PI,2*Math.PI);
 let new_rad = Math.abs(ang - 2*Math.PI);
 let wx2 = canvasWidth - 6*rball;
 let wy2 = canvasHeight - 3*rball;
-let wx1 = wx2 - wy2*Math.cos(ang); 
-let wy1 = wy2 + wy2*Math.sin(ang);
+let wx1 = wx2 + 2*rball - wx2*Math.cos(ang); 
+let wy1 = wy2 + wx2*Math.sin(ang);
+
 const BALLS = [];
 const WALLS = [];
 let wallBottom;
@@ -60,9 +65,7 @@ function pause() {
 }
 
 btnReset.onclick = function() {
-    running = false;
-    mainLoop();
-    pause();
+    document.location.reload();
 }
 
 function animate() {
@@ -88,6 +91,20 @@ function setLine(x0,y0,xf,yf,color,lw=1){
     ctx.stroke();
     ctx.closePath();
 }
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: Math.round(evt.clientY - rect.bottom) * (-1)
+    };
+  }
+
+canvas.addEventListener("mousemove", function (evt) {
+    var mousePos = getMousePos(canvas, evt);
+    xpos.innerHTML = mousePos.x;
+    ypos.innerHTML = mousePos.y;
+}, false);
 
 function closestPointBW(obj1, w1){
     let ballToWallStart = Vector2D.subtract(w1.start,obj1.pos);
@@ -138,19 +155,24 @@ function drawCircle(x,y,r,color){
 
 function drawPanel(){
     ctx.beginPath();
-    ctx.rect(rball, wy2, canvasWidth - 2*rball, canvasHeight);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
+    ctx.moveTo(wx2,wy2);
+    ctx.lineTo(wx1,wy1);
+    ctx.lineTo(wx1 - 2*rball*Math.sin(new_rad),wy1 + 2*rball*Math.cos(new_rad)); 
+    ctx.lineTo(wx2 - 2*rball*Math.sin(new_rad),wy2 + 2*rball*Math.cos(new_rad));
     ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(b.pos.x - 2*rball*Math.sin(new_rad),b.pos.y + 2*rball*Math.cos(new_rad),rball/4,0,2*Math.PI);
+    ctx.fillStyle = 'white';
     ctx.fill();
     ctx.closePath();
 }
 
-
 function mainLoop() {
     ctx.save();
-    c += 1;
-    ctx.clearRect(0,0,canvasWidth,wy2);
+
+    ctx.clearRect(0,0,canvasWidth,canvasHeight);
     BALLS.forEach((b, index) => {
         c === freq ? b.drawBall('black',false,true) : b.drawBall('black',false,false)  
         // b.v.y += g;
@@ -171,15 +193,16 @@ function mainLoop() {
     
     ctx.beginPath();
     ctx.arc(wx2,wy2,wy2/2,Math.PI,new_rad - Math.PI,false);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'red';
     ctx.stroke();
     ctx.closePath();
-
-    document.getElementById("vel").innerHTML = Math.abs(round(b.v.y,1));
-
+    drawPanel();
+    document.getElementById("vel").innerHTML = (Math.abs(round(b.v.length(),1))+" m/s");
+    document.getElementById("freq").innerHTML = (freq+" 1/ms");
+    console.log(wx1,wy1);
+    c += 1;
     ctx.restore();
 }
-drawPanel();
 
 function canvasWall(){
     wallBottom = new Wall(0, wy2, canvasWidth, wy2);
@@ -187,6 +210,6 @@ function canvasWall(){
     wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
 }
 
-document.getElementById("angle").innerHTML = round(rad_deg(ang),1);
-document.getElementById("wx1").innerHTML = round(wx1,4);
-document.getElementById("wy1").innerHTML = round(wy1,4);
+document.getElementById("angle").innerHTML = (round(rad_deg(ang),1)+"°");
+
+
