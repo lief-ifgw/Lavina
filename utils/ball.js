@@ -13,13 +13,13 @@ class Ball{
         this.v = new Vector2D(0,0);
         this.a = new Vector2D(0,0);
         this.color = color;
-        this.acceleration = 1;
+        this.acceleration = 0;
         this.elasticity = 1;
         BALLS.push(this);
         this.player = false;
     }
     
-    drawBall(color=this.color,num=true,led=false){
+    drawBall(color=this.color,num=true){
         ctx.beginPath();
         ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
         ctx.strokeStyle = color;
@@ -33,17 +33,6 @@ class Ball{
             ctx.fillStyle = "black";
             ctx.fillText(BALLS.indexOf(this)+1,this.pos.x - 8,this.pos.y + 8);
             ctx.closePath();
-        }
-        if(led){
-            let x = (canvasWidth-2*rball)/(wx2-wx1);
-            let xball = x*((b.pos.x)-wx1);
-            ctx.beginPath();
-            ctx.arc(this.pos.x,this.pos.y,this.r/4,0,2*Math.PI);
-            ctx.arc(this.pos.x,this.pos.y + 2*this.r,this.r/4,0,2*Math.PI);
-            ctx.fillStyle = 'white';
-            ctx.fill();
-            ctx.closePath();
-            c = 0;
         }
         
     }
