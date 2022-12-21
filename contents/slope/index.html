@@ -2,6 +2,7 @@
 <html lang="pt-br">
     <head>
         <title>Plano Inclinado</title>
+        <script src="../../components/load-mathjax.js" async></script>
         <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
         <link rel="stylesheet" type="text/css" href="../../styles/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,25 +24,24 @@
 
         <div class="content" style="position: flex">
             <h1>Plano Inclinado</h1><br>
-            <h3>No espaço a direita temos um corpo com uma luz, parado no topo de uma descida, tal que sua luz está desligada. Assim que o botão "Iniciar"
-                for pressionado, o corpo será solto e então descerá a inclinação, e sua luz comecará a piscar uma vez por segundo, gerando uma marcação no
-                papel atrás dela, o qual também está representado um pouco abaixo da inclinação. Seu trabalho é observar o resultado no papel sabendo da
-                frequência em que a luz pisca e responder as perguntas na parte abaixo. Informações adicionais ao lado direito do espaço.
+            <h3>No espaço a direita, temos uma bolinha que, assim que o botão iniciar for acionado, deslizará pelo plano inclinado. Seu trabalho é responder 
+                a pergunta proposta abaixo do painel, com o auxílio das informações do lado direito do espaço.
             </h3>
+            <h4>Considere g = 9.8 m/s²</h4>
             <div class="simulation">
                 <div class="control-panel">
                     <table>
                         <tr>
-                            <td id="angle"></td>
+                            <td>Ângulo:</td><td id="angle"></td>
                         </tr>
+                        <!-- <tr>
+                            <td>Velocidade:</td><td id="vel"></td>
+                        </tr> -->                 
                         <tr>
-                            <td id="wx1"></td>
-                        </tr>
-                        <tr>
-                            <td id="wy1"></td>
-                        </tr>
-                        <tr>
-                            <td id="vel"></td>
+                            <td colspan="2">
+                                <h3>Cronômetro:</h3>
+                                <h3> <span id="seconds">00</span>:<span id="tens">00</span></h3>
+                            </td>
                         </tr>
                     </table>
                     <div class="horizontal-buttons">
@@ -51,9 +51,26 @@
                 </div>
                 <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>
-            
+            <h2> Qual a velocidade da bolinha no instante final?</h2>
+            <h5>Arredonde para uma casa decimal.</h5>
+            <form>
+                <input type="tel" name="answer" id="valor" placeholder="Ex.: 5.1" disabled size="4" style="font-size:medium;"> m/s
+                <br><br>
+                <button type="button" name="confirm" id="btnConfirm">Confirma</button>
+            </form>
+            <br>
             <button class="accordion" id="answer">Solução</button>
             <div class="panel">
+                <br>
+                <h3>Partindo das fórmulas de aceleração:<br><br>
+                $\LARGE{a = g\,sen(\theta)\quad a = \frac{\Delta v}{\Delta t}}$<br><br>
+                Podemos desenvolver o seguinte:<br><br>
+                $\LARGE{\Delta v = a\,\Delta t \Rightarrow v = v_{o}+a\,\Delta t}$<br><br>
+                Portanto, chegamos na seguinte fórmula:<br><br>
+                $\LARGE{v = v_{o}+g\,sen(\theta)\,\Delta t}$<br><br>
+                Substituindo os valores:<br><br>
+                <p id="formSlope" class="math"></p><br><br>
+                Portanto, a velocidade da bolinha no instante final é de, aproximadamente: <p id="ansSlope"></p></h3>
             </div>
         </div>
         </div>
@@ -61,7 +78,6 @@
         <script src="src/class/wall.js"></script>
         <script src="../../utils/vector2D.js"></script>
         <script src="src/script.js"></script>
-
     </body>
 </html>
 

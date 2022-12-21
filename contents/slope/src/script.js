@@ -1,5 +1,5 @@
 const canvasWidth = 600;
-const canvasHeight = canvasWidth * 2 / 3;
+const canvasHeight = 400;
 
 const canvas = document.getElementById("myCanvas");
 canvas.width = canvasWidth;
@@ -9,23 +9,29 @@ var ctx = canvas.getContext('2d');
 
 let btnStart = document.getElementById("btnStart");
 let btnReset = document.getElementById("btnReset");
+let btnConfirm = document.getElementById("btnConfirm");
+let valor = document.getElementById("valor");
+let xpos = document.getElementById("xpos");
+let ypos = document.getElementById("ypos");
+let formSlope = document.getElementById("formSlope");
+let ansSlope = document.getElementById("ansSlope");
+let clicked;
 let running = false;
 let animId;
 let x = 100;
 let y = 100;
-const freq = 15;
-let c = 0;
-const g = 0.098;
+const g = 0.15;
 let friction = 0;
 let xcm = 0;
 let ycm = 0;
 let rball = 10;
-let ang = rand(3/2*Math.PI,2*Math.PI);
+let ang = rand(1.8*Math.PI,2*Math.PI);
 let new_rad = Math.abs(ang - 2*Math.PI);
 let wx2 = canvasWidth - 6*rball;
 let wy2 = canvasHeight - 3*rball;
-let wx1 = wx2 - wy2*Math.cos(ang); 
-let wy1 = wy2 + wy2*Math.sin(ang);
+let wx1 = wx2 + 2*rball - wx2*Math.cos(ang); 
+let wy1 = wy2 + wx2*Math.sin(ang);
+
 const BALLS = [];
 const WALLS = [];
 let wallBottom;
@@ -33,13 +39,67 @@ let wallLeft;
 let wallRight;
 
 let b = new Ball("ball1", wx1 + Math.cos(ang)*rball - rball*Math.sin(ang), wy1 - Math.sin(ang)*rball - rball*Math.cos(ang), rball, 1, 'black');
-b.elasticity = 1;
+b.elasticity = 0;
 b.acceleration = g;
 b.a.y = 1;
 let wall = new Wall(wx1, wy1, wx2, wy2);
 
 document.onload = canvasWall();
 document.onload = mainLoop();
+document.onload = cleanAnswer();
+
+function freeze() {
+    pause();
+    clearInterval(Interval);
+}
+
+var velo;
+var time;
+var seconds = 00;
+var tens = 00;
+var dez = 00;
+var appendTens = document.getElementById("tens");
+var appendSeconds = document.getElementById("seconds");
+var Interval;
+
+btnStart.onclick = function() {
+    if(!running) {
+        running = true;
+        animate();
+    }
+    clearInterval(Interval);
+    Interval = setInterval(startTimer, 10);
+    btnStart.disabled = true;
+    valor.disabled = false;
+}
+
+
+function startTimer () {
+    tens++;
+
+    if(tens <= 9){
+        appendTens.innerHTML = "0" + tens;
+    }
+
+    if (tens > 9){
+        appendTens.innerHTML = tens;
+
+    }
+
+    if (tens > 99) {
+        seconds++;
+        appendSeconds.innerHTML = "0" + seconds;
+        tens = 0;
+        appendTens.innerHTML = "0" + 0;
+    }
+
+    if (seconds > 9){
+        appendSeconds.innerHTML = seconds;
+    }
+
+}
+
+
 
 
 function rad_deg(rad){
@@ -48,21 +108,13 @@ function rad_deg(rad){
     return deg;
 }
 
-btnStart.onclick = function() {
-    if(!running) {
-        running = true;
-        animate();
-    }
-}
 
 function pause() {
     cancelAnimationFrame(animId);
 }
 
 btnReset.onclick = function() {
-    running = false;
-    mainLoop();
-    pause();
+    document.location.reload();
 }
 
 function animate() {
@@ -89,6 +141,20 @@ function setLine(x0,y0,xf,yf,color,lw=1){
     ctx.closePath();
 }
 
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: Math.round(evt.clientY - rect.bottom) * (-1)
+    };
+  }
+
+// canvas.addEventListener("mousemove", function (evt) {
+//     var mousePos = getMousePos(canvas, evt);
+//     xpos.innerHTML = mousePos.x;
+//     ypos.innerHTML = mousePos.y;
+// }, false);
+
 function closestPointBW(obj1, w1){
     let ballToWallStart = Vector2D.subtract(w1.start,obj1.pos);
     if(Vector2D.dotProduct(w1.wallUnit(), ballToWallStart) > 0){
@@ -104,6 +170,7 @@ function closestPointBW(obj1, w1){
     let closestVect = Vector2D.scale(w1.wallUnit(),closestDist);
     return Vector2D.subtract(w1.start,closestVect);
 }
+
 
 function collisionDetectionWall(obj1,w1){
     let ballClosest = Vector2D.subtract(closestPointBW(obj1,w1),obj1.pos);
@@ -138,21 +205,25 @@ function drawCircle(x,y,r,color){
 
 function drawPanel(){
     ctx.beginPath();
-    ctx.rect(rball, wy2, canvasWidth - 2*rball, canvasHeight);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-    ctx.fillStyle = 'black';
-    ctx.fill();
+    ctx.moveTo(wx2,wy2);
+    ctx.lineTo(wx1,wy1);
     ctx.closePath();
 }
 
-
 function mainLoop() {
     ctx.save();
-    c += 1;
-    ctx.clearRect(0,0,canvasWidth,wy2);
+    if(tens <= 9){
+        dez = "0" + tens;
+    }
+
+    if (tens > 9){
+        dez = tens;
+    }
+    time = parseFloat(String(seconds)+"."+String(dez));
+    velo = round(9.8*Math.sin(round(new_rad,3))*time,1)
+    ctx.clearRect(0,0,canvasWidth,canvasHeight);
     BALLS.forEach((b, index) => {
-        c === freq ? b.drawBall('black',false,true) : b.drawBall('black',false,false)  
+        b.drawBall('black',false)
         // b.v.y += g;
         b.reposition();
         WALLS.forEach((w) => {
@@ -166,20 +237,21 @@ function mainLoop() {
     });
 
     if(collisionDetectionWall(b, wallBottom)){
-        pause();
+        freeze();
+        formSlope.innerHTML = "$\\large{0+9.8\\,sen("+round(rad_deg(ang),1)+"°)\\,"+time+" \\approx "+velo+"}$";
+        ansSlope.innerHTML = "$\\large{"+velo+"}\\,m/s^{2}$";
+        MathJax.typeset();
     }
     
     ctx.beginPath();
     ctx.arc(wx2,wy2,wy2/2,Math.PI,new_rad - Math.PI,false);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'red';
     ctx.stroke();
     ctx.closePath();
-
-    document.getElementById("vel").innerHTML = Math.abs(round(b.v.y,1));
-
+    drawPanel();
+    //document.getElementById("vel").innerHTML = (velo+" m/s");
     ctx.restore();
 }
-drawPanel();
 
 function canvasWall(){
     wallBottom = new Wall(0, wy2, canvasWidth, wy2);
@@ -187,6 +259,59 @@ function canvasWall(){
     wallRight = new Wall(canvasWidth, 0, canvasWidth, canvasHeight);
 }
 
-document.getElementById("angle").innerHTML = round(rad_deg(ang),1);
-document.getElementById("wx1").innerHTML = round(wx1,4);
-document.getElementById("wy1").innerHTML = round(wy1,4);
+document.getElementById("angle").innerHTML = (round(rad_deg(ang),1)+"°");
+
+
+
+
+function cleanAnswer(){
+    valor.value = "";
+}
+
+
+function isAnswered() {
+    if (valor.value.length == 0){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+function mustAnswer() {
+    window.alert("Você deve inserir um valor válido para ver a resposta.");
+    cleanAnswer();
+}
+
+    btnConfirm.onclick = function() {
+    if (isAnswered()) {
+        clicked = true;
+        btnConfirm.disabled = true;
+        valor.disabled = true;
+        document.getElementById("myCanvas").focus();
+        if(valor.value == velo){
+            valor.className = "correct";
+        }
+        else{
+            valor.className = "wrong";
+        }
+    }
+    else{
+        mustAnswer();
+    }
+}
+
+answer.addEventListener("click", function() {
+    if(clicked){
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+    }
+    else{
+        mustAnswer();
+    }
+});
