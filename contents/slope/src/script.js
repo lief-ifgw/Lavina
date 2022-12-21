@@ -240,7 +240,6 @@ function mainLoop() {
         freeze();
         formSlope.innerHTML = "$\\large{0+9.8\\,sen("+round(rad_deg(ang),1)+"°)\\,"+time+" \\approx "+velo+"}$";
         ansSlope.innerHTML = "$\\large{"+velo+"}\\,m/s^{2}$";
-        console.log("9.8 * sen("+round(new_rad,3)+") * "+time+" = "+velo);
         MathJax.typeset();
     }
     
@@ -291,11 +290,9 @@ function mustAnswer() {
         valor.disabled = true;
         document.getElementById("myCanvas").focus();
         if(valor.value == velo){
-            console.log("Correto!");
             valor.className = "correct";
         }
         else{
-            console.log("Errado.");
             valor.className = "wrong";
         }
     }
