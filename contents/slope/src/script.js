@@ -9,17 +9,18 @@ var ctx = canvas.getContext('2d');
 
 let btnStart = document.getElementById("btnStart");
 let btnReset = document.getElementById("btnReset");
-let t = document.getElementById("t");
+let btnConfirm = document.getElementById("btnConfirm");
+let valor = document.getElementById("valor");
 let xpos = document.getElementById("xpos");
 let ypos = document.getElementById("ypos");
-t.innerHTML = 1;
+let formSlope = document.getElementById("formSlope");
+let ansSlope = document.getElementById("ansSlope");
+let clicked;
 let running = false;
 let animId;
 let x = 100;
 let y = 100;
-const freq = 10;
-let c = freq;
-const g = 0.048;
+const g = 0.15;
 let friction = 0;
 let xcm = 0;
 let ycm = 0;
@@ -38,13 +39,67 @@ let wallLeft;
 let wallRight;
 
 let b = new Ball("ball1", wx1 + Math.cos(ang)*rball - rball*Math.sin(ang), wy1 - Math.sin(ang)*rball - rball*Math.cos(ang), rball, 1, 'black');
-b.elasticity = 1;
+b.elasticity = 0;
 b.acceleration = g;
 b.a.y = 1;
 let wall = new Wall(wx1, wy1, wx2, wy2);
 
 document.onload = canvasWall();
 document.onload = mainLoop();
+document.onload = cleanAnswer();
+
+function freeze() {
+    pause();
+    clearInterval(Interval);
+}
+
+var velo;
+var time;
+var seconds = 00;
+var tens = 00;
+var dez = 00;
+var appendTens = document.getElementById("tens");
+var appendSeconds = document.getElementById("seconds");
+var Interval;
+
+btnStart.onclick = function() {
+    if(!running) {
+        running = true;
+        animate();
+    }
+    clearInterval(Interval);
+    Interval = setInterval(startTimer, 10);
+    btnStart.disabled = true;
+    valor.disabled = false;
+}
+
+
+function startTimer () {
+    tens++;
+
+    if(tens <= 9){
+        appendTens.innerHTML = "0" + tens;
+    }
+
+    if (tens > 9){
+        appendTens.innerHTML = tens;
+
+    }
+
+    if (tens > 99) {
+        seconds++;
+        appendSeconds.innerHTML = "0" + seconds;
+        tens = 0;
+        appendTens.innerHTML = "0" + 0;
+    }
+
+    if (seconds > 9){
+        appendSeconds.innerHTML = seconds;
+    }
+
+}
+
+
 
 
 function rad_deg(rad){
@@ -53,12 +108,6 @@ function rad_deg(rad){
     return deg;
 }
 
-btnStart.onclick = function() {
-    if(!running) {
-        running = true;
-        animate();
-    }
-}
 
 function pause() {
     cancelAnimationFrame(animId);
@@ -100,11 +149,11 @@ function getMousePos(canvas, evt) {
     };
   }
 
-canvas.addEventListener("mousemove", function (evt) {
-    var mousePos = getMousePos(canvas, evt);
-    xpos.innerHTML = mousePos.x;
-    ypos.innerHTML = mousePos.y;
-}, false);
+// canvas.addEventListener("mousemove", function (evt) {
+//     var mousePos = getMousePos(canvas, evt);
+//     xpos.innerHTML = mousePos.x;
+//     ypos.innerHTML = mousePos.y;
+// }, false);
 
 function closestPointBW(obj1, w1){
     let ballToWallStart = Vector2D.subtract(w1.start,obj1.pos);
@@ -121,6 +170,7 @@ function closestPointBW(obj1, w1){
     let closestVect = Vector2D.scale(w1.wallUnit(),closestDist);
     return Vector2D.subtract(w1.start,closestVect);
 }
+
 
 function collisionDetectionWall(obj1,w1){
     let ballClosest = Vector2D.subtract(closestPointBW(obj1,w1),obj1.pos);
@@ -157,24 +207,23 @@ function drawPanel(){
     ctx.beginPath();
     ctx.moveTo(wx2,wy2);
     ctx.lineTo(wx1,wy1);
-    ctx.lineTo(wx1 - 2*rball*Math.sin(new_rad),wy1 + 2*rball*Math.cos(new_rad)); 
-    ctx.lineTo(wx2 - 2*rball*Math.sin(new_rad),wy2 + 2*rball*Math.cos(new_rad));
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.closePath();
-    ctx.beginPath();
-    ctx.arc(b.pos.x - 2*rball*Math.sin(new_rad),b.pos.y + 2*rball*Math.cos(new_rad),rball/4,0,2*Math.PI);
-    ctx.fillStyle = 'white';
-    ctx.fill();
     ctx.closePath();
 }
 
 function mainLoop() {
     ctx.save();
+    if(tens <= 9){
+        dez = "0" + tens;
+    }
 
+    if (tens > 9){
+        dez = tens;
+    }
+    time = parseFloat(String(seconds)+"."+String(dez));
+    velo = round(9.8*Math.sin(round(new_rad,3))*time,1)
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     BALLS.forEach((b, index) => {
-        c === freq ? b.drawBall('black',false,true) : b.drawBall('black',false,false)  
+        b.drawBall('black',false)
         // b.v.y += g;
         b.reposition();
         WALLS.forEach((w) => {
@@ -188,7 +237,11 @@ function mainLoop() {
     });
 
     if(collisionDetectionWall(b, wallBottom)){
-        pause();
+        freeze();
+        formSlope.innerHTML = "$\\large{0+9.8\\,sen("+round(rad_deg(ang),1)+"°)\\,"+time+" \\approx "+velo+"}$";
+        ansSlope.innerHTML = "$\\large{"+velo+"}\\,m/s^{2}$";
+        console.log("9.8 * sen("+round(new_rad,3)+") * "+time+" = "+velo);
+        MathJax.typeset();
     }
     
     ctx.beginPath();
@@ -197,10 +250,7 @@ function mainLoop() {
     ctx.stroke();
     ctx.closePath();
     drawPanel();
-    document.getElementById("vel").innerHTML = (Math.abs(round(b.v.length(),1))+" m/s");
-    document.getElementById("freq").innerHTML = (freq+" 1/ms");
-    console.log(wx1,wy1);
-    c += 1;
+    //document.getElementById("vel").innerHTML = (velo+" m/s");
     ctx.restore();
 }
 
@@ -213,3 +263,58 @@ function canvasWall(){
 document.getElementById("angle").innerHTML = (round(rad_deg(ang),1)+"°");
 
 
+
+
+function cleanAnswer(){
+    valor.value = "";
+}
+
+
+function isAnswered() {
+    if (valor.value.length == 0){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+function mustAnswer() {
+    window.alert("Você deve inserir um valor válido para ver a resposta.");
+    cleanAnswer();
+}
+
+    btnConfirm.onclick = function() {
+    if (isAnswered()) {
+        clicked = true;
+        btnConfirm.disabled = true;
+        valor.disabled = true;
+        document.getElementById("myCanvas").focus();
+        if(valor.value == velo){
+            console.log("Correto!");
+            valor.className = "correct";
+        }
+        else{
+            console.log("Errado.");
+            valor.className = "wrong";
+        }
+    }
+    else{
+        mustAnswer();
+    }
+}
+
+answer.addEventListener("click", function() {
+    if(clicked){
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+    }
+    else{
+        mustAnswer();
+    }
+});
