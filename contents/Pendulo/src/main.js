@@ -55,6 +55,10 @@ omegaView.innerHTML  = ang_freq;
 osc_period = 2.0 * Math.PI * (1.0/ang_freq);
 TView.innerHTML = osc_period;
 
+pendulo.setLenght(1.0 * sliderLenght.value);
+pendulo.setAngle(1.0 * sliderAngle.value);
+draw();
+
 
 sliderLenght.oninput = function() {
     lenghtView.innerHTML = this.value;
@@ -126,9 +130,11 @@ window.onload = function () {
   btnRun.onclick = function() {
      console.log("Start!");
      //animate();
-    clearInterval(Interval);
-     Interval = setInterval(startTimer, 10);
-     animate();
+     //pendulo.setLenght(1.0 * sliderLenght.value);
+     //pendulo.setAngle(1.0 * sliderAngle.value);
+      clearInterval(Interval);
+      Interval = setInterval(startTimer, 10);
+      animate();     
   }
 
     btnStop.onclick = function() {
@@ -139,11 +145,15 @@ window.onload = function () {
 
 
   buttonReset.onclick = function() {
-     clearInterval(Interval);
+    clearInterval(Interval);
     tens = "00";
   	seconds = "00";
     appendTens.innerHTML = tens;
   	appendSeconds.innerHTML = seconds;
+
+    pendulo.setLenght(1.0 * sliderLenght.value);
+    pendulo.setAngle(1.0 * sliderAngle.value);
+    draw();
   }
 
 
@@ -188,7 +198,7 @@ function pause() {
 
 function animate() {
     animId = requestAnimationFrame(animate);
-    t += 0.1;
+    t += 0.05
     //t += t_sec.value;
     pendulo.move(t);
     draw();
