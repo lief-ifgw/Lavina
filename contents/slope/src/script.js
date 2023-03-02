@@ -239,7 +239,7 @@ function mainLoop() {
     if(collisionDetectionWall(b, wallBottom)){
         freeze();
         formSlope.innerHTML = "$\\large{0+9.8\\,sen("+round(rad_deg(ang),1)+"°)\\,"+time+" \\approx "+velo+"}$";
-        ansSlope.innerHTML = "$\\large{"+velo+"}\\,m/s^{2}$";
+        ansSlope.innerHTML = "$\\large{"+velo+"}\\,m/s$";
         MathJax.typeset();
     }
     
