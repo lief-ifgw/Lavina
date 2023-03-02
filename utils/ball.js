@@ -13,29 +13,34 @@ class Ball{
         this.v = new Vector2D(0,0);
         this.a = new Vector2D(0,0);
         this.color = color;
-        this.acceleration = 1;
+        this.acceleration = 0;
         this.elasticity = 1;
-        BALLZ.push(this);
+        BALLS.push(this);
         this.player = false;
     }
     
-    drawBall(){
+    drawBall(color=this.color,num=true){
         ctx.beginPath();
         ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
-        ctx.strokeStyle = 'black';
+        ctx.strokeStyle = color;
         ctx.stroke();
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = color;
         ctx.fill();
-        ctx.font = '20pt Arial';
-        ctx.fillStyle = "black";
-        ctx.fillText(BALLZ.indexOf(this)+1,this.pos.x - 8,this.pos.y + 8);
         ctx.closePath();
+        if(num){
+            ctx.beginPath();
+            ctx.font = '20pt Arial';
+            ctx.fillStyle = "black";
+            ctx.fillText(BALLS.indexOf(this)+1,this.pos.x - 8,this.pos.y + 8);
+            ctx.closePath();
+        }
+        
     }
 
     reposition(){
         this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
         this.v = Vector2D.add(this.v,this.a);
-        this.v = Vector2D.scale(this.v,1-friction);
+        this.v = Vector2D.scale(this.v,1);
         this.pos = Vector2D.add(this.pos,this.v);
     }
 

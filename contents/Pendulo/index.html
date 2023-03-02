@@ -36,17 +36,21 @@
                         <table>
                             <tr>
                                 <td colspan="3">Comprimento: </td>
-                                <td colspan="3"><input type="range" min="0" max="50.0" value="10" step="1.0" class="slider" id="lenght"></td>
+                                <td colspan="3"><input type="range" min="1" max="30.0" value="25" step="1.0" class="slider" id="lenght"></td>
                                 <td colspan="2">$l$ = <span id="outLenght"></span>m</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Ângulo inicial: </td>
-                                <td colspan="3"><input type="range" min="0" max="90.0" value="0" step="1.0" class="slider" id="angle"></td>
+                                <td colspan="3"><input type="range" min="-90.0" max="90.0" value="40" step="1.0" class="slider" id="angle"></td>
                                 <td colspan="2">$\theta$ = <span id="outAngle"></span>$º$</td>
                             </tr>
                             <tr>
                                 <td colspan="4">Frequência Angular: </td>
                                 <td colspan="4">$\omega$ = <span id="omega"></span></td>
+                            </tr>
+                             <tr>
+                                <td colspan="4">Período de Oscilação: </td>
+                                <td colspan="4">$T$ = <span id="T"></span></td>
                             </tr>
                         </table>
                     </div>
@@ -78,7 +82,8 @@
         </div>
         <script src="../../utils/vector2D.js"></script>
         <script src="../../utils/arrow.js"></script>
+       <!-- <script src="src/stopwatch.js"></script> -->
+        <script src="src/pendulo.js"></script>
         <script src="src/main.js"></script>
-        <script src="src/stopwatch.js"></script>
     </body>
 </html>

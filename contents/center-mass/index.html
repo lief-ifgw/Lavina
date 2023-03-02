@@ -2,6 +2,8 @@
 <html lang="pt-br">
     <head>
         <script src="../../components/load-mathjax.js" async></script>
+        <title>Centro de Massa</title>
+        <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
         <link rel="stylesheet" type="text/css" href="../../styles/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,9 +23,10 @@
         </nav>
 
         <div class="content" style="position: flex">
-            <h1>Entendendo o centro de massa</h1><br>
+            <h1>Entendendo o Centro de Massa</h1><br>
             <h3>Abaixo temos uma tabela com informações sobre a localização e massa de três bolinhas, as quais estão representadas no plano a esquerda.
-                Seu trabalho é calcular o centro de massa considerando os três corpos e escolher a alternativa que considere correta. 
+                Seu trabalho é calcular o centro de massa considerando os três corpos e escolher a alternativa que considere correta. A marcação no plano é
+                de 30 metros a cada linha.
             </h3>
             <div class="simulation">
                 <div class="control-panel">
@@ -58,6 +61,10 @@
                             <td id="cmY"></td>
                         </tr>
                     </table>    
+                    <div class="horizontal-buttons">
+                        <button type="button" id="displayCM">Iniciar</button>
+                        <button type="button" id="resetCM">Reiniciar</button>
+                    </div>
                 </div>
                 <canvas id="myCanvas" align="center" tabindex="1"></canvas>
             </div>
@@ -70,26 +77,22 @@
                 c) <input type="radio" name="answer" id="opt3">
                 <label for="opt3" id="r3"></label><br>
             </form>
-            <div class="horizontal-buttons">
-                <button type="button" id="displayCM" style="width: 200px;">Iniciar</button>
-                <button type="button" id="resetCM" style="width: 200px;">Reiniciar</button>
-            </div><br>
+            <br>
             <button class="accordion" id="answerCM">Solução</button>
             <div class="panel">
             <br>
             <h3>Revisando as fórmulas do centro de massa:<br><br>
-            $\LARGE{x_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}x_{i}}\qquad}$
-            $\LARGE{y_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}y_{i}}\qquad}$
+            $\LARGE{x_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}x_{i}}\qquad}$<br>
+            $\LARGE{y_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}y_{i}}\qquad}$<br>
             $\LARGE{M = \sum\limits_{i = 1}^n {m_{i}}}$<br><br>
             Aplicando os valores que temos:<br><br>
-            <p id="ansXCM"></p>
+            <p id="ansXCM" class="math"></p>
             <br><br>
-            <p id="ansYCM"></p><br><br>
+            <p id="ansYCM" class="math"></p><br><br>
             Portanto, o ponto que representa o centro de massa é <p id="ansCM"></p></h3>
             </div>
         </div>
- 
-        <script src="src/class/ball.js"></script>
+        <script src="../../utils/ball.js"></script>
         <script src="../../utils/vector2D.js"></script>
         <script src="src/script.js"></script>
 

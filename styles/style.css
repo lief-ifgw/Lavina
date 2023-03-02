@@ -244,3 +244,10 @@ button:hover{
     overflow: hidden;
     transition: max-height 0.2s ease-out;
   }
+
+   .math {
+    width: auto;
+    overflow-x: auto;
+    white-space:nowrap;
+    padding: 10px;
+  }
