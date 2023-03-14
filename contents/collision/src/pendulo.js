@@ -25,9 +25,10 @@ class Pendulo {
     }
 
     move(t) {
-       this.pos = new Vector2D(this.pivo.x - this.lenght * 10 * Math.sin(this.angle),     
+        this.angle = Math.cos(this.ang_freq * t);
+
+        this.pos = new Vector2D(this.pivo.x - this.lenght * 10 * Math.sin(this.angle),     
                                 this.lenght * 10 * Math.cos(this.angle));
-       this.angle = Math.cos(this.ang_freq * t);
     }
 
     draw(ctx) {

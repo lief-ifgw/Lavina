@@ -12,10 +12,14 @@ class Ball {
     //move(t) {
     //   this.angle = Math.cos(1.0 * this.ang_freq * t);
     //}
+    move(t){
+        this.pos =  new Vector2D(this.pos.x  + (t*2) , this.pos.y);
+    }
 
     draw(ctx) {
         ctx.beginPath();
-        ctx.arc(100, 100, 10, 0, 2 * Math.PI, false);
+        this.pos = new Vector2D(this.pos.x,this.pos.y)
+        ctx.arc(this.pos.x, this.pos.y, 10, 0, 2 * Math.PI, false);
         ctx.fillStyle = 'blue';
         /* Black border on the circle */
         ctx.lineWidth = 2.5; /* Border width */

@@ -11,7 +11,7 @@ const defaultM2 = 10;
 
 var theta;         // Initial angle
 var xpos, ypos, radians;  // Pendulum position parameters
-
+var tcol = 0.0;
 var t = 0.0;
 /********** Physical constants ********/
 
@@ -210,15 +210,26 @@ function pause() {
 }
 
 function animate() {
-
     //pendulo.setAngle(1.0 * sliderAngle.value);
     animId = requestAnimationFrame(animate);
     t += 0.05
     //t += t_sec.value;
     pendulo.move(t);
-    if(pendulo.pos.x > ball.pos.x - 28 ){
-    	pause(); //trocar esse pause pelo início da dinâmica da bolinha
+
+  
+    if(tcol == 0.0){
+      if(pendulo.pos.x > ball.pos.x - 28){
+      	//pause(); //trocar esse pause pelo início da dinâmica da bolinha;
+        tcol = t;
+      }
     }
+
+    if(t > tcol){
+      ball.move(t);
+    }
+
+    console.log("%d, %d",t,tcol);
+
     draw();
 }
 
