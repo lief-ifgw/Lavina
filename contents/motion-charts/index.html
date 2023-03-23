@@ -26,23 +26,42 @@
             <h1>Gráficos de Cinemática</h1><br>
             <h3>Corpo em movimento, gráficos descrevendo grandezas relacionadas ao mesmo em tempo real.
             </h3>
-            <div class="simulation">
-                <div class="control-panel">
-                    <table>                 
+                <div class="simulation">
+                    <table>
                         <tr>
-                            <td colspan="2">
-                                <h3>Cronômetro:</h3>
-                                <h3> <span id="seconds">00</span>:<span id="tens">00</span></h3>
+                            <td rowspan="2">
+                                <div class="control-panel" id="control-panel">
+                                    <table>                 
+                                        <tr>
+                                            <td colspan="2">
+                                                <h3>Cronômetro:</h3>
+                                                <h3> <span id="seconds">00</span>:<span id="tens">00</span></h3>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                X: <h3 id="xPos"></h3>
+                                                Y: <h3 id="yPos"></h3>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="horizontal-buttons">
+                                        <button type="button" id="btnStart">Iniciar</button>
+                                        <button type="button" id="btnReset">Reiniciar</button>
+                                        <button type="button" id="btnZoomIn" style="width: 30px; height: 30px;">+</button>
+                                        <button type="button" id="btnZoomOut" style="width: 30px; height: 30px;">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <canvas id="objectCanvas" tabindex="1"></canvas>
                             </td>
                         </tr>
+                        <tr>
+                            <td><canvas id="myCanvas" tabindex="2"></canvas></td>
+                        </tr>
                     </table>
-                    <div class="horizontal-buttons">
-                        <button type="button" id="btnStart">Iniciar</button>
-                        <button type="button" id="btnReset">Reiniciar</button>
-                    </div>
                 </div>
-                <canvas id="myCanvas" align="center" tabindex="1"></canvas>
-            </div>
             <h2>Pergunta</h2>
             <form>
                 <input type="tel" name="answer" id="valor" placeholder="resposta" disabled size="4" style="font-size:medium;">
@@ -60,6 +79,7 @@
         <script src="../../utils/ball.js"></script>
         <script src="../../utils/wall.js"></script>
         <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/graph.js"></script>
         <script src="src/script.js"></script>
     </body>
 </html>
