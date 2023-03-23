@@ -31,6 +31,12 @@ class Pendulo {
                                 this.lenght * 10 * Math.cos(this.angle));
     }
 
+    stop(){
+        
+        this.pos = new Vector2D(this.pivo.x - this.lenght * 10 * Math.sin(this.angle),     
+        this.lenght * 10 * Math.cos(this.angle));
+    }
+
     draw(ctx) {
         //ctx.save();
         //ctx.clearRect(0,0, canvasWidth, canvasHeight);

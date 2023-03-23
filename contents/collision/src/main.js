@@ -9,10 +9,13 @@ const defaultM1 = 10;
 const defaultM2 = 10;
 /********** Variables ********/
 
+var pendulo;
+var ball;
 var theta;         // Initial angle
 var xpos, ypos, radians;  // Pendulum position parameters
 var tcol = 0.0;
 var t = 0.0;
+var h = 0.0;            //pendulum height
 /********** Physical constants ********/
 
 const alturaH    = 15;       // Fixed height H to the ground.
@@ -34,9 +37,9 @@ ctx.font = '18px Arial';
 
 var sliderAngle  = document.getElementById("angle");
 var angleView    = document.getElementById("outAngle");
-var sliderM1     = document.getElementById("mass1");
+var sliderM1     = document.getElementById("m1");
 var m1View       = document.getElementById("outMass1");
-var sliderM2     = document.getElementById("mass2");
+var sliderM2     = document.getElementById("m2");
 var m2View       = document.getElementById("outMass2");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
@@ -71,9 +74,17 @@ osc_period = 2.0 * Math.PI * (1.0/ang_freq);
 
 sliderAngle.oninput = function() {
     angleView.innerHTML = this.value;
-    pendulo.setAngle(1.0 * this.value);
+    pendulo.setAngle(this.value);
 
     draw();
+}
+
+sliderM1.oninput = function(){
+  m1View.innerHTML = this.value;
+}
+
+sliderM2.oninput = function(){
+  m2View.innerHTML = this.value;
 }
 
 radians = sliderAngle.value  * (Math.PI / 180.0);
@@ -81,18 +92,17 @@ radians = sliderAngle.value  * (Math.PI / 180.0);
 var pos = new Vector2D(pivo.x - defaultLenght * 10.0 * Math.sin(radians), defaultLenght * 10.0 * Math.cos(radians));
 var posb = new Vector2D(100 ,100)
 
-var pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, defaultAngle, defaultM1);
-var ball = new Ball(pivo, posb, defaultM2);
-
-pendulo.setLenght(defaultLenght);
-pendulo.setAngle(1.0 * sliderAngle.value);
-draw();
-
+h = defaultLenght - defaultLenght*Math.cos(radians);
 
 
 /********** Animation ********/
 function init() {
-     //animate();
+
+  pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
+  pendulo.setLenght(defaultLenght);
+  pendulo.setAngle(sliderAngle.value);
+  ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h);
+  draw();
  }
 
 document.onload = init();
@@ -134,13 +144,19 @@ window.onload = function () {
   var Interval ;
 
   btnRun.onclick = function() {
+    if(sliderAngle.value != 0){
      console.log("Start!");
-     //animate();
-     //pendulo.setLenght(1.0 * sliderLenght.value);
-     pendulo.setAngle(1.0 * sliderAngle.value);
-     //clearInterval(Interval);
-     // Interval = setInterval(startTimer, 10);
-      animate();     
+     pendulo.setAngle(sliderAngle.value);
+     ball.setMass1(sliderM1.value);
+     ball.setMass2(sliderM2.value);
+     h = defaultLenght - defaultLenght*Math.cos(sliderAngle.value  * (Math.PI / 180.0));
+     console.log("%f %f",sliderAngle.value,h);
+     ball.seth(h);
+     animate();
+    }
+    else{
+      console.log("Coloque um ângulo diferente de zero!");
+    }
   }
 
     btnStop.onclick = function() {
@@ -210,22 +226,19 @@ function pause() {
 }
 
 function animate() {
-    //pendulo.setAngle(1.0 * sliderAngle.value);
     animId = requestAnimationFrame(animate);
-    t += 0.05
-    //t += t_sec.value;
+    t += 0.03
     pendulo.move(t);
-
   
-    if(tcol == 0.0){
-      if(pendulo.pos.x > ball.pos.x - 28){
-      	//pause(); //trocar esse pause pelo início da dinâmica da bolinha;
+      if(pendulo.pos.x > ball.pos.x - 30 || tcol != 0){
         tcol = t;
-      }
-    }
+        pendulo.stop();
+        ball.move(t);
 
-    if(t > tcol){
-      ball.move(t);
+      }
+    
+    if(ball.pos.y >  400 - 14 ){
+      pause();
     }
 
     console.log("%d, %d",t,tcol);
