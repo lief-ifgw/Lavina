@@ -14,20 +14,23 @@ var ctxObject = canvasObject.getContext('2d');
 document.getElementById("control-panel").style.height = panelHeight+"px";
 
 
-//let FUNCT = ["X+3"];
+let FUNCT = ["Math.pow(X,2)","Math.cos(X)","X*5 - 30"];//variável escrita como 'X', maiúsculo
+let COLORFUNCT = ["green","blue","red"];
 let zoomIn = document.getElementById("btnZoomIn");
 let zoomOut = document.getElementById("btnZoomOut");
-let funct = "Math.pow(X,2)- 2*X";
-let functPrompt = document.getElementById("answer");
-functPrompt.innerHTML = funct;
-let px = 70;
-let py = 70;
-let oX = 100;
-let oY = 300;
+let btnStart = document.getElementById("btnStart");
+let btnReset = document.getElementById("btnReset");
+let xCoord = document.getElementById("xCoord");
+let yCoord = document.getElementById("yCoord");
+let px = 20;
+let py = 20;
+let oX = 3*px;
+let oY = canvasHeight - 3*py;
 let mouseX;
 let mouseY;
 let thick = 2;
 let h = 0;
+
 
 let graph1 = new Graph(canvasGraph);
 
@@ -45,7 +48,7 @@ function mainLoop() {
     h += 1;
     ctxGraph.save();
     ctxGraph.clearRect(0,0,canvasWidth,canvasHeight);
-    graph1.plotFunction(px,py,funct,"green","#888888",thick);//usar 'X', e não 'x'
+    graph1.plotFunction(px,py,FUNCT,COLORFUNCT,"#888888",thick);//usar 'X', e não 'x'
     ctxGraph.restore();
 }
 
@@ -67,4 +70,21 @@ zoomOut.onclick = function(){
         py -= 10;
         thick -= 0.2;
     }
+}
+
+
+
+
+canvasGraph.addEventListener("mousemove", function (evt) {
+    var mousePos = getMouseCoord(canvasGraph, evt);
+    xCoord.innerHTML = Math.round(((mousePos.x)/px)*100)/100;
+    yCoord.innerHTML = Math.round(((mousePos.y)/py)*100)/100;
+}, false);
+
+function getMouseCoord(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left - oX,
+        y: -1*(evt.clientY - Math.round(rect.top) - oY)
+    };
 }
