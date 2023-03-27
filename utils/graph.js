@@ -28,33 +28,28 @@ class Graph{
         this.ctx.fill();
     }
 
-    plotFunction(px,py,funct,colorFunct="black",colorGrid="grey",thick = 2){
+    plotFunction(px,py,FUNCT,COLORFUNCT,colorGrid="grey",thick = 2){
         this.drawGrid(px,py,colorGrid);
         let x;
         let y;
         let xAntes = 0;
         let yAntes = 0;
-        funct = funct.replace(/X/g,"(x/px)");
-        funct ="(" + funct + ")*py";
-        for(x=-oX;x<this.canvas.width-oX;x += px/100){
-            y = eval(funct)*(py/px);    
-            x == -oX ? this.drawPoint(x+oX,(-y)+oY,thick): setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,colorFunct,this.canvas,thick);
-            xAntes = x;
-            yAntes = y;
-        }
-        // FUNCT.forEach((f,i) => {
-        //     f = f.replace(/X/g,"(x/px)");
-        //     f = "(" + f + ")*py";
-        //     FUNCT[i] = f;    
-        // });
-        // for(x=-oX;x<this.canvas.width-oX;x += px/100){
-        //     FUNCT.forEach(f => {
-        //         y = eval(f)*(py/px);
-        //         x == -oX ? this.drawPoint(x+oX,(-y)+oY,thick): setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,colorFunct,this.canvas,thick);   
-        //         xAntes = x;
-        //         yAntes = y;
-        //     });
-        // }
+        let fTransf = [];
+        FUNCT.forEach((f,i) => {
+            f = f.replace(/X/g,"(x/px)");
+            f = "(" + f + ")*py";
+            fTransf.push(f);
+        });
+        FUNCT = fTransf;
+    
+        FUNCT.forEach((f,i) => {
+            for(x=-oX;x<this.canvas.width-oX;x += px/100){
+                y = eval(f)*(py/px);
+                x == -oX ? this.drawPoint(x+oX,(-y)+oY,thick): setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,COLORFUNCT[i],this.canvas,thick);   
+                xAntes = x;
+                yAntes = y;
+            }
+        });
     }
 
     moveGraph(){    
