@@ -9,6 +9,7 @@ const defaultM1 = 10;
 const defaultM2 = 10;
 /********** Variables ********/
 
+var oldX,oldY;
 var pendulo;
 var ball;
 var theta;         // Initial angle
@@ -101,7 +102,7 @@ function init() {
   pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
   pendulo.setLenght(defaultLenght);
   pendulo.setAngle(sliderAngle.value);
-  ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h);
+  ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h,oldX,oldY);
   draw();
  }
 
@@ -234,7 +235,6 @@ function animate() {
         tcol = t;
         pendulo.stop();
         ball.move(t);
-
       }
     
     if(ball.pos.y >  400 - 14 ){
