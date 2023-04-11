@@ -17,6 +17,9 @@ var xpos, ypos, radians;  // Pendulum position parameters
 var tcol = 0.0;
 var t = 0.0;
 var h = 0.0;            //pendulum height
+var arrpos = new Array();      // array for the ball trajectory
+
+
 /********** Physical constants ********/
 
 const alturaH    = 15;       // Fixed height H to the ground.
@@ -102,7 +105,7 @@ function init() {
   pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
   pendulo.setLenght(defaultLenght);
   pendulo.setAngle(sliderAngle.value);
-  ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h,oldX,oldY);
+  ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h,arrpos);
   draw();
  }
 
@@ -151,7 +154,7 @@ window.onload = function () {
      ball.setMass1(sliderM1.value);
      ball.setMass2(sliderM2.value);
      h = defaultLenght - defaultLenght*Math.cos(sliderAngle.value  * (Math.PI / 180.0));
-     console.log("%f %f",sliderAngle.value,h);
+     //console.log("%f %f",sliderAngle.value,h);
      ball.seth(h);
      animate();
     }
@@ -241,7 +244,7 @@ function animate() {
       pause();
     }
 
-    console.log("%d, %d",t,tcol);
+    //console.log("%d, %d",t,tcol);
 
     draw();
 }

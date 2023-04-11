@@ -1,13 +1,12 @@
 class Ball {
-    constructor(pivo, pos, mass1,mass2,h,oldX,oldY) {
+    constructor(pivo, pos, mass1,mass2,h,arrpos) {
         this.pivo         = new Vector2D(pivo.x, pivo.y);
         this.pos          = new Vector2D(pos.x, pos.y);
         this.mass2        = mass2;
         this.mass1        = mass1;
         this.gravity      = new Vector2D(0,10);
         this.h            = h;
-        this.oldX         = 100;
-        this.oldY         = 100;
+        this.arrpos       = arrpos;
 
         // this.acceleration = new Vector2D(0, 0);
         // this.velocity     = new Vector2D(0, 0);
@@ -37,6 +36,7 @@ class Ball {
 
     draw(ctx) {
         
+
         /* Drawing the ball */
         ctx.beginPath();
         this.pos = new Vector2D(this.pos.x,this.pos.y)
@@ -45,17 +45,21 @@ class Ball {
         /* Black border on the circle */
         ctx.lineWidth = 2.5; /* Border width */
         ctx.strokeStyle = 'black'; /* Border color */
+        
+        /*Drawing the trajectory*/
+        var narr = this.arrpos.push(this.pos);
+        //console.log(narr);
+        for(var i = 0; i < narr; i++){
+
+            ctx.rect(this.arrpos[i].x,this.arrpos[i].y,0.5,0.5);
+            ctx.stroke();
+            //console.log(this.arrpos[i].x,this.arrpos[i].y);
+            
+        }
+        
+        
         ctx.fill();
         ctx.stroke();
-
-        /*Drawing the trajectory*/
-        ctx.beginPath();
-        ctx.moveTo(this.oldX,this.oldY);
-        ctx.lineTo(this.pos.x,this.pos.y);
-        /* Draw the border */
-        ctx.stroke();  /* It's necessary only if your are drawing the border */
-        this.oldX = this.pos.x;
-        this.oldY = this.pos.y;
     }
 
 }
