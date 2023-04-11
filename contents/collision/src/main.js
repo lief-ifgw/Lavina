@@ -12,18 +12,19 @@ const defaultM2 = 10;
 var oldX,oldY;
 var pendulo;
 var ball;
-var theta;         // Initial angle
-var xpos, ypos, radians;  // Pendulum position parameters
+var theta;                     // Initial angle
+var xpos, ypos, radians;       // Pendulum position parameters
 var tcol = 0.0;
 var t = 0.0;
-var h = 0.0;            //pendulum height
+var h = 0.0;                   //pendulum height
 var arrpos = new Array();      // array for the ball trajectory
+
 
 
 /********** Physical constants ********/
 
-const alturaH    = 15;       // Fixed height H to the ground.
-const defaultG   = 10.0;    // Gravity acceleration
+const alturaH    = 20;       // Fixed height H to the ground.
+const defaultG   = 10.0;     // Gravity acceleration
 
 var ang_freq = Math.sqrt(defaultG / defaultLenght);
 
@@ -47,7 +48,7 @@ var sliderM2     = document.getElementById("m2");
 var m2View       = document.getElementById("outMass2");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
-
+var posfin       = document.getElementById("finalpos");
 
 angleView.innerHTML  = sliderAngle.value;
 m1View.innerHTML = sliderM1.value;
@@ -58,45 +59,32 @@ ang_freq = Math.sqrt(defaultG/defaultLenght);
 osc_period = 2.0 * Math.PI * (1.0/ang_freq);
 
 
-
-
-//sliderLenght.oninput = function() {
-//      lenghtView.innerHTML = this.value;
-//
-//    ang_freq = Math.sqrt(defaultG/sliderLenght.value);
-//    omegaView.innerHTML = ang_freq;
-//
-//    osc_period = 2.0 * Math.PI * (1.0/ang_freq);
-//    TView.innerHTML = osc_period;
-//
-//    pendulo.setLenght(1.0 * this.value);
-//    pendulo.setAngularFrequency(ang_freq);
-
-//    draw();
-//}
-
-
 sliderAngle.oninput = function() {
     angleView.innerHTML = this.value;
     pendulo.setAngle(this.value);
-
+    radians = sliderAngle.value  * (Math.PI / 180.0);
+    h = defaultLenght - defaultLenght*Math.cos(radians);
+    posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
     draw();
 }
 
 sliderM1.oninput = function(){
   m1View.innerHTML = this.value;
+  posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+
 }
 
 sliderM2.oninput = function(){
   m2View.innerHTML = this.value;
+  posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+
 }
 
-radians = sliderAngle.value  * (Math.PI / 180.0);
 
 var pos = new Vector2D(pivo.x - defaultLenght * 10.0 * Math.sin(radians), defaultLenght * 10.0 * Math.cos(radians));
 var posb = new Vector2D(100 ,100)
 
-h = defaultLenght - defaultLenght*Math.cos(radians);
+
 
 
 /********** Animation ********/
@@ -154,7 +142,6 @@ window.onload = function () {
      ball.setMass1(sliderM1.value);
      ball.setMass2(sliderM2.value);
      h = defaultLenght - defaultLenght*Math.cos(sliderAngle.value  * (Math.PI / 180.0));
-     //console.log("%f %f",sliderAngle.value,h);
      ball.seth(h);
      animate();
     }

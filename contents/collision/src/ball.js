@@ -49,7 +49,7 @@ class Ball {
         /*Drawing the trajectory*/
         var narr = this.arrpos.push(this.pos);
         //console.log(narr);
-        for(var i = 0; i < narr; i++){
+        for(var i = 0; i < narr; i = i + 3){
 
             ctx.rect(this.arrpos[i].x,this.arrpos[i].y,0.5,0.5);
             ctx.stroke();
