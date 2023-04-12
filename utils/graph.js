@@ -1,5 +1,5 @@
 class Graph{
-    constructor(canvas){
+    constructor(canvas){ 
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         let mouse_down;
@@ -28,29 +28,70 @@ class Graph{
         this.ctx.fill();
     }
 
-    plotFunction(px,py,FUNCT,COLORFUNCT,colorGrid="grey",thick = 2){
+    plotFunction(px,py,FUNCT,COLORFUNCT,colorGrid="grey",thick = 2, insta = true,canvas = this.canvas,x){
         this.drawGrid(px,py,colorGrid);
-        let x;
+        // let x = -oX;
         let y;
-        let xAntes = 0;
-        let yAntes = 0;
+        let index = 0;
+        let j = 0;
+        let xAntes;
+        let yAntes;
         let fTransf = [];
-        FUNCT.forEach((f,i) => {
+        FUNCT.forEach((f) => {
             f = f.replace(/X/g,"(x/px)");
             f = "(" + f + ")*py";
             fTransf.push(f);
         });
         FUNCT = fTransf;
-    
-        FUNCT.forEach((f,i) => {
-            for(x=-oX;x<this.canvas.width-oX;x += px/100){
-                y = eval(f)*(py/px);
-                x == -oX ? this.drawPoint(x+oX,(-y)+oY,thick): setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,COLORFUNCT[i],this.canvas,thick);   
-                xAntes = x;
-                yAntes = y;
+        if(insta){
+            FUNCT.forEach((f,i) => {
+                for(x=-oX;x<canvas.width-oX;x += px/100){
+                    y = eval(f)*(py/px);
+                    x == -oX ? {}: setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,COLORFUNCT[i],canvas,thick);   
+                    xAntes = x;
+                    yAntes = y;
+                }
+            });
+        }
+        else{
+            let y = eval(FUNCT[index])*(py/px);
+            let xAntes = x;
+            let yAntes = y; 
+            if(x !== -oX){
+                setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,COLORFUNCT[index],canvas,thick);
             }
-        });
+            //x += px/100;
+            if(x >= canvas.width-oX){
+                index += 1;
+                x = -oX;
+            }
+            return{index,x};
+
+        }
     }
+    fu(f,x,i){
+        let y = eval(f)*(py/px);
+        let xAntes = x;
+        let yAntes = y;
+        console.log(x); 
+        x == -oX ? this.drawPoint(x+oX,(-y)+oY,thick): setLine(xAntes+oX,-yAntes+oY,x+oX,-y+oY,COLORFUNCT[i],this.canvas,thick);   
+        x += px/100;
+        console.log(x);
+        if(x >= this.canvas.width-oX){
+            clearInterval(sett);
+        }
+    }
+    
+
+    // var counter = 0;
+    // var i = setInterval(function(){
+    //     // do your thing
+    
+    //     counter++;
+    //     if(counter === 10) {
+    //         clearInterval(i);
+    //     }
+    // }, 200);
 
     moveGraph(){    
         this.canvas.onmousedown = mouse_down;
