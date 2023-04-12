@@ -14,8 +14,8 @@ var ctxObject = canvasObject.getContext('2d');
 document.getElementById("control-panel").style.height = panelHeight+"px";
 
 
-let FUNCT = ["Math.pow(X,2)","Math.cos(X)","X*5 - 30"];//variável escrita como 'X', maiúsculo
-let COLORFUNCT = ["green","blue","red"];
+let FUNCT = ["Math.sin(X)"];//variável escrita como 'X', maiúsculo
+let COLORFUNCT = ["red"];
 let zoomIn = document.getElementById("btnZoomIn");
 let zoomOut = document.getElementById("btnZoomOut");
 let btnStart = document.getElementById("btnStart");
@@ -30,25 +30,36 @@ let mouseX;
 let mouseY;
 let thick = 2;
 let h = 0;
-
+let x = -oX
 
 let graph1 = new Graph(canvasGraph);
 
 document.onload = mainLoop();
 document.onload = animate();
 
+
 function animate() {
     animId = requestAnimationFrame(animate);
     mainLoop();
 }
 
-graph1.moveGraph();
+//graph1.moveGraph();
 
 function mainLoop() {
     h += 1;
     ctxGraph.save();
     ctxGraph.clearRect(0,0,canvasWidth,canvasHeight);
-    graph1.plotFunction(px,py,FUNCT,COLORFUNCT,"#888888",thick);//usar 'X', e não 'x'
+
+    let sett = setInterval(function(){
+        let plotVar = graph1.plotFunction(px,py,FUNCT,COLORFUNCT,"#888888",thick,false,canvasGraph,x);//usar 'X', e não 'x'
+        console.log(plotVar.index);
+        x = plotVar.x + px/100;
+        if(FUNCT.length === plotVar.index){
+            clearInterval(sett);
+        }    
+    },1000)    
+    
+
     ctxGraph.restore();
 }
 
