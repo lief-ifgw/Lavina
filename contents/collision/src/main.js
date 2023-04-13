@@ -18,8 +18,7 @@ var tcol = 0.0;
 var t = 0.0;
 var h = 0.0;                   //pendulum height
 var arrpos = new Array();      // array for the ball trajectory
-
-
+var posfin;
 
 /********** Physical constants ********/
 
@@ -48,7 +47,8 @@ var sliderM2     = document.getElementById("m2");
 var m2View       = document.getElementById("outMass2");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
-var posfin       = document.getElementById("finalpos");
+//var posfin       = document.getElementById("finalpos");
+var answer       = document.getElementById("answ");
 
 angleView.innerHTML  = sliderAngle.value;
 m1View.innerHTML = sliderM1.value;
@@ -58,25 +58,25 @@ ang_freq = Math.sqrt(defaultG/defaultLenght);
 
 osc_period = 2.0 * Math.PI * (1.0/ang_freq);
 
-
 sliderAngle.oninput = function() {
     angleView.innerHTML = this.value;
     pendulo.setAngle(this.value);
     radians = sliderAngle.value  * (Math.PI / 180.0);
     h = defaultLenght - defaultLenght*Math.cos(radians);
-    posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+
     draw();
 }
 
 sliderM1.oninput = function(){
   m1View.innerHTML = this.value;
-  posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
 
 }
 
 sliderM2.oninput = function(){
   m2View.innerHTML = this.value;
-  posfin.innerHTML = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
 
 }
 
@@ -138,15 +138,23 @@ window.onload = function () {
   btnRun.onclick = function() {
     if(sliderAngle.value != 0){
      console.log("Start!");
-     pendulo.setAngle(sliderAngle.value);
-     ball.setMass1(sliderM1.value);
-     ball.setMass2(sliderM2.value);
-     h = defaultLenght - defaultLenght*Math.cos(sliderAngle.value  * (Math.PI / 180.0));
-     ball.seth(h);
-     animate();
+     console.log(answer.value);
+      if(answer.value != 0){
+        //console.log(answer.value);
+        pendulo.setAngle(sliderAngle.value);
+        ball.setMass1(sliderM1.value);
+        ball.setMass2(sliderM2.value);
+        h = defaultLenght - defaultLenght*Math.cos(sliderAngle.value  * (Math.PI / 180.0));
+        ball.seth(h);
+        animate();
+      }
+      else{
+        alert("Reponda a posição final!");
+      }
+
     }
     else{
-      console.log("Coloque um ângulo diferente de zero!");
+      alert("Coloque um ângulo diferente de zero!");
     }
   }
 
@@ -229,6 +237,12 @@ function animate() {
     
     if(ball.pos.y >  400 - 14 ){
       pause();
+      if(answer.value < (posfin+(posfin*0.05)) && answer.value > (posfin-(posfin*0.05)) ){
+        alert('Resposta correta!  Re: ' + posfin);
+      }
+      else{
+        alert('Resposta incorreta!  Re: ' + posfin);
+      }
     }
 
     //console.log("%d, %d",t,tcol);
