@@ -54,8 +54,8 @@ class Pendulo {
         //this.pos = new Vector2D(this.pivo.x - this.lenght * 10.0 * Math.sin(this.angle),     
         //                        this.lenght * 10.0 * Math.cos(this.angle));
 
-        ctx.lineTo(110,110);
-        ctx.lineTo(110,600);
+        ctx.lineTo(100,110);
+        ctx.lineTo(100,600);
         ctx.lineWidth = 3;
         ctx.stroke();
 
