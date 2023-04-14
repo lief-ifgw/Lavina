@@ -160,7 +160,7 @@ button:hover{
 
 .control-panel th,
 .control-panel td {
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     padding: 2px; 
     background-color: white;
@@ -206,6 +206,15 @@ button:hover{
 
 .hide{
     display: none;
+}
+
+.input_text {
+    width:20%;
+    text-align: center;
+    border: 5px;
+    padding: 2px;
+    background-color: lightgray;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .accordion {
