@@ -18,7 +18,7 @@ class Ball {
     //}
     move(t){
         //EOM
-        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(1 + (this.mass2)/(this.mass1)) , (10*(t*0.2)**2)/2);
+        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(0.8 + 1 + (this.mass2)/(this.mass1)) , (10*(t*0.2)**2)/2);
         this.pos = Vector2D.add(this.pos,v2);
     }
 

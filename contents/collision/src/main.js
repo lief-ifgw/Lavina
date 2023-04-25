@@ -47,6 +47,8 @@ var sliderM2     = document.getElementById("m2");
 var m2View       = document.getElementById("outMass2");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
+var btnReset     = document.getElementById("button-reset");
+
 //var posfin       = document.getElementById("finalpos");
 var answer       = document.getElementById("answ");
 
@@ -83,8 +85,7 @@ sliderM2.oninput = function(){
 
 var pos = new Vector2D(pivo.x - defaultLenght * 10.0 * Math.sin(radians), defaultLenght * 10.0 * Math.cos(radians));
 var posb = new Vector2D(100 ,100)
-
-
+posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
 
 
 /********** Animation ********/
@@ -132,7 +133,7 @@ window.onload = function () {
   var appendSeconds = document.getElementById("seconds")
   //var buttonStart = document.getElementById('button-start');
   //var buttonStop = document.getElementById('button-stop');
-  var buttonReset = document.getElementById('button-reset');
+  //var buttonReset = document.getElementById('button-reset');
   var Interval ;
 
   btnRun.onclick = function() {
@@ -158,14 +159,14 @@ window.onload = function () {
     }
   }
 
-    btnStop.onclick = function() {
-        pause();
-        draw();
-       clearInterval(Interval);
-  }
+  //  btnStop.onclick = function() {
+  //      pause();
+  //      draw();
+  //     clearInterval(Interval);
+  //}
 
 
-  buttonReset.onclick = function() {
+  btnReset.onclick = function() {
     clearInterval(Interval);
     //tens = "00";
     // 	seconds = "00";
@@ -175,10 +176,16 @@ window.onload = function () {
     //pendulo.setLenght(1.0 * sliderLenght.value);
     ctx.save();
     ctx.clearRect(0,0, canvasWidth, canvasHeight);
-    pendulo.setAngle(1.0 * sliderAngle.value);
+    pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
+    pendulo.setLenght(defaultLenght);
+    pendulo.setAngle(sliderAngle.value);
+    ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h,arrpos);
+    ctx.save();
+    ctx.clearRect(0,0, canvasWidth, canvasHeight);
+    pendulo.draw(ctx);
+    ball.draw(ctx);
     ctx.restore();
-    draw();
-  }
+    }
 
 
 
@@ -238,10 +245,10 @@ function animate() {
     if(ball.pos.y >  400 - 14 ){
       pause();
       if(answer.value < (posfin+(posfin*0.05)) && answer.value > (posfin-(posfin*0.05)) ){
-        alert('Resposta correta!  Re: ' + posfin);
+        alert('Resposta correta!  Re: ' + posfin + ' m');
       }
       else{
-        alert('Resposta incorreta!  Re: ' + posfin);
+        alert('Resposta incorreta!  Re: ' + posfin + ' m');
       }
     }
 
