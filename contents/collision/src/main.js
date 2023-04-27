@@ -85,12 +85,10 @@ sliderM2.oninput = function(){
 
 var pos = new Vector2D(pivo.x - defaultLenght * 10.0 * Math.sin(radians), defaultLenght * 10.0 * Math.cos(radians));
 var posb = new Vector2D(100 ,100)
-posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
 
 
 /********** Animation ********/
 function init() {
-
   pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
   pendulo.setLenght(defaultLenght);
   pendulo.setAngle(sliderAngle.value);
@@ -126,6 +124,8 @@ document.onload = init();
 // STOPWATCH STUFF
 
 window.onload = function () {
+  h = defaultLenght - defaultLenght*Math.cos(defaultAngle  * (Math.PI / 180.0));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (defaultM2/defaultM1));
 
   var seconds = 00;
   var tens = 00;
@@ -134,9 +134,11 @@ window.onload = function () {
   //var buttonStart = document.getElementById('button-start');
   //var buttonStop = document.getElementById('button-stop');
   //var buttonReset = document.getElementById('button-reset');
+  
   var Interval ;
 
   btnRun.onclick = function() {
+    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
     if(sliderAngle.value != 0){
      console.log("Start!");
      console.log(answer.value);
@@ -184,7 +186,7 @@ window.onload = function () {
     ctx.clearRect(0,0, canvasWidth, canvasHeight);
     pendulo.draw(ctx);
     ball.draw(ctx);
-    ctx.restore();
+    ctx.restore();  
     }
 
 
