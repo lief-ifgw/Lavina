@@ -199,9 +199,12 @@ function animate() {
     t += 0.03
     ball1.move(t);
     ball2.move(t);
+    //Elastica (teste)
     if( Math.abs(ball1.pos.x - ball2.pos.x) < 20 ){
-      pause();
+      ball1.setV(-ball1.v);
+      ball2.setV(-ball2.v);
     }
+    //Inelastica (teste)
 
     //console.log("%d, %d",t,tcol);
 
