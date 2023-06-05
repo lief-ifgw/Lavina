@@ -5,7 +5,8 @@ class Wall{
         WALLS.push(this);
     }
 
-    drawWall(){
+    drawWall(canvas){
+        let ctx = canvas.getContext('2d');
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
         ctx.lineTo(this.end.x, this.end.y);
