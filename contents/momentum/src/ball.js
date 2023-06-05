@@ -21,6 +21,19 @@ class Ball {
         this.pos = Vector2D.add(this.pos,v2);
     }
 
+    //move1(t,m1,m2,v1){
+    //    console.log("%d, %d %d",m1,m2,v1);
+    //    var v1f = new Vector2D(0.05*t*(((m1 - m2)/(m1 + m2))*v1 + (2*m2/(m1+m2))*(-10.0 )),0);
+    //    console.log(v1f.x);
+    //    this.pos = Vector2D.add(this.pos,v1f);
+    //}
+    
+    //move2(t,m1,m2,v1){
+    //    var v2f = new Vector2D(0.05*t*(((2*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0)),0);
+    //    console.log(v2f.x);
+    //    this.pos = Vector2D.add(this.pos,v2f);
+    //}
+
     setMass(mass){
         this.mass = mass;
     }

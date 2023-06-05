@@ -12,6 +12,8 @@ var color1 = 'blue';
 var color2 = 'red';
 var t = 0.0;
 var pivo;
+var v1f;
+var v2f;
 
 /********** Physical constants ********/
 
@@ -201,10 +203,16 @@ function animate() {
     ball2.move(t);
     //Elastica (teste)
     if( Math.abs(ball1.pos.x - ball2.pos.x) < 20 ){
-      ball1.setV(-ball1.v);
-      ball2.setV(-ball2.v);
+      //v1f = new Vector2D(0.005*t*((-10.0 - sliderV1.value) + (2.0*sliderM1.value*sliderV1.value + (-10.0)**2 * (sliderM2.value - sliderM1.value))/(sliderM2.value - sliderM1.value)),0);
+      var m1 = sliderM1.value;
+      var m2 = sliderM2.value;
+      var v1 = sliderV1.value;
+      ball1.setV( 50.0*(((m1 - m2)/(m1 + m2))*v1 + (2.0*m2/(m1+m2))*(-10.0)));
+      //console.log("%f",50.0*(((m1 - m2)/(m1 + m2))*v1 + (2.0*m2/(m1+m2))*(-10.0)));
+      ball2.setV( 50.0*(((2.0*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0)));
+      //ball1.move1(t,sliderM1.value,sliderM2.value,sliderV1.value);
+      //ball2.move2(t,sliderM1.value,sliderM2.value,sliderV1.value);
     }
-    //Inelastica (teste)
 
     //console.log("%d, %d",t,tcol);
 
