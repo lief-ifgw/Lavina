@@ -7,6 +7,7 @@ canvas.height = canvasHeight;
 
 var ctx = canvas.getContext('2d');
 
+let color = ['#5050FF','#FF5050','yellow'];
 let displayCM  = document.getElementById("displayCM");
 let resetCM = document.getElementById("resetCM");
 let answerCM = document.getElementById("answerCM");
@@ -112,14 +113,14 @@ function drawX(cx, cy, l, t = 1){
     ctx.closePath();
 }
 
-let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9), '#5050FF');
-let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9), '#FF5050');
-let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9), 'yellow');
+let ball1 = new Ball("ball1", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9));
+let ball2 = new Ball("ball2", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9));
+let ball3 = new Ball("ball3", Math.random()*canvasWidth, Math.random()*canvasHeight, 15, Math.ceil(Math.random()*9));
 
 
 drawGrid(gridX,gridY,'blue');
-BALLS.forEach((b) => {
-    b.drawBall();
+BALLS.forEach((b,index) => {
+    b.drawBall(canvas,color[index],true);
 });
 
 massCenter();
