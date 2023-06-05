@@ -223,11 +223,11 @@ function mainLoop() {
     velo = round(9.8*Math.sin(round(new_rad,3))*time,1)
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     BALLS.forEach((b, index) => {
-        b.drawBall('black',false)
+        b.drawBall(canvas,'black',false)
         // b.v.y += g;
-        b.reposition();
+        b.reposition(0,0,0,2);
         WALLS.forEach((w) => {
-            w.drawWall();
+            w.drawWall(canvas);
             if(collisionDetectionWall(BALLS[index], w)){
                 penetrationResultWall(BALLS[index], w);
                 collisionResultWall(BALLS[index], w);
