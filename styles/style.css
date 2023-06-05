@@ -231,33 +231,65 @@ button:hover{
     transition: 0.4s;
   }
   
-  .active, .accordion:hover {
+.active, .accordion:hover {
     background-color: #01e59b
-  }
-  
-  .accordion:after {
+}
+
+.accordion:after {
     content: '\002B';
     color: #777;
     font-weight: bold;
     float: right;
     margin-left: 5px;
-  }
-  
-  .active:after {
+}
+
+.active:after {
     content: "\2212";
-  }
-  
-  .panel {
+}
+
+.panel {
     padding: 0 18px;
     background-color: rgb(255, 255, 255);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-  }
+}
 
-   .math {
+.math {
     width: auto;
     overflow-x: auto;
     white-space:nowrap;
-    padding: 10px;
-  }
+}
+
+.color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    margin: 20px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+    
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    opacity: 80%;
+    color: #fff;
+    text-align: center;
+    padding: 2px 3px;
+    border-radius: 6px;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -80px;
+    
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
