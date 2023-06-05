@@ -1,5 +1,5 @@
 class Ball{
-    constructor(name, x, y, r, m=1, color){
+    constructor(name, x, y, r, m=1){
         this.name = name;
         this.pos = new Vector2D(x,y);
         this.r = r;
@@ -12,14 +12,14 @@ class Ball{
         }
         this.v = new Vector2D(0,0);
         this.a = new Vector2D(0,0);
-        this.color = color;
         this.acceleration = 0;
         this.elasticity = 1;
         BALLS.push(this);
         this.player = false;
     }
     
-    drawBall(color=this.color,num=true){
+    drawBall(canvas,color,num=true){
+        let ctx = canvas.getContext('2d');
         ctx.beginPath();
         ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
         ctx.strokeStyle = color;
@@ -37,11 +37,25 @@ class Ball{
         
     }
 
-    reposition(){
-        this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
-        this.v = Vector2D.add(this.v,this.a);
-        this.v = Vector2D.scale(this.v,1);
-        this.pos = Vector2D.add(this.pos,this.v);
+    reposition(time = 0, v0 = 0, d0 = 0,dimensions=1){
+        if(dimensions === 1){
+            if(time != undefined){
+                this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
+                this.v.x = v0 + this.a.x * time;
+                //this.v = Vector2D.add(Vector2D.scale(this.v,1),Vector2D.scale(this.a,1));
+                //this.v = Vector2D.scale(this.v,1);
+                //this.pos = Vector2D.add(this.pos,Vector2D.scale(this.v,1));
+                //this.pos = Vector2D.add(this.pos,Vector2D.scale(Vector2D.add(this.v,Vector2D.scale(this.a,time)),time));
+                this.pos.x = d0 + this.v.x * time;
+                //console.log("\nposição:",this.pos,"\nvelocidade:",this.v,"\naceleração:",this.a,"\ntempo:",time);
+            }
+        }
+        else if(dimensions === 2){
+            this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
+            this.v = Vector2D.add(this.v,this.a);
+            this.v = Vector2D.scale(this.v,1);
+            this.pos = Vector2D.add(this.pos,this.v);    
+        }
     }
 
 }
