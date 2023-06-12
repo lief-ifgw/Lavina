@@ -1,12 +1,12 @@
 class Pendulo {
     constructor(pivo, pos, ang_freq, lenght, angle, mass1) {
-        this.pivo         = new Vector2D(pivo.x, pivo.y);
+        this.pivo         = new Vector2D(parseFloat(pivo.x), parseFloat(pivo.y));
         this.pos          = new Vector2D(pos.x, pos.y);
-        this.mass         = mass1;
-        this.angle        = angle * (Math.PI / 180.0);
-        this.ini_angle    = angle * (Math.PI / 180.0);
-        this.ang_freq     = ang_freq;
-        this.lenght       = lenght;
+        this.mass         = parseFloat(mass1);
+        this.angle        = parseFloat(angle * (Math.PI / 180.0));
+        this.ini_angle    = parseFloat(angle * (Math.PI / 180.0));
+        this.ang_freq     = parseFloat(ang_freq);
+        this.lenght       = parseFloat(lenght);
         this.gravity      = new Vector2D(0,10);
         // this.acceleration = new Vector2D(0, 0);
         // this.velocity     = new Vector2D(0, 0);
@@ -27,13 +27,13 @@ class Pendulo {
     move(t) {
         this.angle = Math.cos(this.ang_freq * t);
 
-        this.pos = new Vector2D(this.pivo.x - this.lenght * 10 * Math.sin(this.angle),     
+        this.pos = new Vector2D(this.pivo.x - (this.lenght * 10 * Math.sin(this.angle)),     
                                 this.lenght * 10 * Math.cos(this.angle));
     }
 
     stop(){
         
-        this.pos = new Vector2D(this.pivo.x - this.lenght * 10 * Math.sin(this.angle),     
+        this.pos = new Vector2D(this.pivo.x - (this.lenght * 10 * Math.sin(this.angle)),     
         this.lenght * 10 * Math.cos(this.angle));
     }
 
@@ -42,7 +42,7 @@ class Pendulo {
         //ctx.clearRect(0,0, canvasWidth, canvasHeight);
         ctx.beginPath();
         ctx.moveTo(this.pivo.x,this.pivo.y);
-        this.pos = new Vector2D(this.pivo.x - this.lenght * 10.0 * Math.sin(this.angle),     
+        this.pos = new Vector2D(this.pivo.x - (this.lenght * 10.0 * Math.sin(this.angle)),     
                                 this.lenght * 10.0 * Math.cos(this.angle));
 
         ctx.lineTo(this.pos.x,this.pos.y);

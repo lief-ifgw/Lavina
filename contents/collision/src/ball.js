@@ -18,7 +18,8 @@ class Ball {
     //}
     move(t){
         //EOM
-        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(5.4 + 1 + (this.mass2)/(this.mass1)) , (10*(t*0.08)**2)/2);
+        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(5.4 + 1.0 + parseFloat((this.mass2)/(this.mass1))) , (10*(t*0.08)**2)/2);
+        //var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t))/(20*(1.0 + parseFloat((this.mass2)/(this.mass1)))) , (t**2)/(2.3*2));
         this.pos = Vector2D.add(this.pos,v2);
     }
 
@@ -49,7 +50,7 @@ class Ball {
         /*Drawing the trajectory*/
         var narr = this.arrpos.push(this.pos);
         //console.log(narr);
-        for(var i = 0; i < narr; i = i + 3){
+        for(var i = 0; i < narr; i = i + 8){
 
             ctx.rect(this.arrpos[i].x,this.arrpos[i].y,0.5,0.5);
             ctx.stroke();

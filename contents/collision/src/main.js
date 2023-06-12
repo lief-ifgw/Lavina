@@ -65,20 +65,20 @@ sliderAngle.oninput = function() {
     pendulo.setAngle(this.value);
     radians = sliderAngle.value  * (Math.PI / 180.0);
     h = defaultLenght - defaultLenght*Math.cos(radians);
-    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(sliderM2.value/sliderM1.value));
 
     draw();
 }
 
 sliderM1.oninput = function(){
   m1View.innerHTML = this.value;
-  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(sliderM2.value/sliderM1.value));
 
 }
 
 sliderM2.oninput = function(){
   m2View.innerHTML = this.value;
-  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(sliderM2.value/sliderM1.value));
 
 }
 
@@ -124,8 +124,8 @@ document.onload = init();
 // STOPWATCH STUFF
 
 window.onload = function () {
-  h = defaultLenght - defaultLenght*Math.cos(defaultAngle  * (Math.PI / 180.0));
-  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (defaultM2/defaultM1));
+  h = defaultLenght - parseFloat(defaultLenght*Math.cos(defaultAngle  * (Math.PI / 180.0)));
+  posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(defaultM2/defaultM1));
 
   var seconds = 00;
   var tens = 00;
@@ -138,7 +138,7 @@ window.onload = function () {
   var Interval ;
 
   btnRun.onclick = function() {
-    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + (sliderM2.value/sliderM1.value));
+    posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(sliderM2.value/sliderM1.value));
     if(sliderAngle.value != 0){
      console.log("Start!");
      console.log(answer.value);
@@ -246,11 +246,13 @@ function animate() {
     
     if(ball.pos.y >  400 - 14 ){
       pause();
-      if(answer.value < (posfin+(posfin*0.05)) && answer.value > (posfin-(posfin*0.05)) ){
+      if(answer.value < ( parseFloat(posfin) + parseFloat(posfin*0.05)) && answer.value > (posfin-(posfin*0.05)) ){
         alert('Resposta correta!  Re: ' + posfin + ' m');
+        console.log("%f %f",ball.pos.x,ball.pos.y);
       }
       else{
         alert('Resposta incorreta!  Re: ' + posfin + ' m');
+        console.log("%f %f",ball.pos.x,ball.pos.y);
       }
     }
 
