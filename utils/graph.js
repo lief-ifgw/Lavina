@@ -4,7 +4,7 @@ class Graph{
         this.ctx = canvas.getContext('2d');
     }
 
-    drawGrid(px, color,thickGrid=0.9){
+    drawGrid(px, color,thickGrid=0.9,oX,oY,labelX = "x",labelY = "y"){
         setLine(oX,0,oX,this.canvas.height,'black',this.canvas,thickGrid*1.5); //linha eixo y
         setLine(0,oY,this.canvas.width,oY,'black',this.canvas,thickGrid*1.5); //linha eixo x
         for(let x = -this.canvas.width-oX;x<this.canvas.width-oX;x += 1){//linhas y
@@ -17,8 +17,12 @@ class Graph{
                 setLine(0,oY+y,this.canvas.width,oY+y,color,this.canvas,thickGrid);
             } 
         }
-        this.ctx.font = "italic 25px Times";
-        this.ctx.fillText("tempo (s)",canvasWidth-(5*px),canvasHeight-(2*px));
+        if(labelX != null || labelY != null){
+            this.ctx.font = "italic 25px Times";
+            this.ctx.fillText(labelX,oX+10,oY+20);
+            this.ctx.fillText(labelY,oX-60,oY-10);
+        }
+        
     }
 
     drawPoint(x,y,thick = 2){
