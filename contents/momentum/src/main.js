@@ -108,8 +108,8 @@ document.onload = init();
 // STOPWATCH STUFF
 
 window.onload = function () {
-  var seconds = 00;
-  var tens = 00;
+  var seconds = 0o0;
+  var tens = 0o0;
   var appendTens = document.getElementById("tens")
   var appendSeconds = document.getElementById("seconds")
   //var buttonStart = document.getElementById('button-start');
@@ -121,11 +121,16 @@ window.onload = function () {
   btnRun.onclick = function() {
 
         //console.log(answer.value);
-        ball1.setMass(sliderM1.value);
-        ball1.setV(sliderV1.value);
-        ball2.setMass(sliderM2.value);
-        ball2.setV(-10.0);
-        animate();
+        if(answer.value != 0){
+          ball1.setMass(sliderM1.value);
+          ball1.setV(sliderV1.value);
+          ball2.setMass(sliderM2.value);
+          ball2.setV(-10.0);
+          animate();
+        }
+        else{
+          alert("Digite uma resposta para a velocidade final.");
+        }
   }
 
   //  btnStop.onclick = function() {
@@ -208,14 +213,27 @@ function animate() {
       var m2 = parseInt(sliderM2.value);
       var v1 = parseInt(sliderV1.value);
       var testev =  ((((m1 - m2)*v1)/(m1 + m2))) + (((2.0*m2*(-10.0))/(m1+m2)));
-      console.log("%f %f %f %f",m1,m2,v1,testev);
+      //console.log("%f %f %f %f",m1,m2,v1,testev);
       ball1.setV((((m1 - m2)/(m1 + m2))*v1 + (2.0*m2/(m1+m2))*(-10.0)));
       //console.log("%f",50.0*(((m1 - m2)/(m1 + m2))*v1 + (2.0*m2/(m1+m2))*(-10.0)));
       ball2.setV((((2.0*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0)));
+      
       //ball1.move1(t,sliderM1.value,sliderM2.value,sliderV1.value);
       //ball2.move2(t,sliderM1.value,sliderM2.value,sliderV1.value);
     }
-
+    if (Math.abs(ball2.pos.x) > 590 && t > 1 || Math.abs(ball2.pos.x) < 10 && t > 1){
+        pause();
+        var m1 = parseInt(sliderM1.value);  
+        var m2 = parseInt(sliderM2.value);
+        var v1 = parseInt(sliderV1.value);
+        var vfin = (((2.0*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0));
+        if( answer.value < (vfin + (vfin*0.05)) && answer.value > (vfin - (vfin*0.05))){
+          alert('Resposta correta!  Re: ' + vfin + ' m/s');
+        }
+        else{
+          alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+        }
+      }
     //console.log("%d, %d",t,tcol);
 
     draw();
