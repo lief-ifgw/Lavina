@@ -216,11 +216,21 @@ function animate() {
         var m2 = parseInt(sliderM2.value);
         var v1 = parseInt(sliderV1.value);
         var vfin = (((2.0*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0));
-        if( answer.value <= (vfin + (vfin*0.05)) && answer.value >= (vfin - (vfin*0.05))){
-          alert('Resposta correta!  Re: ' + vfin + ' m/s');
+        if(answer.value >= 0){  
+          if( answer.value <= (vfin + (vfin*0.05)) && answer.value >= (vfin - (vfin*0.05))){
+            alert('Resposta correta!  Re: ' + vfin + ' m/s');
+          }
+          else{
+            alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+          }
         }
         else{
-          alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+          if( answer.value >= (vfin + (vfin*0.05)) && answer.value <= (vfin - (vfin*0.05))){
+            alert('Resposta correta!  Re: ' + vfin + ' m/s');
+          }
+          else{
+            alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+          }
         }
       }
 
