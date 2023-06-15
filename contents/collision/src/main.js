@@ -127,8 +127,8 @@ window.onload = function () {
   h = defaultLenght - parseFloat(defaultLenght*Math.cos(defaultAngle  * (Math.PI / 180.0)));
   posfin = (4.0 * Math.sqrt(alturaH*h))/(1 + parseFloat(defaultM2/defaultM1));
 
-  var seconds = 00;
-  var tens = 00;
+  var seconds = 0o0;
+  var tens = 0o0;
   var appendTens = document.getElementById("tens")
   var appendSeconds = document.getElementById("seconds")
   //var buttonStart = document.getElementById('button-start');

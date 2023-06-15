@@ -18,8 +18,8 @@ class Ball {
     //}
     move(t){
         //EOM
-        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(5.4 + 1.0 + parseFloat((this.mass2)/(this.mass1))) , (10*(t*0.08)**2)/2);
-        //var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t))/(20*(1.0 + parseFloat((this.mass2)/(this.mass1)))) , (t**2)/(2.3*2));
+        //var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(5.4 + 1.0 + parseFloat((this.mass2)/(this.mass1))) , (10*(t*0.08)**2)/2);
+        var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t))/(50*(1.0 + parseFloat((this.mass2)/(this.mass1)))) , (t**2.8)/(57+2));
         this.pos = Vector2D.add(this.pos,v2);
     }
 
