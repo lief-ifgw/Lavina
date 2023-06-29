@@ -141,11 +141,9 @@ window.onload = function () {
     // 	seconds = "00";
     //  appendTens.innerHTML = tens;
     //	appendSeconds.innerHTML = seconds;
-
-    //pendulo.setLenght(1.0 * sliderLenght.value);
-    ctx.save();
-    ctx.clearRect(0,0, canvasWidth, canvasHeight);
-    ctx.restore();  
+    cancelAnimationFrame(animate);
+    init();
+    pause(); 
     }
 
 
@@ -212,6 +210,7 @@ function animate() {
     }
     if (Math.abs(ball2.pos.x) > 590 && t > 1 || Math.abs(ball2.pos.x) < 10 && t > 1 || Math.abs(ball1.pos.x) < 10 && t > 1){
         pause();
+        t=0.0;
         var m1 = parseInt(sliderM1.value);  
         var m2 = parseInt(sliderM2.value);
         var v1 = parseInt(sliderV1.value);
