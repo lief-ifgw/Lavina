@@ -13,7 +13,7 @@ var ctx = canvas.getContext('2d');
 /////////////////////////////////
 /*      ATRIBUIÇÃO DE IDS      */
 
-let color = ['#5050FF','#FF5050','yellow'];
+let color = ['#8080FF','#FF5050','yellow'];
 let displayCM  = document.getElementById("displayCM");
 let resetCM = document.getElementById("resetCM");
 let answerCM = document.getElementById("answerCM");
@@ -48,8 +48,8 @@ let friction = 0.1;
 let xcm = 0;
 let ycm = 0;
 let px = 30;
-let oX = 3*px;
-let oY = canvasHeight - 3*px;
+let oX = canvasWidth/2;
+let oY = canvasHeight/2;
 let labelX = "x (m)";
 let labelY = "y (m)";
 let clicked;
