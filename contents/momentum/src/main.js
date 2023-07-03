@@ -14,6 +14,7 @@ var t = 0.0;
 var pivo;
 var v1f;
 var v2f;
+var clicked = false;
 
 /********** Physical constants ********/
 
@@ -40,6 +41,11 @@ var v1View       = document.getElementById("outSpeed1");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
 var btnReset     = document.getElementById("button-reset");
+
+var solution     = document.getElementById("solution");
+var explanation  = document.getElementById("explanation");
+var formMomentum = document.getElementById("formMomentum");
+var ansMomentum  = document.getElementById("ansMomentum");
 
 //var posfin       = document.getElementById("finalpos");
 var answer       = document.getElementById("answ");
@@ -71,6 +77,22 @@ var pos1 = new Vector2D(10,200);
 var pos2 = new Vector2D(590 ,200)
 pivo = new Vector2D(0,200);
 
+//SOLUTION ACCORDION
+
+solution.addEventListener("click", function() {
+  if(clicked){
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+      } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+      } 
+  }
+  else{
+      window.alert("Você deve inserir um valor válido para ver a resposta.");
+  }
+});
 
 /********** Animation ********/
 function init() {
@@ -105,6 +127,11 @@ document.onload = init();
 //    draw();
 //}
 
+function round(n, precision){
+  let factor = 10**precision;
+  return parseFloat(Math.round(n*factor)/factor).toFixed(2);
+}
+
 // STOPWATCH STUFF
 
 window.onload = function () {
@@ -121,6 +148,8 @@ window.onload = function () {
   btnRun.onclick = function() {
 
         //console.log(answer.value);
+          clicked = true;        
+          showAns();
           ball1.setMass(sliderM1.value);
           ball1.setV(sliderV1.value);
           ball2.setMass(sliderM2.value);
@@ -217,18 +246,18 @@ function animate() {
         var vfin = (((2.0*m1)/(m1+m2))*v1 + ((m2 - m1)/(m1+m2))*(-10.0));
         if(answer.value >= 0){  
           if( answer.value <= (vfin + (vfin*0.05)) && answer.value >= (vfin - (vfin*0.05))){
-            alert('Resposta correta!  Re: ' + vfin + ' m/s');
+            alert('Resposta correta!  Re: ' + round(vfin,3) + ' m/s');
           }
           else{
-            alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+            alert('Resposta incorreta!  Re: ' + round(vfin,3) + ' m/s');
           }
         }
         else{
           if( answer.value >= (vfin + (vfin*0.05)) && answer.value <= (vfin - (vfin*0.05))){
-            alert('Resposta correta!  Re: ' + vfin + ' m/s');
+            alert('Resposta correta!  Re: ' + round(vfin,3) + ' m/s');
           }
           else{
-            alert('Resposta incorreta!  Re: ' + vfin + ' m/s');
+            alert('Resposta incorreta!  Re: ' + round(vfin,3) + ' m/s');
           }
         }
       }
@@ -237,4 +266,21 @@ function animate() {
 }
 
 draw();
-  
+
+function showAns(){
+  explanation.innerHTML =`Primeiro devemos lembrar das equações de conservação de energia cinética e momento linear:<br><br>
+  $\\LARGE{m_{1}(v_{1f}^{2}-v_{1i}^{2})+m_{2}(v_{2f}^{2}-v_{2i}^{2})=0}$<br><br>
+  $\\LARGE{m_{1}(v_{1f}-v_{1i})+m_{2}(v_{2f}-v_{2i})=0}$<br><br>
+  Desenvolvendo as equações, chegamos em:<br><br>
+  $\\LARGE{v_{1f}=v_{2f}+v_{2i}-v_{1i}}$<br><br>
+  Onde substituindo na equação de conservação de energia cinética:<br><br>
+  $\\LARGE{m_{1}((v_{2f}+v_{2i}-v_{1i})^{2}-v_{1i}^{2})+m_{2}(v_{2f}^{2}-v_{2i}^{2})=0}$<br><br>
+  Portanto, agora o valor da velocidade final da bolinha 2 depende apenas de valores que já temos. Remanejando a expressão para isolar
+  a velocidade desejada, temos:<br><br>
+  $\\LARGE{v_{2f}=\\frac{v_{2i}(m_{2}-m_{1})+2m_{1}v_{1i}}{m_{1}+m_{2}}}$<br><br>
+  Substituindo os valores na expressão obtida:<br><br>`
+  formMomentum.innerHTML = "$\\LARGE{\\frac{-10("+sliderM2.value+"-"+sliderM1.value+")+2*"+sliderM1.value+"*"+sliderV1.value+"}{"+sliderM1.value+"+"+sliderM2.value+"}}$<br>";
+  let v = (-10*(parseInt(sliderM2.value)-parseInt(sliderM1.value))+(2*parseInt(sliderM1.value)*parseInt(sliderV1.value)))/(parseInt(sliderM1.value)+parseInt(sliderM2.value));
+  ansMomentum.innerHTML = "$\\large{"+round(v,3)+"}\\,m/s$"; 
+  MathJax.typeset();
+}
