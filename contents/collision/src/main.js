@@ -174,20 +174,10 @@ window.onload = function () {
     // 	seconds = "00";
     //  appendTens.innerHTML = tens;
     //	appendSeconds.innerHTML = seconds;
-
-    //pendulo.setLenght(1.0 * sliderLenght.value);
-    ctx.save();
-    ctx.clearRect(0,0, canvasWidth, canvasHeight);
-    pendulo = new Pendulo(pivo, pos, ang_freq, defaultLenght, sliderAngle.value, sliderM1.value);
-    pendulo.setLenght(defaultLenght);
-    pendulo.setAngle(sliderAngle.value);
-    ball = new Ball(pivo, posb, sliderM1.value,sliderM2.value, h,arrpos);
-    ctx.save();
-    ctx.clearRect(0,0, canvasWidth, canvasHeight);
-    pendulo.draw(ctx);
-    ball.draw(ctx);
-    ctx.restore();  
-    }
+    cancelAnimationFrame(animate);
+    init();
+    pause();
+  }
 
 
 
@@ -234,6 +224,7 @@ function pause() {
 }
 
 function animate() {
+    //console.log(t);
     animId = requestAnimationFrame(animate);
     t += 0.03
     pendulo.move(t);
@@ -246,6 +237,7 @@ function animate() {
     
     if(ball.pos.y >  400 - 14 ){
       pause();
+      t = 0.0;
       if(answer.value < ( parseFloat(posfin) + parseFloat(posfin*0.05)) && answer.value > (posfin-(posfin*0.05)) ){
         alert('Resposta correta!  Re: ' + posfin + ' m');
         console.log("%f %f",ball.pos.x,ball.pos.y);
