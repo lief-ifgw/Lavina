@@ -241,7 +241,7 @@ button:hover{
   }
   
 .active, .accordion:hover {
-    background-color: #01e59b
+    background-color: #eb93ff;
 }
 
 .accordion:after {
