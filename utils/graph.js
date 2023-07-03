@@ -17,13 +17,92 @@ class Graph{
                 setLine(0,oY+y,this.canvas.width,oY+y,color,this.canvas,thickGrid);
             } 
         }
-        if(labelX != null || labelY != null){
-            this.ctx.font = "italic 25px Times";
-            this.ctx.fillText(labelX,oX+10,oY+20);
-            this.ctx.fillText(labelY,oX-60,oY-10);
+        this.ctx.font = "italic 25px Times";
+        if(labelX != null){
+            let xPosX,xPosY;
+            let labelXObj = document.createElement("span");
+            document.body.appendChild(labelXObj);
+            labelXObj.style.font = "Times";
+            labelXObj.style.fontSize = 25 + "px";
+            labelXObj.style.fontStyle = "italic";
+            labelXObj.innerHTML = labelX;
+
+            if(oX >= 0 && this.canvas.width-oX >= labelXObj.clientWidth){ //para situações ideais, com espaço no 1o quadrante
+                xPosX = this.canvas.width-labelXObj.clientWidth;
+            }
+            else if(this.canvas.width-oX < labelXObj.clientWidth){
+                if(this.canvas.width >= oX){//acompanha
+                    xPosX = oX-labelXObj.clientWidth;
+                }
+                else{//fixa
+                    xPosX = this.canvas.width-labelXObj.clientWidth;
+                }
+            }
+            else if(oX < 0){
+                xPosX = this.canvas.width - labelXObj.clientWidth;
+            }
+
+            if(this.canvas.height-oY >= labelXObj.clientHeight && oY >= 0){
+                xPosY = oY+labelXObj.clientHeight;
+            }
+            else if(this.canvas.height-oY < labelXObj.clientHeight){
+                if(this.canvas.height >= oY){
+                    xPosY = oY-labelXObj.clientHeight;
+                }
+                else{
+                    xPosY = this.canvas.height-labelXObj.clientHeight;
+                }
+            }
+            else if(oY < 0){
+                xPosY = labelXObj.clientHeight;
+            }
+            this.ctx.fillText(labelX,xPosX,xPosY);
+            document.body.removeChild(labelXObj);
         }
         
+
+        if(labelY != null){
+            let yPosX,yPosY;
+            let labelYObj = document.createElement("span");
+            document.body.appendChild(labelYObj);
+            labelYObj.style.font = "Times";
+            labelYObj.style.fontSize = 25 + "px";
+            labelYObj.style.fontStyle = "italic";
+            labelYObj.innerHTML = labelY;
+
+            if(oY >= labelYObj.clientHeight){
+                yPosY = labelYObj.clientHeight;
+            }
+            else if(oY < labelYObj.clientHeight){
+                if(oY >= 0){
+                    yPosY = labelYObj.clientHeight + oY;
+                }
+                else{
+                    yPosY = labelYObj.clientHeight;
+                }
+            }
+
+            if(oX >= labelYObj.clientWidth && oX <= this.canvas.width){
+                yPosX = oX-labelYObj.clientWidth;
+            }
+            else if(oX < labelYObj.clientWidth){
+                if(oX >= 0){    
+                    yPosX = oX;
+                }
+                else{
+                    yPosX = 0;
+                }
+            }
+            else if(oX > this.canvas.width){
+                yPosX = this.canvas.width - labelYObj.clientWidth;
+            }
+            this.ctx.fillText(labelY,yPosX,yPosY);
+            document.body.removeChild(labelYObj);
+        }
+
     }
+    
+    
 
     drawPoint(x,y,thick = 2){
         this.ctx.beginPath();
