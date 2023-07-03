@@ -22,7 +22,7 @@ class Ball{
         let ctx = canvas.getContext('2d');
         ctx.beginPath();
         ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = "black";
         ctx.stroke();
         ctx.fillStyle = color;
         ctx.fill();
