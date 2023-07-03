@@ -154,12 +154,12 @@ button:hover{
 }
 
 #ball1:hover{
-    background-color: blue;
+    background-color: #8080FF;
     transition: 0.1s;
 }
 
 #ball2:hover{
-    background-color: red;
+    background-color: #FF5050;
     transition: 0.1s;
 }
 
