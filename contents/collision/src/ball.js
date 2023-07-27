@@ -8,17 +8,11 @@ class Ball {
         this.h            = h;
         this.arrpos       = arrpos;
 
-        // this.acceleration = new Vector2D(0, 0);
-        // this.velocity     = new Vector2D(0, 0);
     }
 
 
-    //move(t) {
-    //   this.angle = Math.cos(1.0 * this.ang_freq * t);
-    //}
     move(t){
         //EOM
-        //var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t*0.08))/(5.4 + 1.0 + parseFloat((this.mass2)/(this.mass1))) , (10*(t*0.08)**2)/2);
         var v2 = new Vector2D((2*Math.sqrt(2*10*this.h)*(t))/(50*(1.0 + parseFloat((this.mass2)/(this.mass1)))) , (t**2.8)/(57+2));
         this.pos = Vector2D.add(this.pos,v2);
     }
@@ -49,12 +43,10 @@ class Ball {
         
         /*Drawing the trajectory*/
         var narr = this.arrpos.push(this.pos);
-        //console.log(narr);
         for(var i = 0; i < narr; i = i + 8){
 
             ctx.rect(this.arrpos[i].x,this.arrpos[i].y,0.5,0.5);
             ctx.stroke();
-            //console.log(this.arrpos[i].x,this.arrpos[i].y);
             
         }
         

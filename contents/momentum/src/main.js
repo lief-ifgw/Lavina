@@ -36,8 +36,6 @@ var sliderM2     = document.getElementById("m2");
 var m2View       = document.getElementById("outMass2");
 var sliderV1     = document.getElementById("v1");
 var v1View       = document.getElementById("outSpeed1");
-//var sliderV2     = document.getElementById("v2");
-//var v2View       = document.getElementById("outSpeed2");
 var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
 var btnReset     = document.getElementById("button-reset");
@@ -47,13 +45,11 @@ var explanation  = document.getElementById("explanation");
 var formMomentum = document.getElementById("formMomentum");
 var ansMomentum  = document.getElementById("ansMomentum");
 
-//var posfin       = document.getElementById("finalpos");
 var answer       = document.getElementById("answ");
 
 m1View.innerHTML = sliderM1.value;
 m2View.innerHTML = sliderM2.value;
 v1View.innerHTML = sliderV1.value;
-//v2View.innerHTML = sliderV2.value;
 
 sliderM1.oninput = function(){
   m1View.innerHTML = this.value;
@@ -68,9 +64,7 @@ sliderV1.oninput = function(){
   v1View.innerHTML = this.value;
 }
 
-//sliderV2.oninput = function(){
-//  v2View.innerHTML = this.value;
-//}
+
 
 
 var pos1 = new Vector2D(10,200);
@@ -104,29 +98,6 @@ function init() {
 
 document.onload = init();
 
-//btnRun.onclick = function() {
-//    console.log("Start!");
-//    animate();
-   //if(!running) {
-   //   if (answered === true) {
-   //         init();
-   //         dynamics(1.0 * sliderForce.value);
-   //         running = true;
-   //         animate();
-   //     } else {
-   //         mustAnswer();
-    //    }
-    //}
-    
-//}
-
-//btnStop.onclick = function() {
-
-//    pause();
-//    ctx.clearRect(0,0, canvasWidth, canvasHeight);
-//    draw();
-//}
-
 function round(n, precision){
   let factor = 10**precision;
   return parseFloat(Math.round(n*factor)/factor).toFixed(2);
@@ -139,15 +110,12 @@ window.onload = function () {
   var tens = 0o0;
   var appendTens = document.getElementById("tens")
   var appendSeconds = document.getElementById("seconds")
-  //var buttonStart = document.getElementById('button-start');
-  //var buttonStop = document.getElementById('button-stop');
-  //var buttonReset = document.getElementById('button-reset');
+
   
   var Interval ;
 
   btnRun.onclick = function() {
 
-        //console.log(answer.value);
           clicked = true;        
           showAns();
           ball1.setMass(sliderM1.value);
@@ -157,19 +125,9 @@ window.onload = function () {
           animate();
   }
 
-  //  btnStop.onclick = function() {
-  //      pause();
-  //      draw();
-  //     clearInterval(Interval);
-  //}
-
 
   btnReset.onclick = function() {
     clearInterval(Interval);
-    //tens = "00";
-    // 	seconds = "00";
-    //  appendTens.innerHTML = tens;
-    //	appendSeconds.innerHTML = seconds;
     cancelAnimationFrame(animate);
     init();
     pause(); 

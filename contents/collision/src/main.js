@@ -49,7 +49,6 @@ var btnRun       = document.getElementById("button-start");
 var btnStop      = document.getElementById("button-stop");
 var btnReset     = document.getElementById("button-reset");
 
-//var posfin       = document.getElementById("finalpos");
 var answer       = document.getElementById("answ");
 
 angleView.innerHTML  = sliderAngle.value;
@@ -98,28 +97,7 @@ function init() {
 
 document.onload = init();
 
-//btnRun.onclick = function() {
-//    console.log("Start!");
-//    animate();
-   //if(!running) {
-   //   if (answered === true) {
-   //         init();
-   //         dynamics(1.0 * sliderForce.value);
-   //         running = true;
-   //         animate();
-   //     } else {
-   //         mustAnswer();
-    //    }
-    //}
-    
-//}
 
-//btnStop.onclick = function() {
-
-//    pause();
-//    ctx.clearRect(0,0, canvasWidth, canvasHeight);
-//    draw();
-//}
 
 // STOPWATCH STUFF
 
@@ -131,9 +109,7 @@ window.onload = function () {
   var tens = 0o0;
   var appendTens = document.getElementById("tens")
   var appendSeconds = document.getElementById("seconds")
-  //var buttonStart = document.getElementById('button-start');
-  //var buttonStop = document.getElementById('button-stop');
-  //var buttonReset = document.getElementById('button-reset');
+
   
   var Interval ;
 
@@ -161,19 +137,10 @@ window.onload = function () {
     }
   }
 
-  //  btnStop.onclick = function() {
-  //      pause();
-  //      draw();
-  //     clearInterval(Interval);
-  //}
-
 
   btnReset.onclick = function() {
     clearInterval(Interval);
-    //tens = "00";
-    // 	seconds = "00";
-    //  appendTens.innerHTML = tens;
-    //	appendSeconds.innerHTML = seconds;
+
     cancelAnimationFrame(animate);
     init();
     pause();
@@ -224,7 +191,6 @@ function pause() {
 }
 
 function animate() {
-    //console.log(t);
     animId = requestAnimationFrame(animate);
     t += 0.03
     pendulo.move(t);
@@ -248,7 +214,6 @@ function animate() {
       }
     }
 
-    //console.log("%d, %d",t,tcol);
 
     draw();
 }
