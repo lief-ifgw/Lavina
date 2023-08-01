@@ -64,7 +64,6 @@ function round(n, precision){
     return Math.round(n*factor)/factor;
 }
 
-
 function setLine(x0,y0,xf,yf,color,lw=1){
     ctx.beginPath();    
     ctx.moveTo(x0,y0);

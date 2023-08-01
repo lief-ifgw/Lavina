@@ -55,9 +55,9 @@ function freeze() {
 
 var velo;
 var time;
-var seconds = 00;
-var tens = 00;
-var dez = 00;
+var seconds = 0;
+var tens = 0;
+var dez = 0;
 var appendTens = document.getElementById("tens");
 var appendSeconds = document.getElementById("seconds");
 var Interval;

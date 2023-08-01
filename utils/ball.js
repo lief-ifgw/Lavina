@@ -42,12 +42,7 @@ class Ball{
             if(time != undefined){
                 this.a = Vector2D.scale(Vector2D.norma(this.a),this.acceleration);
                 this.v.x = v0 + this.a.x * time;
-                //this.v = Vector2D.add(Vector2D.scale(this.v,1),Vector2D.scale(this.a,1));
-                //this.v = Vector2D.scale(this.v,1);
-                //this.pos = Vector2D.add(this.pos,Vector2D.scale(this.v,1));
-                //this.pos = Vector2D.add(this.pos,Vector2D.scale(Vector2D.add(this.v,Vector2D.scale(this.a,time)),time));
                 this.pos.x = d0 + this.v.x * time;
-                //console.log("\nposição:",this.pos,"\nvelocidade:",this.v,"\naceleração:",this.a,"\ntempo:",time);
             }
         }
         else if(dimensions === 2){

@@ -5,14 +5,14 @@ class Graph{
     }
 
     drawGrid(px, color,thickGrid=0.9,oX,oY,labelX = "x",labelY = "y"){
-        setLine(oX,0,oX,this.canvas.height,'black',this.canvas,thickGrid*1.5); //linha eixo y
-        setLine(0,oY,this.canvas.width,oY,'black',this.canvas,thickGrid*1.5); //linha eixo x
-        for(let x = -this.canvas.width-oX;x<this.canvas.width-oX;x += 1){//linhas y
+        setLine(oX,0,oX,this.canvas.height,'black',this.canvas,thickGrid*1.5);
+        setLine(0,oY,this.canvas.width,oY,'black',this.canvas,thickGrid*1.5); 
+        for(let x = -this.canvas.width-oX;x<this.canvas.width-oX;x += 1){
             if(x%px == 0){
                 setLine(oX+x,0,oX+x,this.canvas.height,color,this.canvas,thickGrid);
             }
         }
-        for(let y = -this.canvas.height-oY;y<this.canvas.height-oY;y += 1){//linhas x
+        for(let y = -this.canvas.height-oY;y<this.canvas.height-oY;y += 1){
             if(y%px == 0){
                 setLine(0,oY+y,this.canvas.width,oY+y,color,this.canvas,thickGrid);
             } 
@@ -31,10 +31,10 @@ class Graph{
                 xPosX = this.canvas.width-labelXObj.clientWidth;
             }
             else if(this.canvas.width-oX < labelXObj.clientWidth){
-                if(this.canvas.width >= oX){//acompanha
+                if(this.canvas.width >= oX){
                     xPosX = oX-labelXObj.clientWidth;
                 }
-                else{//fixa
+                else{
                     xPosX = this.canvas.width-labelXObj.clientWidth;
                 }
             }
@@ -154,17 +154,11 @@ class Graph{
                 px += 10;
                 thick += 0.2;
             }
-            else{
-                
-            }
         }
         btnZoomOut.onclick = function(){
             if(px >= 10){
                 px -= 10;
                 thick -= 0.2;
-            }
-            else{
-                
             }
         }
     }

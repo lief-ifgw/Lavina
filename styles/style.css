@@ -140,7 +140,7 @@ p {
 
 button{
     border: 1px solid black;
-    background-color: #01e59b;
+    background-color: #e882ff;
     width: 75px;
     border-radius: 5px;
     padding: 5px 5px 5px 5px;
@@ -149,7 +149,7 @@ button{
 }
 
 button:hover{
-    background-color: aquamarine;
+    background-color: #f3beff;
     transition: 0.1s;
 }
 

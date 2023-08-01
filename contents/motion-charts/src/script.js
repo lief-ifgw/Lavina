@@ -141,8 +141,6 @@ function graphLoop() {
         dez = tens;
     }
     time = parseFloat(String(seconds)+"."+String(dez));
-    //ctxGraph.clearRect(0,0,canvasWidth,canvasHeight); 
-    //graph1.plotFunction(px,funct1,"#888888");
     let pos = ball1.pos.x; 
     let v = ball1.v.x;
     let a = ball1.a.x;
@@ -167,7 +165,6 @@ function graphLoop() {
     yAntesA = yGraphA;
     
     ball1.reposition(time,v0,d0,1);
-    //graph1.drawGrid(px,'grey',1);  
     ctxGraph.restore();
 }
 
@@ -181,9 +178,6 @@ function objectLoop(){
         penetrationResultWall(ball1, wall1);
         collisionResultWall(ball1, wall1);
     }
-    
-
-    //ball1.reposition();
     ctxObject.restore();
 }
 
@@ -296,8 +290,6 @@ btnStart.onclick = function() {
         animateObject();
         btnStart.disabled = true;
         btnPause.disabled = false;
-        // zoomIn.disabled = true;
-        // zoomOut.disabled = true;
         btnAplicar.scrollIntoView({ behavior: "smooth", block: "center"});
         if(a === 0){
             explanation.innerHTML =`Primeiro é preciso saber como podemos relacionar o tempo com os valores que sabemos.<br>
@@ -332,8 +324,6 @@ btnPause.onclick = function(){
     freeze();
     btnPause.disabled = true;
     btnStart.disabled = false;
-    // zoomIn.disabled = false;
-    // zoomOut.disabled = false;
 }
 
 btnReset.onclick = function() {
@@ -430,13 +420,9 @@ let graph1 = new Graph(canvasGraph);
 let wall1 = new Wall(0,canvasHeight/2,canvasWidth,canvasHeight/2);
 let ball1 = new Ball("ball1",d0,(canvasHeight/2)-rball,rball,1);
 ball1.drawBall(canvasObject,color[0],false);
-//ball1.v.x = v0*px;
 ball1.a.x = 1;
-//ball1.acceleration = a*px;
 ball1.elasticity = 0;
-//graph1.moveGraph();  
 graph1.drawGrid(px,'lightgrey',1,oX,oY,labelX,null);
-// graph1.zoom(zoomIn,zoomOut);
 graph1.coordGraph(xCoord,yCoord);
 funct1.adaptToGraph();
 btnPause.disabled = true;
@@ -448,16 +434,5 @@ answer.disabled = true;
 sliderDx.max = canvasWidth - 2*rball - 1;
 sliderDx.step = 1;
 drawBridge();
-
 /////////////////////////////////
-/*  NOTAS, TAREFAS E RECADOS *//*
--Tornar a interface mais amigável, com um botão de confirmar os valores que serão calculados: feito
--projetar a verificação de resposta: feito
--projetar soluções para a = 0 (evitar divisão por 0): feito
--Criar a solução em latex: feito
--corrigir a equação (ausência do termo dividindo por 2): feito
--corrigir a repetição adicional do loop
--mudar variáveis: feito
--adicionar unidades no cálculo das soluções: feito
--adicionar legendas para cada função no gráficos: feito
-*/
+
