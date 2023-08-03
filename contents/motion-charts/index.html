@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Gráficos de Cinemática</title>
+        <script src="../../components/load-mathjax.js" async></script>
+        <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1>Laboratório de Cinemática</h1><br>
+            <h3>Explore o comportamento das 3 grandezas relacionadas ao movimento por meio da bolinha e do gráfico exibido.
+                <br>
+                Escolha os valores das grandezas iniciais e encontre o resultado baseado nelas, depois veja como o gráfico relaciona tais grandezas entre si.
+            </h3>
+                <div class="simulation">
+                    <table>
+                        <tr>
+                            <td rowspan="2">
+                                <div class="control-panel" id="control-panel">
+                                    <table> 
+                                        <tr>
+                                            <td>
+                                                <h3>Cronômetro:</h3>
+                                                <h3> <span id="seconds">00</span>:<span id="tens">00</span> s</h3>
+                                            </td>
+                                        </tr>                
+                                        <tr>
+                                            <td>
+                                                <h3 class="tooltip"><span class="tooltiptext">Posição</span><span style="color: blue;">■</span><var id="labelx0">$x_{0}:$</var> <span id="dx">0</span> $m$</h3>
+                                                <input type="range" min="0" max="100" value="0" step="1" class="slider" id="sliderDx">
+
+                                                <h3 class="tooltip"><span class="tooltiptext">Velocidade</span><span style="color: red;">■</span><var id="labelv0">$v_{0}:$</var> <span id="v">0</span> $ms^{-1}$</h3>
+                                                <input type="range" min="0" max="5" value="0" step="0.1" class="slider" id="sliderV">
+
+                                                <h3 class="tooltip"><span class="tooltiptext">Aceleração</span><span style="color: green;">■</span>$a:$ <span id="a">0</span> $ms^{-2}$</h3>
+                                                <input type="range" min="0" max="5" value="0" step="0.1" class="slider" id="sliderA">
+                                                <button type="button" style="min-width: 50%;" id="btnAplicar">Aplicar Valores</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h3>Posição do mouse no gráfico:</h3>
+                                                <h3>Eixo X (tempo): <span id="xCoord">0.0</span></h3>
+                                                <h3>Eixo Y: <span id="yCoord">0.0</span></h3>
+                                            </td>
+                                    </table>
+                                        <button class="accordion" style="background-color: white; border: 1px solid black; height: fit-content;" id="legenda">Legenda</button>        
+                                            <div class="panel" style="overflow-y: auto;">
+
+                                                    Azul: posição em função do tempo: x(t)<br>
+                                                    Vermelho: velocidade em função do tempo: v(t)<br>
+                                                    Verde: aceleração em função do tempo: a(t)
+                                            </div>
+                                    
+                                    <div class="horizontal-buttons">
+                                        <button type="button" id="btnStart">Iniciar</button>
+                                        <button type="button" id="btnPause">Pausar</button>
+                                        <button type="button" id="btnReset">Reiniciar</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <canvas id="objectCanvas" tabindex="1"></canvas>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><canvas id="myCanvas" tabindex="2"></canvas></td>
+                        </tr>
+                    </table>
+                </div>
+            <h3>Para os valores escolhidos, descubra em quantos segundos a bolinha leva para chegar ao outro lado da ponte de 24 metros de comprimento:</h3>
+            <h5>Incerteza para a resposta: $\pm 0.05\space s$</h5>
+            <form>
+                <input type="tel" name="answer" id="answer" placeholder="Resposta" size="5" style="font-size:medium;">
+                <br><br>
+                <button type="button" name="confirm" id="btnConfirm">Confirma</button>
+            </form>
+            <br>
+            <button class="accordion" id="solution">Solução</button>
+            <div class="panel">
+                <br>
+                <h3>
+                    <p style="font-family: 'Montserrat',sans-serif;" id="explanation"></p>
+                    Substituindo os valores:<br><br>
+                    <p id="formGraph" class="math"></p><br>
+                    Portanto, o tempo em segundos para a bolinha percorrer a ponte é de, aproximadamente: 
+                    <p class="math" id="ansGraph"></p>
+                </h3>
+            </div>
+        </div>
+        </div>
+        <script src="../../utils/ball.js"></script>
+        <script src="../../utils/wall.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/graph.js"></script>
+        <script src="src/script.js"></script>
+    </body>
+</html>
+

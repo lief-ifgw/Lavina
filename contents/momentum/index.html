@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <script src="../../components/load-mathjax.js" async></script>
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1> Conservação de Momento Linear</h1>
+
+            <h3> Dados do problema: </h3>
+            <font size="3" face="times" color="black">
+            <ul>
+                <li>Considere: </li>
+                <li>          $m_{1} =$ Bolinha azul.</li>
+                <li>          $m_{2} =$ Bolinha vermelha.</li>
+                <li>          $v_{0}^{2} = -10.0 m/s$</li>
+            </ul>
+            </font>
+
+            <div class="simulation">
+                <div class="control-panel">
+                    <div class="slidecontainer">
+                        <table>
+                            <tr>
+                                <td colspan="3">Massa 1: </td>
+                                <td colspan="3"><input type="range" min="1.0" max="30.0" value="10.0" step="1.0" class="slider" id="m1"></td>
+                                <td colspan="3">$m_{1}$ = <span id="outMass1"></span>kg</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Massa 2: </td>
+                                <td colspan="3"><input type="range" min="1.0" max="30.0" value="10.0" step="1.0" class="slider" id="m2"></td>
+                                <td colspan="3">$m_{2}$ = <span id="outMass2"></span>kg</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Velocidade 1: </td>
+                                <td colspan="3"><input type="range" min="1.0" max="30.0" value="10.0" step="1.0" class="slider" id="v1"></td>
+                                <td colspan="3">$v_{0}^1$ = <span id="outSpeed1"></span>m/s</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Velocidade Final $v^{f}_{2}$: </td>
+                                <td colspan="3">$v^{f}_{2}$ = <input size=10 type="text" class="input_text" value="0" id="answ" name="answ"><span></span> $m/s$
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="buttons">
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="horizontal-buttons">
+                                        <button id="button-start">Start</button>
+                                        <!--<button id="button-stop">Stop</button>-->
+                                        <button id="button-reset">Reset</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <canvas id="myCanvas" align="center" ></canvas>
+            </div>
+            
+            <br>
+            <button class="accordion" id="solution">Solução</button>
+            <div class="panel">
+                <br>
+                <h3>
+                    <p style="font-family: 'Montserrat',sans-serif;" id="explanation"></p>
+                    <p id="formMomentum" class="math"></p><br>
+                    Portanto, a velocidade da bolinha 2 após a colisão é de: 
+                    <p class="math" id="ansMomentum"></p>
+                </h3>
+                <br>
+            </div>
+        </div>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/arrow.js"></script>
+        <script src="src/pendulo.js"></script>
+        <script src="src/ball.js"></script>
+        <script src="src/kinematics.js"></script>
+       <!-- <script src="src/stopwatch.js"></script> -->
+        <script src="src/main.js"></script>
+    </body>
+</html>

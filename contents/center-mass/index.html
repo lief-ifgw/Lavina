@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <script src="../../components/load-mathjax.js" async></script>
+        <title>Centro de Massa</title>
+        <link rel="icon" type="image/x-icon" href="../../img/logo_LIEF.png">
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex">
+            <h1>Entendendo o Centro de Massa</h1><br>
+            <h3>Abaixo temos uma tabela com informações sobre a localização e massa de três bolinhas, as quais estão representadas no plano a esquerda.
+                Seu trabalho é calcular o centro de massa considerando os três corpos e escolher a alternativa que considere correta. A escala no plano é
+                de 30 metros por unidade.
+            </h3>
+            <div class="simulation">
+                <div class="control-panel">
+                    <table>
+                        <tr>
+                            <th style="border: 0px; background-color: transparent;"></th>
+                            <th>X (m)</th>
+                            <th>Y (m)</th>
+                            <th>Massa (Kg)</th>
+                        </tr>
+                        <tr>
+                            <th id="ball1" class="btn">Bola 1:</th>
+                            <td id="b1x" class="w2"></td>
+                            <td id="b1y" class="w2"></td>
+                            <td id="mb1" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th id="ball2" class="btn">Bola 2:</th>
+                            <td id="b2x" class="w2"></td>
+                            <td id="b2y" class="w2"></td>
+                            <td id="mb2" class="w2"></td>
+                        </tr>
+                        <tr>
+                            <th id="ball3" class="btn">Bola 3:</th>
+                            <td id="b3x" class="w2"></td>
+                            <td id="b3y" class="w2"></td>
+                            <td id="mb3" class="w2"></td>
+                        </tr>
+                        <tr id="cm" class="hide">
+                            <th>CM:</th>
+                            <td id="cmX"></td>
+                            <td id="cmY"></td>
+                        </tr>
+                    </table>   
+                    <div class="horizontal-buttons">
+                        <button type="button" id="displayCM">Checar</button>
+                        <button type="button" id="resetCM">Reiniciar</button>
+                    </div>
+                </div>
+                <canvas id="myCanvas" align="center" tabindex="1"></canvas>
+            </div>
+            <h2> Qual é o centro de massa correto? </h2>
+            <form>
+                a) <input type="radio" name="answer" id="opt1">
+                <label for="opt1" id="r1"></label><br><br>
+                b) <input type="radio" name="answer" id="opt2">
+                <label for="opt2" id="r2"></label><br><br>
+                c) <input type="radio" name="answer" id="opt3">
+                <label for="opt3" id="r3"></label><br>
+            </form>
+            <br>
+            <button class="accordion" id="answerCM">Solução</button>
+            <div class="panel">
+            <br>
+            <h3>Revisando as fórmulas do centro de massa:<br><br>
+            $\LARGE{x_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}x_{i}}\qquad}$<br>
+            $\LARGE{y_{cm} = \frac{1}{M}\sum\limits_{i = 1}^n {m_{i}y_{i}}\qquad}$<br>
+            $\LARGE{M = \sum\limits_{i = 1}^n {m_{i}}}$<br><br>
+            Aplicando os valores que temos:<br><br>
+            <p id="ansXCM" class="math"></p>
+            <br><br>
+            <p id="ansYCM" class="math"></p><br><br>
+            Portanto, o ponto que representa o centro de massa é <p id="ansCM"></p></h3>
+            </div>
+        </div>
+        <script src="../../utils/ball.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/graph.js"></script>
+        <script src="src/script.js"></script>
+
+    </body>
+</html>
+
