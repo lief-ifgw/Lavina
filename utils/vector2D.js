@@ -10,8 +10,9 @@ class Vector2D {
         } else if (this.y === 0) {
             return this.x < 0 ? 180 : 0;
         } else {
-            let theta = Math.atan(this.y / this.x) * 180 / Math.PI;
-            return this.x < 0 ? -theta: theta; 
+            let theta = Math.atan(this.y / this.x);
+            theta = theta * 180 / Math.PI;
+            return this.x < 0 ? theta + 180: theta; 
         }
     }
 
@@ -38,7 +39,7 @@ class Vector2D {
     }
 
     decrementBy(v) {
-        this.x -= v.x;
+           this.x -= v.x;
         this.y -= v.y;
     }
 

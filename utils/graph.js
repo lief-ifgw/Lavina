@@ -4,9 +4,13 @@ class Graph{
         this.ctx = canvas.getContext('2d');
     }
 
-    drawGrid(px, color,thickGrid=0.9,oX,oY,labelX = "x",labelY = "y"){
-        setLine(oX,0,oX,this.canvas.height,'black',this.canvas,thickGrid*1.5);
-        setLine(0,oY,this.canvas.width,oY,'black',this.canvas,thickGrid*1.5); 
+    drawGrid(px, color,thickGrid=0.9,oX,oY,labelX = "x",labelY = "y",axes = true){
+        oX = Math.round(oX);
+        oY = Math.round(oY);
+        if(axes === true){
+            setLine(oX,0,oX,this.canvas.height,'black',this.canvas,thickGrid*1.5); //eixo y
+            setLine(0,oY,this.canvas.width,oY,'black',this.canvas,thickGrid*1.5); //eixo x
+        }
         for(let x = -this.canvas.width-oX;x<this.canvas.width-oX;x += 1){
             if(x%px == 0){
                 setLine(oX+x,0,oX+x,this.canvas.height,color,this.canvas,thickGrid);
@@ -101,14 +105,16 @@ class Graph{
         }
 
     }
-    
-    
 
-    drawPoint(x,y,thick = 2){
+    drawPoint(x,y,thick = 2,color="black"){
         this.ctx.beginPath();
+        this.ctx.fillStyle = color;
         this.ctx.arc(x,y,thick,0,2*Math.PI);
         this.ctx.fill();
     }
+    
+    
+
 
     plotFunction(px,funct,colorGrid="grey"){
         this.drawGrid(px,colorGrid);
@@ -204,7 +210,7 @@ let mouse_move = function(event){
         let dy = mouseY - startY;
         oX += dx;
         oY += dy;
-        startX = mouseX;
+        startX = mouseX;e = k*q/Math.pow(ponto,2);
         startY = mouseY;
     }
 }

@@ -80,7 +80,6 @@ var time;
 var seconds = 0o0;
 var tens = 0o0;
 var dez = 0o0;
-var Interval;
 let BALLS = [];
 let FUNCTIONS = [];
 let WALLS = [];
