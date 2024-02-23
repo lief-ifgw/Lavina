@@ -22,33 +22,27 @@
             </ul>
         </nav>
 
-        <div class="content" style="position: flex">
+        <div class="content" style="position: flex;">
             <h1>Campo Elétrico</h1><br>
-            <h3>Divirta-se visualizando o campo elétrico gerado por diversas cargas! Arraste qualquer carga para mudas sua posição.
+            <h3>Divirta-se visualizando o campo elétrico gerado por diversas cargas! Arraste qualquer carga para mudar sua posição.
             </h3>
             <div class="simulation">
-                <div class="control-panel">
+                <div class="control-panel" style="display: block; font-size: larger;">
                     <table>
                         <tr>
-                            <th colspan="4">Descrição da carga selecionada:</th>
+                            <th colspan="6">Descrição da carga selecionada:</th>
                         </tr>
                         <tr>
-                            <td colspan="2">Número da bolinha:</td>
-                            <td colspan="2" id="nomeCarga"></td>
-                        </tr>
-                        <tr>
-                            <td>Carga:</td>
-                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMaisCarga">+</button></td>
+                            <td colspan="3">Carga:</td>
+                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMaisCarga" style="min-width: 30px; min-height: 30px;">+</button></td>
                             <td id="cargaCarga">1</td>
-                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMenosCarga">-</button></td>
+                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMenosCarga" style="min-width: 30px; min-height: 30px;">-</button></td>
                         </tr>
-                        <tr>
-                            <td colspan="4"><button type="button" id="btnApagarCarga">Apagar Carga</button></td>
-                        </tr>
-
                     </table>
+                    <br>
                     <div class="horizontal-buttons">
                         <button type="button" id="btnNovaCarga">Adicionar Carga</button>
+                        <button type="button" id="btnApagarCarga">Apagar Carga</button>
                     </div>
                 </div>
                 <canvas id="fieldCanvas" class="myCanvas" tabindex="1"></canvas>
