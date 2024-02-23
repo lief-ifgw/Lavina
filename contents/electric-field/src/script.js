@@ -13,7 +13,6 @@ var ctxField = canvasField.getContext('2d');
 /////////////////////////////////
 /*      ATRIBUIÇÃO DE IDS      */
 
-let nomeCarga = document.getElementById("nomeCarga");
 let cargaCarga = document.getElementById("cargaCarga");
 let btnMaisCarga = document.getElementById("btnMaisCarga");
 let btnMenosCarga = document.getElementById("btnMenosCarga");
@@ -98,6 +97,19 @@ function verifyPlayer(c, funct){
     });
 }
 
+function onlyPlayer(carga){
+    let ind = BALLS.indexOf(carga);
+    BALLS.forEach(charge => {
+        let comp = BALLS.indexOf(charge);
+        if(comp != ind){
+            charge.player = false;
+        }
+        else{
+            charge.player = true;
+        }
+    });
+}
+
 btnMaisCarga.onclick = function(){
     verifyPlayer(1, changeCharge);
     
@@ -142,16 +154,13 @@ function moveCharge(i,mouse){
  
 let clickPos = canvasField.addEventListener("mousedown", function (evt) {
     var mousePos = new Vector2D(getMousePos(canvasField, evt).x,getMousePos(canvasField, evt).y);
-    let play = [];
 
     BALLS.forEach(charge => {
         let dist = Vector2D.distance(mousePos,charge.pos); 
         if(dist <= 1.2*r){
             clicked = true;
-            charge.player = true;
-            play.push(charge.index);
+            onlyPlayer(charge);
             chargeIndex = BALLS.indexOf(charge);
-            nomeCarga.innerHTML = chargeIndex+1;
             cargaCarga.innerHTML = charge.m;
             console.log(charge);
         }
@@ -160,7 +169,6 @@ let clickPos = canvasField.addEventListener("mousedown", function (evt) {
         }
         
     });
-    console.log(play);
 }, false);
 
 
