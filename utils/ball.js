@@ -21,11 +21,23 @@ class Ball{
     drawBall(canvas,color,num=true){
         let ctx = canvas.getContext('2d');
         ctx.beginPath();
-        ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
-        ctx.strokeStyle = "black";
-        ctx.stroke();
-        ctx.fillStyle = color;
-        ctx.fill();
+        if(this.player === true){
+            ctx.arc(this.pos.x,this.pos.y,this.r+2,0,2*Math.PI);
+            ctx.fillStyle = "#000000";
+            ctx.fill();            
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();         
+        }
+        else{
+            ctx.arc(this.pos.x,this.pos.y,this.r,0,2*Math.PI);
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
         ctx.closePath();
         if(num){
             ctx.beginPath();
@@ -34,6 +46,7 @@ class Ball{
             ctx.fillText(BALLS.indexOf(this)+1,this.pos.x - 8,this.pos.y + 8);
             ctx.closePath();
         }
+        
         
     }
 
