@@ -139,15 +139,17 @@ function moveCharge(i,mouse){
     charge.pos.y = mouse.y;
     calcField(BALLS,field,true);
 }
-
+ 
 let clickPos = canvasField.addEventListener("mousedown", function (evt) {
     var mousePos = new Vector2D(getMousePos(canvasField, evt).x,getMousePos(canvasField, evt).y);
+    let play = [];
 
     BALLS.forEach(charge => {
         let dist = Vector2D.distance(mousePos,charge.pos); 
         if(dist <= 1.2*r){
             clicked = true;
             charge.player = true;
+            play.push(charge.index);
             chargeIndex = BALLS.indexOf(charge);
             nomeCarga.innerHTML = chargeIndex+1;
             cargaCarga.innerHTML = charge.m;
@@ -156,8 +158,11 @@ let clickPos = canvasField.addEventListener("mousedown", function (evt) {
         else{
             charge.player = false;
         }
+        
     });
+    console.log(play);
 }, false);
+
 
 canvasField.addEventListener("mousemove", function (evt){
     if(clicked){
