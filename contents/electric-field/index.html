@@ -27,23 +27,43 @@
             <h3>Divirta-se visualizando o campo elétrico gerado por diversas cargas! Arraste qualquer carga para mudar sua posição.
             </h3>
             <div class="simulation">
-                <div class="control-panel" style="display: block; font-size: larger;">
+                <div class="control-panel" style="display: block; font-size: 16px;">
                     <table>
                         <tr>
-                            <th colspan="6">Descrição da carga selecionada:</th>
+                            <td colspan="6">Unidade de carga:</td>
+                            <td colspan="2" style="border: 0px; background-color: transparent;"><button type="button" id="btnMaisCarga" style="min-width: 30px; min-height: 30px;">+</button></td>
+                            <td colspan="2" id="cargaCarga">1</td>
+                            <td colspan="2" style="border: 0px; background-color: transparent;"><button type="button" id="btnMenosCarga" style="min-width: 30px; min-height: 30px;">-</button></td>
                         </tr>
                         <tr>
-                            <td colspan="3">Carga:</td>
-                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMaisCarga" style="min-width: 30px; min-height: 30px;">+</button></td>
-                            <td id="cargaCarga">1</td>
-                            <td style="border: 0px; background-color: transparent;"><button type="button" id="btnMenosCarga" style="min-width: 30px; min-height: 30px;">-</button></td>
+                            <td colspan="6" style="border: 0px; background-color: transparent;"><button type="button" id="btnNovaCarga">Adicionar Carga</button></td>
+                            <td colspan="6" style="border: 0px; background-color: transparent;"><button type="button" id="btnApagarCarga">Apagar Carga</button></td>
                         </tr>
+                        <tr>
+                            <td colspan="12">Campo no ponteiro:</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Posição:</td>
+                            <td colspan="3" rowspan="1" id="posicaoXCampo">x:</td>
+                            <td colspan="3" rowspan="1" id="posicaoYCampo">y:</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Módulo:</td>
+                            <td colspan="12" rowspan="1" id="moduloCampo">Módulo: </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Ângulo:</td>
+                            <td colspan="12" rowspan="1" id="anguloCampo">Ângulo: </td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" rowspan="1" style="border: 0px; background-color: transparent;">
+                            <canvas id="vectorCanvas" class="myCanvas" tabindex="2" style="justify-content: center;"></canvas>
+                        </td></tr>
+
+                        
                     </table>
-                    <br>
-                    <div class="horizontal-buttons">
-                        <button type="button" id="btnNovaCarga">Adicionar Carga</button>
-                        <button type="button" id="btnApagarCarga">Apagar Carga</button>
-                    </div>
+
+
                 </div>
                 <canvas id="fieldCanvas" class="myCanvas" tabindex="1"></canvas>
             </div>
