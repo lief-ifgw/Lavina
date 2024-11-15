@@ -4,7 +4,7 @@
     padding: 0px;
     margin: 0px;
 	line-height:1.5;
-	font-family: Verdana, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -14,20 +14,25 @@ body {
     display: flex;
 }
 
-nav {
+.navbar {
     width: 100%;
     top: 0;
+    height: 130px;
     float: right;
     display: flex;
     position: fixed;
     z-index: 99;
-    background-color: #7f0799;
+    background-color: #cd9bcd;
 }
 
 
 
 #nav_logo {
     margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: auto;
+    height: auto; 
 }    
 
 ul {
@@ -39,6 +44,7 @@ ul {
 nav a {
     text-decoration: none;
     color: #fff;
+    font-size: 30px;
 }
 
 nav li {
@@ -49,9 +55,8 @@ nav li {
 }
 
 nav li:hover {
-    background-color: #600675;
+    background-color: #c166d5;
     transition: 0.3s;
-    font-size: 15px;
 }
 
 .content {
@@ -83,6 +88,14 @@ nav li:hover {
 h1, h2, h3, h4, h5 {
     padding: 0 10px 10px 0; 
     font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 50pt;
+}
+
+h2 {
+    font-size: 30pt;
 }
 
 h3 {
