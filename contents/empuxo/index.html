@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <script src="../../components/load-mathjax.js" async></script>
+        <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <nav>
+            <img src="../../img/logo_LIEF.png" alt="LIEF physlets" height="75" width="75" id="nav_logo">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../pages/experimentos.html">Experimentos</a></li>
+                <li><a href="../../pages/projetos.html">Projetos</a></li>
+                <li><a href="../../pages/sobre.html">Sobre</a></li>
+                <li><a href="../../pages/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <div class="content" style="position: flex;">
+            <h1>Empuxo</h1><br>
+            <h3>Divirta-se visualizando o empuxo!
+            </h3>
+            <div class="simulation">
+                <div class="control-panel" style="display: block; font-size: 16px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <h3 class="tooltip"><span class="tooltiptext">Raio do Objeto (m)</span><var id="labelRObj">$R_{obj}:$</var> <span id="Robj">0</span> $m$</h3>
+                                <input type="range" min="1" max="100" value="0" step="1" class="slider" id="sliderRObj">
+
+                                <h3 class="tooltip"><span class="tooltiptext">Volume do FLuido (m³)</span><var id="labelVObj">$V_{fluido}:$</var> <span id="Vfluido">0</span> $m^{3}$</h3>
+                                <input type="range" min="0" max="100" value="0" step="1" class="slider" id="sliderVFluido">
+
+
+                                <h3 class="tooltip"><span class="tooltiptext">Densidade do Objeto (Kg/m³)</span><var id="labelPObj">$\rho _{obj}:$</var> <span id="Pobj">0</span> $Kg/m^{3}$</h3>
+                                <input type="range" min="0.1" max="5" value="0" step="0.1" class="slider" id="sliderPObj">
+
+                                <h3 class="tooltip"><span class="tooltiptext">Densidade do Fluido (Kg/m³)</span>$\rho _{fluido}:$ <span id="Pfluido">0</span> $Kg/m^{3}$</h3>
+                                <input type="range" min="0.1" max="5" value="0" step="0.1" class="slider" id="sliderPFluido">
+
+                                <h3 class="tooltip"><span class="tooltiptext">Viscosidade do Fluido (m²/s)</span>$\nu _{fluido}:$ <span id="Viscfluido">0</span> $m^{2}/s$</h3>
+                                <input type="range" min="0.1" max="5" value="0" step="0.1" class="slider" id="sliderViscFluido">
+                                <button type="button" style="min-width: 50%;" id="btnAplicar">Aplicar Valores</button>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <button type="button" id="btnPlay">Play</button>
+                    <button type="button" id="btnPause">Pause</button>
+
+                </div>
+                <canvas id="myCanvas" class="myCanvas" tabindex="1"></canvas>
+            </div>  
+            <br>
+            <button class="accordion" id="solution">Solução</button>
+            <div class="panel">
+                <br>
+                <h3>
+                    <p style="font-family: 'Montserrat',sans-serif;" id="explanation"></p>
+                    <p id="formMomentum" class="math"></p><br>  
+                    <p class="math" id="ansMomentum"></p>
+                </h3>
+                <br>
+            </div>
+        </div>
+            
+            
+        </div>
+        <script src="../../utils/ball.js"></script>
+        <script src="../../utils/wall.js"></script>
+        <script src="../../utils/vector2D.js"></script>
+        <script src="../../utils/graph.js"></script>
+        <script src="../../utils/arrow.js"></script>
+        <script src="src/script.js"></script>
+    </body>
+</html>
